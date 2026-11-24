@@ -1,0 +1,31 @@
+# Byte-compiled / optimized
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# Datasets (fetched via FETCH_DATA.md; not committed)
+data/pbmc3k/
+data/eeg/
+data/*.tar.gz
+!data/BBBP.csv
+
+# Model weights (torchvision auto-downloads)
+*.pth
+*.pt
+
+# Generated artifacts from advanced runs (regenerate via scripts)
+data/pbmc3k/processed.h5ad
+data/pbmc3k/processed_advanced.h5ad
+
+# OS / editor
+.DS_Store
+*.bak
+*.swp
+.ipynb_checkpoints/
+
+# Keep figures/ tracked (they are deliverables)

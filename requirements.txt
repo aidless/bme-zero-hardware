@@ -1,0 +1,19 @@
+numpy>=1.26
+pandas>=2.0
+scikit-learn>=1.3
+scipy>=1.11
+matplotlib>=3.7
+torch>=2.0
+torchvision>=0.15
+medmnist>=3.0
+rdkit>=2023.9
+scanpy>=1.10
+anndata>=0.10
+umap-learn>=0.5
+leidenalg>=0.10
+scikit-image>=0.22
+mne>=1.7
+lightgbm>=4.0
+networkx>=3.0
+
+# Optional: build_portfolio.py only needs stdlib (base64/re/glob)
