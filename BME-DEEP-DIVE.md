@@ -2,13 +2,15 @@
 
 > 目的：把已开源作品集（github.com/aidless/bme-zero-hardware）的五个方向从"单数字 demo"升级到"经得起审稿的 benchmark"。核心动作有两层：① 联网逐条核实 2024–2026 真实前沿（号-题一致 + 数字溯源，杜绝编造 DOI）；② 用更严格的实验协议重估我们的基线，并诚实标注口径差异。
 >
-> 日期：2026-11-24（第三轮补齐类器官 & EEG） · 证据分级：🟢 已打开正文核对标题/年份/数字 ｜ 🟡 仅搜索摘要未验证（不得当事实）｜ ⚪ 自报未独立复现
+> 日期：2026-11-24（第三轮补齐类器官 & EEG；第四轮跨数据集、跨被试与概率校准） · 证据分级：🟢 已打开正文核对标题/年份/数字 ｜ 🟡 仅搜索摘要未验证（不得当事实）｜ ⚪ 自报未独立复现
 
 ---
 
 ## 零、一句话结论
 
 深挖之后，**我们作品集的六个数字没有一个能直接写成"超过 SOTA"**——不是因为结果差，而是因为 SOTA 对比必须口径一致（切分方式、预训练与否、特征维度、是否去重、被试内还是跨被试）。本报告的真正产出是：把每个数字放回它真实的口径里，并给出审稿人会问的 bootstrap 置信区间、scaffold split、seed 稳定性、多重检验校正。结果反而更可信——融合特征在严格 scaffold split 下没有掉，反而略升；而 EEG 的 0.7778 经多 seed 重估实为 0.76±0.05，单 seed 数字偏乐观。文献核实覆盖全部五个方向，累计证伪 / 纠正 9 个易记错的文献 id，并对不存在官方榜单的方向如实留白。
+
+**第四轮的新发现更尖锐**：三个方向的"外部验证 / 校准"把前面的乐观进一步收敛。① 制药换到第二个数据集 BACE，融合特征相对单 ECFP4 仍是正增量，但 bootstrap CI 跨 0、统计上不显著——"融合永远最优"不成立；② 影像换到 7 类 DermaMNIST，协议可迁移（macro-AUC 0.9343），但与二分类不同口径；③ EEG 换被试后从 0.76 塌到近随机（跨被试 0.4944，CI 覆盖 0.5），**S001 的高分是被试特异的幸运抽样，不是泛化能力**；④ 概率校准上 BBBP 可信（ECE 0.041），EEG 严重失校准（ECE 0.152）。一句话：**判别力、泛化力、概率可信是三件事，单数据集单被试的单数字三样都没证明。**
 
 ---
 
@@ -223,3 +225,71 @@ PBMC3k 官方范式核对：Scanpy 教程 resolution=0.7→8 群；Seurat 教程
 **留白（核实不到就不填数）**：2024–2026 BBBP/PneumoniaMNIST 无权威持续更新 SOTA 榜单；类器官无官方 SOTA 榜单（里程碑标签不写分数）；PhysioNet 官方不提供 acc 基线；NeurIPS EEGPT arXiv id、MIRepNet 逐数据集 acc、Neuralink 同行评审论文未核实到。
 
 同步到开源仓库 github.com/aidless/bme-zero-hardware，present 报告与脚本。
+
+---
+
+## 七、第四轮：外部验证、跨被试与概率校准（2026-11-24）
+
+> 前三轮的重新评估都还在**同一个数据集内部**（BBBP 内换 split、S001 内换 seed、PBMC3k 内换 res）。审稿人真正的下一问是："**换个数据集、换个被试，还行吗？概率可信吗？**" 本轮用三个新方向回答：BACE（第二分子数据集）、DermaMNIST（第二影像数据集）、EEGBCI S2-5（跨被试），外加一轮概率校准。结论是判别力、泛化力、概率可信三件事里，前面的单数字只证明了第一件的一部分。
+
+### 7.1 制药 · 换数据集 BACE：融合增量不再显著
+
+第二个 MoleculeNet 数据集 BACE（BACE1 抑制剂二分类，1513 分子，URL 用小写 `bace.csv`，大写返回 403；sha256 `f3fb9ce9…737`）。canonical SMILES 去重后仍 1513（无效 0、重复 0、标签冲突 0），671 个 Bemis-Murcko scaffold，DeepChem 式 scaffold split 1210/151/152，三集合 scaffold 重叠 0。
+
+| 表征 | random AUC [95% CI] | scaffold AUC [95% CI] |
+|---|---|---|
+| ECFP4-2048 | 0.8805 [0.843, 0.914] | 0.8909 [0.834, 0.940] |
+| MACCS-167 | 0.8674 [0.824, 0.907] | 0.8654 [0.797, 0.921] |
+| ECFP4+desc | 0.8862 [0.850, 0.919] | **0.9027 [0.846, 0.950]** |
+| ECFP4+MACCS+desc（2223 维融合） | **0.8912 [0.856, 0.923]** | 0.8998 [0.843, 0.947] |
+
+- **配对 bootstrap（融合 − 单 ECFP4）**：random +0.0108 [−0.000, +0.022]、scaffold +0.0088 [−0.005, +0.024]，**两处 CI 都跨 0**。融合是两个数据集上都为正的小增量，但在 BACE 上统计不显著；scaffold 上 `ECFP4+desc`（0.9027）还略高于完整融合（0.8998）。所以**"融合永远最优"不成立**，诚实写法是"融合稳定为正、幅度小且不显著"。
+- **5 seed 分解**：融合 scaffold 同时重切分+换 RF seed → 0.8882±0.0197（range 0.862–0.913）；固定切分只换 RF seed → 0.8980±0.0012。**split 扰动比模型 seed 扰动大一个数量级**——真正的方差来源是数据怎么切，不是随机种子。
+- **口径**：MoleculeNet 原文（arXiv:1703.00564v3）BACE 在 **Table 5**（不是 Table 6）：RF 0.867±0.008 / KernelSVM 0.862±0.000 / GC 0.783±0.014 / Weave 0.806±0.002（已 web_fetch 证伪任务给的错映射——0.783 是 GC 不是 RF）。我们的 0.8998 高于官方 RF +0.033，但官方是 GP 调参三次平均、默认 ECFP4 位数未钉死，我们是固定 RF500、2223 维融合、canonical 去重、自实现 80/10/10 scaffold 填充，CI 只反映 test 抽样方差——**只能作定性外部验证，不写同口径 SOTA 超越**。描述子 StandardScaler 在全量去重数据上拟合（忠实 BBBP v2，但非严格 train-only），已记入 limitations。
+
+### 7.2 影像 · 换数据集 DermaMNIST：协议可迁移，口径不可比
+
+第二个 MedMNIST 数据集 DermaMNIST（7 类皮肤病，官方划分 7007/1003/2005，类别 5 占 test 66.9% 长尾明显）。同一套 ResNet18 ImageNet 迁移协议，条件 Lambda 处理通道（灰度 repeat 成 3 通道、RGB 保留——无条件 repeat 会得到 9 通道触发 conv1 shape 错，已实测修正），val macro-AUC 选模选中 finetune epoch 2。
+
+| 指标 | 实测 | 95% CI（1000×分层 bootstrap） |
+|---|---|---|
+| test accuracy | 0.7751 | [0.7601, 0.7900] |
+| macro-AUC | 0.9343 | [0.9254, 0.9429] |
+| ECE(15 bins) | 0.0539 | — |
+| multiclass Brier | 0.3200 | — |
+
+- 最弱类 class4 melanoma AUC 0.8797、次弱 class2 0.8913，混淆矩阵里 class2/4 大量误判成占多数的 class5。
+- **口径**：官方 medmnist.com benchmark 列 DermaMNIST ResNet-18(224) AUC 0.920 / ACC 0.754，本轮数值略高但预训练与上采样路径未对齐，**只作参考不宣称 SOTA**。与 PneumoniaMNIST 二分类 AUC 0.9721 在指标定义、类别数、难度上都不同，**区间不可直接相减**。可写的结论是：协议在更难的多类任务上仍达到较高判别力（macro-AUC 0.934）和中等准确度（0.775），少数类与概率过度自信是后续点。
+
+### 7.3 EEG · 换被试 S2-5：0.76 塌到近随机（本轮最关键）
+
+前三轮的 S001 acc 0.7778 全来自**单个被试**。本轮换 EEGBCI subject 2–5（每人 runs 4/8/12、45 trials），做 subject-specific 5-fold 与 leave-one-subject-out（LOSO）。
+
+- **先修一个确定性 bug**：首版 `bench_eeg_cross_subject.py:93` 用 `(prob>=0.5).astype(int)` 得 0/1，但真实标签是 {1,2}，导致所有 y=2 判错、subject-specific acc 被系统性压到 0.2444（AUC 不受影响）——**AUC 正常不能证明 acc 正确**。改成 `np.where(prob>=0.5,2,1)` 整脚本重跑（144s），并用原 `mini_project_eeg.py` 同款路径独立复核 S002=0.4889 一致。
+- **subject-specific**（5-fold OOF）：S2 0.4889 / S3 0.5778 / S4 0.5556 / S5 0.4889，macro acc **0.5278**、macro AUC 0.5741——连单被试内的换人基线都只有 0.53。
+- **LOSO**（留出被试完全不进 fit/缩放/阈值）：逐被试 acc 0.4889/0.4444/0.4222/0.6222；**pooled acc 0.4944、AUC 0.4851**，bootstrap CI acc [0.4222, 0.5667]、AUC [0.3979, 0.5701]，相对 macro 掉 3.33pp / AUC 掉 0.0891。
+- **判读**：CI 覆盖 0.5，**本小样本 CSP+LR 协议下无跨被试优势的任何证据**。S001 的 0.76 是被试特异的幸运抽样，不能外推。文献 CTNet subject-specific 82–88% vs cross-subject 58–76% 的量级，在本复现里表现为 0.53→0.49，而非 0.76→0.58–0.76（本协议整体低于 CTNet 的深度模型）。**这是全部四轮里对原始作品集最不利、也最该写进简历口径的一条**。
+
+### 7.4 概率校准：BBBP 可信，EEG 严重失校准
+
+新增 `bench_calibration.py`：对 BBBP（ECFP4+RF）和 EEG（CSP+LR）的 OOF 概率算 ECE(15 bins)/MCE/Brier/LogLoss/sharpness，并做 temperature scaling（对半切，避免同批 fit+eval）。踩坑：RF `predict_proba` 给精确 0/1，取 logit 会除零，变换前 clip 到 [1e-6, 1−1e-6]。
+
+| 数据集 | n | ECE | MCE | Brier | LogLoss | temperature scaling |
+|---|---:|---:|---:|---:|---:|---|
+| BBBP | 2039 | **0.0409** | 0.2855 | 0.0853 | 0.2956 | T=0.877，test-half ECE 0.0365→0.0375（本就校准，无需） |
+| EEG S001 | 45 | **0.1521** | 0.6758 | 0.1425 | 0.4294 | T=0.891，ECE 0.2187→0.1694（仍超标） |
+
+BBBP 概率基本可信（ECE<0.05）；EEG 严重过度自信（ECE 0.152，MCE 0.676）+ 45 试次小样本，temperature scaling 也救不回来。叠加第三轮的多 seed 不稳（0.76±0.05）和本轮的跨被试塌缩（0.49），EEG 这个数字有两层独立警告。
+
+### 7.5 第四轮交付与新增脚本
+
+| 方向 | 脚本 | 新增检验 |
+|---|---|---|
+| 制药 | `bench_mol_bace.py` | 第二数据集 BACE + 4 表征对比 + 配对 bootstrap + 5-seed 分解（含 `--selftest`） |
+| 影像 | `bench_imaging_derma.py` | 第二数据集 DermaMNIST 7 类 + macro-AUC + 校准 + 混淆矩阵（GPU） |
+| EEG | `bench_eeg_cross_subject.py` | S2-5 跨被试 LOSO + 标签阈值 bug 修复 + 12 EDF sha256 |
+| 校准 | `bench_calibration.py` | ECE/MCE/Brier/LogLoss + temperature scaling（对半切） |
+
+新增实测档案：`notes/2026-11-25-{bace-external-validation,derma-external-validation,eeg-cross-subject,calibration-analysis}.md`，指标 JSON 在 `data/{bace_rigorous_metrics.json,derma_rigorous_metrics.json,calibration/calibration_metrics.json,eeg/eeg_cross_subject_metrics.json}`，图在 `figures/{derma_reliability,derma_confusion,eeg_cross_subject,calibration_bbbp,calibration_eeg}.png`。文献核实覆盖全部新方向（BACE 的 MoleculeNet Table 5 映射已 web_fetch 证伪错值）。
+
+**第四轮净结论**：判别力（单数据集 AUC）、泛化力（跨数据集/跨被试）、概率可信（ECE）是三件独立的事；本作品集在判别力上有扎实数字并配齐 CI，但跨被试泛化（EEG 0.49）和概率校准（EEG ECE 0.152）暴露了明显短板——这些是比"超过 SOTA"更值得写进简历讨论部分的诚实发现。
