@@ -21,7 +21,7 @@
 ## 快速开始
 
 ```bash
-git clone <this-repo>
+git clone https://github.com/aidless/bme-zero-hardware.git
 cd bme-zero-hardware
 pip install -r requirements.txt
 # 数据按需下载，见 FETCH_DATA.md
