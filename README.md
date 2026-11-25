@@ -46,14 +46,15 @@ python3 mini_project_eeg.py      # ③ EEG 解码（MNE 自动下载）
 | ① 影像 | ResNet18 AUC 0.974 | bootstrap CI [0.957, 0.983]；换 DermaMNIST / PathMNIST / RetinaMNIST 后 macro-AUC 0.934 / 0.992 / 0.742，难度效应明显；无官方榜单 |
 | ⑤ 制药 | BBBP 融合 AUC 0.941 | scaffold split 后 0.941[0.904,0.972]；与 MoleculeNet RF 0.714 的 0.23 gap 有 97.5% 由 scaffold split 实现差异解释；BACE 融合增量不显著，ClinTox 上 MACCS 单表征显著优于融合 |
 | ⑥ 单细胞 | Leiden 10 群 | res=0.5/0.7/1.0 得 7/8/10 群；通讯 BH-FDR 显著对数 96/125/194；heart_1k_v3 是 mm10 小鼠心脏，marker/通讯结论只在组织+物种+批次+分辨率内成立 |
-| ③ EEG | CSP acc 0.778 / AUC 0.877 | 仅 S001 被试内；9 人 LOSO 后 CSP pooled acc 0.519（CI 覆盖 0.5），换 Riemannian TangentSpace+LR 后 acc 0.580（CI 不含 0.5）但 McNemar p=0.052 边界；ECE 经校准后大幅改善 |
+| ③ EEG | CSP acc 0.778 / AUC 0.877 | 仅 S001 被试内；9 人 LOSO 后 CSP pooled acc 0.519（CI 覆盖 0.5）。第五轮黎曼 ensemble 报 acc 0.580（CI 不含 0.5），但第六轮把预测规则冻结成单次 fit 后**两臂都不显著**（CSP 0.509 / 黎曼 0.449，CI 均覆盖 0.5，黎曼点估计还更差）——所谓优势依赖一个事后选的 ensemble 细节；两臂 ECE 0.49/0.72 跨被试严重失校准 |
 | ② 类器官/细胞图像 | 230 个核（HeLa） | DSB2018 32 图人工 GT 上传统流水线 Dice 0.7765、Cellpose3 对照 0.8547；2D 核 Dice ≠ 3D 类器官质量 |
 
 详细文献核实、bootstrap CI、scaffold split、跨被试验证、概率校准全部在 [`BME-DEEP-DIVE.md`](BME-DEEP-DIVE.md)，累计证伪/纠正 9 个易记错的文献 id，并对无官方榜单的方向如实留白。
 
 ## 文档
 
-- [`BME-DEEP-DIVE.md`](BME-DEEP-DIVE.md) — 五轮 deep dive 总报告：文献核实 + bootstrap CI + scaffold split + 跨被试 + 概率校准 + P0 硬伤修复 + 跨数据集/跨组织验证
+- [`BME-DEEP-DIVE.md`](BME-DEEP-DIVE.md) — 六轮 deep dive 总报告：文献核实 + bootstrap CI + scaffold split + 跨被试 + 概率校准 + P0 硬伤修复 + 跨数据集/跨组织验证 + **预注册与分析者自由度（第六轮）**
+- [`PREREGISTRATION-1-EEG-crosssubject.md`](PREREGISTRATION-1-EEG-crosssubject.md) / [`PREREGISTRATION-2-Mol-split-effect.md`](PREREGISTRATION-2-Mol-split-effect.md) — 第六轮两份预注册，含冻结 sha256（`data/prereg/FREEZE.log`）；判定规则跑前写死、脚本运行时验签。结论：黎曼 ensemble 优势在冻成单次 fit 后消失；split 单因素差异 CI 跨 0（推翻此前"97.5% gap"归因）
 - [`docs/BME-PORTFOLIO.md`](docs/BME-PORTFOLIO.md) — 完整实测档案：每方向的脚本、数字、踩坑、下一步
 - [`docs/bme-zero-hardware-guide.md`](docs/bme-zero-hardware-guide.md) — 零硬件入门路径：工具栈 + 数据集 + 12 周路线
 - [`docs/eeg_direction_conclusion.md`](docs/eeg_direction_conclusion.md) — EEG 方向能做/不能做的边界说明

@@ -39,4 +39,10 @@ data/pbmc3k/processed_advanced.h5ad
 *.swp
 .ipynb_checkpoints/
 
-# Keep figures/ tracked (they are deliverables)
+# Keep figures/ tracked (they are deliverables)# 第六轮预注册产物（冻结文件 + 判定指标 JSON 入库，日志/flag 不入库）
+!data/prereg/
+data/prereg/*.log
+data/prereg/*.flag
+!data/prereg/FREEZE.log
+!data/prereg/*.sha256
+!data/prereg/*_metrics.json

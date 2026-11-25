@@ -1,0 +1,33 @@
+{
+  "prereg": "PREREGISTRATION-2-Mol-split-effect.md",
+  "prereg_sha256": "8254b930074a82a6466dee0590ec6c3d271aa99e5ecb250ae68037f24d634ffe",
+  "n_rows": 2050,
+  "n_unique": 1975,
+  "n_scaffold": 1025,
+  "ours_shuffle": {
+    "n_train": 1750,
+    "n_test": 225,
+    "auc": 0.7616147664490206,
+    "test_pos": 181,
+    "test_neg": 44
+  },
+  "deepchem_order": {
+    "n_train": 1777,
+    "n_test": 198,
+    "auc": 0.7099162581699346,
+    "test_pos": 102,
+    "test_neg": 96
+  },
+  "paired_diff": {
+    "point": 0.05169850827908595,
+    "ci95": [
+      -0.0517652388924679,
+      0.1531419090107987
+    ],
+    "note": "\u4e24\u5207\u5206 test \u96c6\u4e0d\u540c\uff0cCI \u7528\u5404\u81ea test \u72ec\u7acb bootstrap \u91cd\u91c7\u6837\u540e\u4f5c\u5dee\uff08\u4fdd\u5b88\uff09"
+  },
+  "verdict": {
+    "ci_excludes_0": false,
+    "statement": "\u65e0\u8bc1\u636e\uff1aCI \u8de8 0"
+  }
+}
