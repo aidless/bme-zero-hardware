@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "updated": "2026-11-25T05:35:00.000Z",
+  "entries": [
+    {"key":"imaging.resnet18.test_auc","value":0.9741,"unit":"AUC","source":"bench_imaging_rigorous.py","anchor":"test AUC=0.9741","note":"seed42 主运行；bootstrap CI [0.9569,0.9833]","revision":1,"updated":"2026-11-25T05:35:00.000Z"},
+    {"key":"imaging.resnet18.bi_auc","value":0.9721,"unit":"AUC","source":"bench_imaging_rigorous.py","anchor":"test auc=0.9721","note":"审稿级 bootstrap 重跑，seed 抖动","revision":1,"updated":"2026-11-25T05:35:00.000Z"},
+    {"key":"mol.bbbp.scaffold_fusion_auc","value":0.9413,"unit":"AUC","source":"bench_mol_rigorous_v2.py","anchor":"scaffold 0.9413","note":"ECFP4+MACCS+desc；CI [0.904,0.972]","revision":1,"updated":"2026-11-25T05:35:00.000Z"},
+    {"key":"mol.bace.scaffold_fusion_auc","value":0.8998,"unit":"AUC","source":"bench_mol_bace.py","anchor":"scaffold fusion 0.8998","note":"CI [0.843,0.947]；融合增量在 BACE 不显著","revision":1,"updated":"2026-11-25T05:35:00.000Z"},
+    {"key":"scrna.significant_communications_bh","value":83,"unit":"pairs","source":"bench_scrna_rigorous.py","anchor":"BH-FDR q<0.05 得 83","note":"630 检验；p<0.05 名义 126","revision":1,"updated":"2026-11-25T05:35:00.000Z"},
+    {"key":"eeg.csp.test_auc_s001","value":0.8775,"unit":"AUC","source":"bench_eeg_rigorous.py","anchor":"auc=0.8775","note":"仅 S001 被试内","revision":1,"updated":"2026-11-25T05:35:00.000Z"},
+    {"key":"eeg.loso.pooled_acc","value":0.4944,"unit":"accuracy","source":"bench_eeg_cross_subject.py","anchor":"acc=0.4944","note":"CI [0.4222,0.5667] 覆盖 0.5","revision":1,"updated":"2026-11-25T05:35:00.000Z"},
+    {"key":"eeg.calibration.ece","value":0.1521,"unit":"ECE","source":"bench_calibration.py","anchor":"ECE=0.1521","note":"n=45 严重失校准；T=0.891 后仍 0.1694","revision":1,"updated":"2026-11-25T05:35:00.000Z"},
+    {"key":"organoid.nuclei_count","value":230,"unit":"nuclei","source":"bench_organoid_rigorous.py","anchor":"230 核","note":"无 GT 算不出 Dice；36 组参数 CV=0.075","revision":1,"updated":"2026-11-25T05:35:00.000Z"}
+  ]
+}

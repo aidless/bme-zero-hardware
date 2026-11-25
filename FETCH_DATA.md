@@ -50,6 +50,42 @@ pip install mne
 ## 6. HeLa 细胞核显微图（② 细胞图像）
 `mini_project_organoid.py` 使用 scikit-image 内置 `data.human_mitosis()`，首次调用下载到 `~/.cache/scikit-image`，之后离线可复现。
 
+## 7. BACE 分子数据集（第五轮 deep dive · 第二数据集）
+`bench_mol_bace.py` 需要 DeepChem BACE（1513 分子，二分类）：
+```bash
+mkdir -p data
+# 注意 URL 必须小写 bace.csv，大写 BACE.csv 实测 HTTP 403
+curl -L -o data/BACE.csv \
+  https://deepchemdata.s3-us-west-1.amazonaws.com/datasets/bace.csv
+# sha256 f3fb9ce90bada3e2bd6148b0df13f8f8145a357bf87df0dd5b391ede974fc737
+python3 bench_mol_bace.py
+```
+
+## 8. DermaMNIST 皮肤镜数据集（第五轮 deep dive · 跨数据集）
+`bench_imaging_derma.py` 通过 medmnist 自动下载（7 类，官方划分 7007/1003/2005）：
+```bash
+python3 bench_imaging_derma.py   # medmnist 自动下载，无需手动
+```
+
+## 9. ClinTox 数据集（第六轮 · 第三数据集，可选）
+```bash
+curl -L -o data/clintox.csv.gz \
+  https://deepchemdata.s3-us-west-1.amazonaws.com/datasets/clintox.csv.gz
+```
+
+## 10. 10x heart_1k_v3 单细胞（第六轮 · 跨组织，可选）
+```bash
+mkdir -p data/heart_1k_v3 && cd data/heart_1k_v3
+curl -L -o heart_1k_v3.h5 \
+  https://cf.10xgenomics.com/samples/cell-exp/3.0.0/heart_1k_v3/heart_1k_v3_filtered_feature_bc_matrix.h5
+```
+
+## 11. BCI IV-2a (Zenodo 8276054) EEG 跨数据集（可选）
+```bash
+# 需从 https://zenodo.org/records/8276054 手动下载（体积较大，按需）
+# 放置后见 notes/2026-11-26-eeg-extended.md
+```
+
 ## 环境
 - Python 3.12（测试环境），依赖见 `requirements.txt`
 - 部分发行版（如 Debian/Ubuntu 系统 Python）用 pip 安装需加 `--break-system-packages` 或使用 venv

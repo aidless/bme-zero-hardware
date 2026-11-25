@@ -1,0 +1,19 @@
+[data] DSB2018/BBBC038 subset n=32 256x256 nuclei GT
+[data] license=CC0; source=DataTorchio HF mirror of BBBC038 stage1_train
+
+[config] baseline_512tuned  params={'sigma': 2.0, 'min_distance': 10, 'peak_threshold': 3.0, 'min_object': 40, 'min_hole': 200, 'area_low': 80, 'area_high': 2000}
+[agg] baseline_512tuned Dice=0.7765 [0.7452,0.8055] IoU=0.6428 matchF1@.5=0.6162
+
+[config] adapt_256  params={'sigma': 2.0, 'min_distance': 6, 'peak_threshold': 3.0, 'min_object': 20, 'min_hole': 100, 'area_low': 40, 'area_high': 1200}
+[agg] adapt_256 Dice=0.8041 [0.7777,0.8302] IoU=0.6789 matchF1@.5=0.7148
+[cellpose3] Dice=0.8547 [0.8160,0.8853] IoU=0.7577
+[compare] cellpose-adapt Dice diff mean=0.0506 (better 29/32)
+[compare] adapt-baseline Dice diff mean=0.0276 (adapt better 26/32)
+[verify] recomputed 96 Dice from npz; mismatches=0
+[artifact] /home/liuzewen/F:\deepseek/data/organoid/gt/metrics.json
+[figure] organoid_gt_dice.png / organoid_gt_paired.png / organoid_gt_cellpose.png / organoid_gt_examples.png
+[done] elapsed=24.9s
+
+[cellpose3 standalone] model=cellpose 3.1.1.2 type=nuclei device=CPU n=32 elapsed_s=643.3
+[cellpose3 standalone] mean_dice=0.854689
+[cellpose3 standalone] failed preliminary run: uint8 + diameter=60 yielded mean Dice 0.0876 (not used); corrected float32 + auto diameter gave final metrics

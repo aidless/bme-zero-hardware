@@ -1,0 +1,72 @@
+{
+  "subject_specific": {
+    "seeds": [
+      42,
+      0,
+      7,
+      2024,
+      123
+    ],
+    "acc_per_seed": [
+      0.7777777777777778,
+      0.7111111111111111,
+      0.6888888888888889,
+      0.8,
+      0.8222222222222222
+    ],
+    "auc_per_seed": [
+      0.8774703557312253,
+      0.8043478260869565,
+      0.7845849802371542,
+      0.7766798418972333,
+      0.8241106719367589
+    ],
+    "acc_mean": 0.76,
+    "acc_std": 0.051448164012400995,
+    "auc_mean": 0.8134387351778656,
+    "auc_std": 0.036000940827622764,
+    "bootstrap_acc_ci95": [
+      0.6444444444444445,
+      0.8888888888888888
+    ],
+    "bootstrap_auc_ci95": [
+      0.7639789473684211,
+      0.9585234273735417
+    ],
+    "n_boot": 2000,
+    "caliber": "subject-specific, random 5-fold (within-subject)"
+  },
+  "cross_run": {
+    "scheme": "leave-one-run-out (run4/run8/run12 each held out)",
+    "acc_per_heldout_run": {
+      "4": 0.8,
+      "8": 0.8,
+      "12": 0.7333333333333333
+    },
+    "mean_acc": 0.7777777777777778,
+    "std": 0.03142696805273549
+  },
+  "permutation": {
+    "null_mean": 0.48370370370370364,
+    "null_std": 0.07755169964591246,
+    "null_95th": 0.601111111111111,
+    "real_acc": 0.76,
+    "empirical_p": 0.01639344262295082,
+    "n_perm": 60
+  },
+  "metadata": {
+    "dataset": "EEGBCI/EEGMMIDB v1.0.0 PhysioNet, subject 1, runs 4/8/12",
+    "n_epochs": 45,
+    "sfreq": 160.0,
+    "bandpass_hz": [
+      7.0,
+      30.0
+    ],
+    "epoch_window_s": [
+      -0.5,
+      4.0
+    ],
+    "features": "CSP(4 comps, ledoit_wolf, log) + LR",
+    "elapsed_s": 449.7471716403961
+  }
+}

@@ -10,7 +10,18 @@ env/
 
 # Datasets (fetched via FETCH_DATA.md; not committed)
 data/pbmc3k/
-data/eeg/
+data/eeg/*
+!data/eeg/eeg_rigorous_metrics.json
+!data/eeg/eeg_cross_subject_metrics.json
+!data/eeg/eeg_metrics.json
+!data/eeg/eeg_extended_metrics.json
+data/organoid/gt/*
+!data/organoid/gt/metrics.json
+!data/organoid/gt/cellpose_metrics.json
+!data/organoid/gt/per_image.csv
+!data/organoid/gt/run.log
+!data/organoid/gt/masks/
+!data/organoid/gt/dsb2018/
 data/*.tar.gz
 !data/BBBP.csv
 

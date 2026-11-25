@@ -293,3 +293,66 @@ BBBP 概率基本可信（ECE<0.05）；EEG 严重过度自信（ECE 0.152，MCE
 新增实测档案：`notes/2026-11-25-{bace-external-validation,derma-external-validation,eeg-cross-subject,calibration-analysis}.md`，指标 JSON 在 `data/{bace_rigorous_metrics.json,derma_rigorous_metrics.json,calibration/calibration_metrics.json,eeg/eeg_cross_subject_metrics.json}`，图在 `figures/{derma_reliability,derma_confusion,eeg_cross_subject,calibration_bbbp,calibration_eeg}.png`。文献核实覆盖全部新方向（BACE 的 MoleculeNet Table 5 映射已 web_fetch 证伪错值）。
 
 **第四轮净结论**：判别力（单数据集 AUC）、泛化力（跨数据集/跨被试）、概率可信（ECE）是三件独立的事；本作品集在判别力上有扎实数字并配齐 CI，但跨被试泛化（EEG 0.49）和概率校准（EEG ECE 0.152）暴露了明显短板——这些是比"超过 SOTA"更值得写进简历讨论部分的诚实发现。
+
+---
+
+## 八、第五轮：把 21 项动作清单逐条做完（2026-11-25/26）
+
+> 第四轮结束后列了 21 项"有价值动作"，按 P0 硬伤 / P1 验证 / P1 文献 / P1 产出 / P2 工程分五档。本轮把其中可在本机做的全部做完，派四路子代理并行，主会话做文献留白与工程收口。核心增量是：把第四轮暴露的三个短板（EEG 跨被试、scaler 泄漏疑虑、0.23 gap）逐个查清，并在第三、第四个数据集上验证"融合永远最优"这句话到底成不成立。
+
+### 8.1 P0 硬伤逐条修复
+
+| 编号 | 动作 | 实测结论 |
+|---|---|---|
+| P0-1 | EEG 跨被试扩到 9 人 + 强模型对照 | CSP+LR 的 LOSO pooled acc 0.5185、CI [0.4691, 0.5704] 覆盖 0.5（泛化仍不成立）；换 Riemannian TangentSpace+LR 后 pooled acc 0.5802、CI [0.5333, 0.6272] 不含 0.5，AUC 配对提升 +0.0965、CI [0.0259, 0.1691] 排除 0，逐被试 7 胜 2 平 0 负，McNemar p=0.052 为边界值 |
+| P0-2 | EEG 跨被试概率校准 | CSP raw ECE 0.0696 → temperature 0.0158；Tangent raw ECE 0.2510 → isotonic 0.0509（ECE 最优），但 proper score（Brier/LogLoss）仍是 temperature 最优 |
+| P0-3 | 制药 scaler 改严格 train-only | BBBP 三表征 ΔAUC = 0 / +0.0004 / −0.0002，BACE = 0 / −0.0011 / −0.0009：全量拟合 scaler 无实质泄漏（<0.002） |
+| P0-4 | 0.23 gap 根因归因 | 我们 BBBP scaffold 0.9384 vs MoleculeNet 官方 RF 0.714 差 0.2244；单因素切到 DeepChem 精确 split 一项就消掉 0.2188（占 gap 97.5%），其余 ECFP4 位数/RF 树数/去重/特征组合各贡献 ≤0.031；全部切到官方同款后 0.7018，残差 0.0122。**gap 的绝大部分是切分实现差异，不是模型超越** |
+| P0-5 | 收紧融合表述 | 见 8.2 ClinTox——第三个数据集上融合显著劣于 MACCS，原"融合最优"表述已全面收紧 |
+
+**8.1 的关键判读**：P0-1 是好事也是坏事——换对模型（黎曼切空间）后 EEG 跨被试确实有弱—中等证据（AUC 提升 CI 排除 0），但 McNemar p=0.052 恰在边界，只能写"弱证据、待更大样本复现"，不能写成"已解决跨被试问题"。P0-3 与 P0-4 则把前两轮两条自我怀疑（scaler 泄漏、0.23 gap）都证伪为"协议差异、非缺陷/非超越"。
+
+### 8.2 P1 验证扩展：三个新数据集再度改写结论
+
+**ClinTox（第三分子数据集，P1-9）**：endpoint 用 CT_TOX（下载文件为 FDA_APPROVED + CT_TOX 两列，不是 HIV；gzip sha256 `7324a84a…9697`）。1484 行 → canonical 去重 1461（无效 4 / 重复 19 / 冲突 19），正例仅 7.05%，scaffold split 1168/146/147。
+
+| 表征 | scaffold AUC（5 seed 均值±std） | random AUC | 配对融合−MACCS（scaffold） |
+|---|---|---|---|
+| ECFP4-2048 | 0.6760±0.0160 | 0.8623 | — |
+| **MACCS-167** | **0.8949±0.0047** | **0.9444** | 融合 −0.0901，CI [−0.1508, −0.0349] 显著为负 |
+| ECFP4+desc | 0.6802±0.0150 | 0.8708 | — |
+| 融合 2223 维 | 0.8036±0.0165 | 0.9188 | 见左 |
+
+融合相对 ECFP4、ECFP4+desc 显著为正，但**相对 MACCS 显著为负**——这是第三个数据集上"融合永远最优"被推翻（BBBP 融合微升不显著、BACE 融合不显著、ClinTox 融合显著更差）。三个数据集一致的诚实写法是：**融合相对单 ECFP4 稳定为正、幅度小，但不是普适最优，MACCS 在稀疏高不平衡端点上更强**。
+
+**类器官金标准（P1-6）**：用 DSB2018 / BBBC038 stage1_train（32 图，CC0）把 COCO polygon 栅格化为实例 mask，跑同一条 Otsu+watershed 流水线算逐图 Dice/IoU，并加一个更强方法对照。基线（sigma2 / min_dist10 / peak3）Dice **0.7765** [0.7452, 0.8055]、IoU 0.6428；256 尺寸自适应版 Dice 0.8041 [0.7777, 0.8302]，配对 adapt−baseline +0.0276 [0.0145, 0.0419]（26/32 更好）；**Cellpose3 nuclei 对照 Dice 0.8547** [0.8160, 0.8853]，配对 Cellpose−adapt +0.0506 [0.0154, 0.0765]（29/32 更好）——传统 Otsu+watershed 与专用模型之间有可量化的差距。oracle 逐图取最优 0.8068 是调参上界、不是泛化。96 个 mask 从 npz 复算 Dice mismatch=0。踩坑：Cellpose 初版用 uint8 + 固定 diameter=60 得错误值 0.0876，改 float32 + 自动直径后才得 0.8547，失败与修正都记进 run.log。边界：2D HeLa/DSB 核 Dice ≠ 3D 类器官质量，体积 Dice、囊腔形态、跨设备泛化仍需 3D 人工体积标注。
+
+**单细胞分辨率与跨组织（P1-7 / P1-10）**：PBMC3k 在 res=0.5/0.7/1.0 下 Leiden 得 7/8/10 群，ARI 0.5878/0.6312/1.0；通讯 BH-FDR 显著对数 96/125/194（res=1.0 从 .h5ad kNN 重跑为 194，与更早 83/126 的口径不同，属脚本重跑值，按本报告以重跑值为准）。官方常用 res=0.7 下 B/单核/血小板/T 主要谱系仍可辨，但 NK 与 cycling 细分不再保持。跨组织用 10x heart_1k_v3，实测是 **mm10 小鼠心脏**（跨组织+跨物种），QC 1011→879→146 细胞、8 群；8/8 人类 PBMC canonical marker 符号均不匹配，心脏主群由 Tnnt2/Myh6/Actc1 与 Col1a1/Dcn 定义，ComBat 仅 smoke test。**组织边界一句话**：marker 与通讯结论只在组织、物种、批次、聚类分辨率内成立，不可直接外推。
+
+**影像跨数据集（P1-8）**：新增 `bench_imaging_extra.py`，在 PathMNIST（9 类）与 RetinaMNIST（5 类）上跑同一套 ResNet18 ImageNet 迁移协议 + val macro-AUC 选模 + 1000× 分层 bootstrap + ECE。踩坑：medmnist 3.x 用 `INFO[name]["label"]` 而非 `cls.info`；PathMNIST 无 `.samples` 属性；多类 Brier 用 `np.eye` one-hot。
+
+| 数据集 | 规模（train/val/test） | test macro-AUC [95% CI] | test acc | ECE(15) |
+|---|---|---|---|---|
+| PathMNIST（9 类组织病理） | 89996/10004/7180 | **0.9919** [0.9908, 0.9930] | 0.9104 | 0.0476 |
+| RetinaMNIST（5 类视网膜眼底） | 1080/120/400 | **0.7422** [0.7036, 0.7788] | 0.5475 | 0.0846 |
+
+这组结果是"协议可迁移性有边界"的直接证据：同一套迁移学习在组织病理上达到 0.99 高判别力，但在小样本、类别不均衡、需要细粒度眼底判读的 RetinaMNIST 上掉到 0.74 / acc 0.55。加上第四轮的 DermaMNIST 0.9343，影像在三个不同数据集上是 0.99 / 0.93 / 0.74 的梯度——**难度由数据集决定，不是单一数字能代表的**；且三者的类别数、指标口径、预训练路径都不同，不可横向相减或宣称 SOTA。（结果落 `data/imaging_extra_metrics.json`。）
+
+### 8.3 P1 文献留白收口
+
+- **EEGPT id 坐实**：官方 NeurIPS 2024 页（hash `4540d267…`）确认 Guagnyu Wang 等、NeurIPS 37(2024) Main、DOI 10.52202/079017-1239、10M 参数、code github.com/BINE022/EEGPT，**官方页无 arXiv id**——此前"arXiv 号未核实到"结论坐实，统一改用 DOI 引用。
+- **MIRepNet 逐数据集 acc 留白**：deepwiki 页显示结果在 asset/*.jpg 图片里、正文无逐数据集 acc 表格；本机 modlens 视觉桥未配置（实测报 "No vision provider is set up"），两条通道都取不到，**如实留白不编数字**。
+- Neuralink PRIME 为 ClinicalTrials.gov NCT06429735（临床试验注册，非同行评审论文）；本轮未核实到 Neuralink 同行评审论文，继续留白。
+
+### 8.4 P1 产出 / P2 工程
+
+| 项 | 交付 |
+|---|---|
+| requirements 锁版本 | numpy 2.5.2 / pandas 2.3.3 / sklearn 1.9.1 / torch 2.14.1+cu130 / torchvision 0.29.2+cu132 / medmnist 3.0.2 / rdkit 2026.09.1 / scanpy 1.12.6 / scikit-image 0.26 / mne 1.13.2 / pyriemann ≥0.6 |
+| FETCH_DATA 补 5 节 | BACE（小写 bace.csv）/ DermaMNIST / ClinTox / heart_1k_v3 / BCI IV-2a |
+| README 短板表 | 明列六个数字无一 SOTA + 修 BME-DEEP-DIVE.md 链接（在仓库根不在 docs）+ 补验证 notes |
+| 回归测试 | `smoke_test.py` 静态检查（语法编译 / README 链接 / metrics JSON schema / figures 非空），实测 5/5 PASS |
+| claim ledger | `bme-claim-ledger.json` 9 个核心数字绑脚本，`research_ledger verify` 9/9 PASS |
+| 简历口径审计 | `notes/2026-11-25-BME-简历口径审计.md`：6 条声称逐条给"实测 / 判定 / 替代说法"，不改简历正文（共享写点 + 事实闸） |
+
+**第五轮净结论**：21 项里 P0 五项全部修复或证伪，P1 验证项把"融合最优""跨被试不可用"两条都改写成更精确的口径——融合只在相对单 ECFP4 时稳定为正、在 ClinTox 上显著不如 MACCS；EEG 换黎曼模型后有弱—中等跨被试证据但仍处 McNemar 边界。真正沉淀下来的不是更高的分数，而是把每个数字的可信边界钉死：切分实现能解释 97.5% 的 gap、scaler 泄漏 <0.002、跨被试 CI 是否覆盖 0.5、概率 ECE 能不能被校准救回。

@@ -1,0 +1,868 @@
+{
+  "task": "Train-only StandardScaler audit of BBBP and BACE scaffold benchmarks",
+  "protocol": {
+    "canonicalization": "RDKit MolFromSmiles -> MolToSmiles, keep first; invalid dropped; label conflicts counted",
+    "split": "DeepChem-style Bemis-Murcko scaffold split, shuffle groups seed 42, descending group size, fill 80/10/10; pairwise overlap asserted zero",
+    "descriptors": [
+      "MolWt",
+      "MolLogP",
+      "NumHDonors",
+      "NumHAcceptors",
+      "TPSA",
+      "NumRotatableBonds",
+      "RingCount",
+      "HeavyAtomCount"
+    ],
+    "full_fit": "Historical protocol: StandardScaler fit on all deduplicated rows before splitting",
+    "train_only": "Strict protocol: StandardScaler fit on scaffold train fold only, then transform valid/test without refitting",
+    "model": "RandomForestClassifier(n_estimators=500, random_state=42, n_jobs=-1, class_weight=None)",
+    "bootstrap": "2000 stratified resamples of the scaffold test set; percentile 95% CI; seed 42",
+    "seed_stability": "Five RF seeds 42/0/7/2024/123 on the fixed scaffold split, fusion representation only"
+  },
+  "environment": {
+    "python": "3.12.3",
+    "rdkit": "2026.09.1",
+    "scikit_learn": "1.9.1",
+    "numpy": "2.5.2",
+    "pandas": "2.3.3",
+    "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39"
+  },
+  "datasets": {
+    "BBBP": {
+      "data": {
+        "path": "data/BBBP.csv",
+        "sha256": "d07a38487aeac5cee5508413e468043ef3097451d2a112701c2d60be9ec6b662",
+        "dedup": {
+          "raw_rows": 2050,
+          "unique_valid": 1975,
+          "invalid_dropped": 11,
+          "duplicate_dropped": 64,
+          "conflicting_label_duplicates": 10
+        },
+        "label_counts": {
+          "0": 474,
+          "1": 1501
+        }
+      },
+      "split": {
+        "unique_scaffolds": 1025,
+        "sizes": {
+          "train": {
+            "n": 1580,
+            "pos": 1208,
+            "neg": 372,
+            "positive_rate": 0.7645569620253164
+          },
+          "valid": {
+            "n": 197,
+            "pos": 138,
+            "neg": 59,
+            "positive_rate": 0.700507614213198
+          },
+          "test": {
+            "n": 198,
+            "pos": 155,
+            "neg": 43,
+            "positive_rate": 0.7828282828282829
+          }
+        },
+        "train_indices_first20": [
+          1,
+          21,
+          41,
+          43,
+          51,
+          54,
+          91,
+          97,
+          98,
+          128,
+          132,
+          138,
+          140,
+          142,
+          147,
+          149,
+          152,
+          153,
+          164,
+          187
+        ],
+        "test_indices": [
+          1347,
+          1852,
+          1860,
+          222,
+          1200,
+          628,
+          914,
+          249,
+          612,
+          1516,
+          1793,
+          776,
+          402,
+          1524,
+          547,
+          389,
+          1851,
+          1111,
+          944,
+          365,
+          1396,
+          318,
+          1015,
+          784,
+          1946,
+          1457,
+          920,
+          226,
+          735,
+          328,
+          307,
+          1124,
+          1269,
+          159,
+          18,
+          1230,
+          971,
+          303,
+          600,
+          340,
+          1814,
+          1068,
+          969,
+          666,
+          1720,
+          950,
+          1792,
+          766,
+          1811,
+          1541,
+          129,
+          1035,
+          902,
+          932,
+          569,
+          1582,
+          1602,
+          1400,
+          726,
+          742,
+          1039,
+          719,
+          672,
+          854,
+          1175,
+          1166,
+          344,
+          1179,
+          781,
+          853,
+          108,
+          1548,
+          1506,
+          1628,
+          686,
+          535,
+          851,
+          1762,
+          994,
+          418,
+          1339,
+          148,
+          171,
+          741,
+          1960,
+          1351,
+          416,
+          277,
+          1629,
+          1601,
+          272,
+          973,
+          276,
+          117,
+          1353,
+          5,
+          1104,
+          1876,
+          833,
+          1714,
+          1572,
+          717,
+          589,
+          1459,
+          1091,
+          941,
+          1899,
+          694,
+          1606,
+          1551,
+          172,
+          1135,
+          1118,
+          1454,
+          1905,
+          1336,
+          1109,
+          338,
+          1212,
+          909,
+          444,
+          438,
+          1719,
+          629,
+          1888,
+          1917,
+          1130,
+          1079,
+          1859,
+          1274,
+          1172,
+          252,
+          1362,
+          1926,
+          165,
+          1084,
+          1157,
+          1813,
+          1240,
+          1356,
+          933,
+          1167,
+          980,
+          236,
+          1491,
+          1509,
+          102,
+          480,
+          938,
+          1338,
+          998,
+          1178,
+          1846,
+          1138,
+          472,
+          1842,
+          1429,
+          1705,
+          1027,
+          1908,
+          1251,
+          1460,
+          1752,
+          811,
+          940,
+          1517,
+          1143,
+          1292,
+          466,
+          852,
+          490,
+          1386,
+          1145,
+          1787,
+          286,
+          465,
+          538,
+          1853,
+          598,
+          263,
+          63,
+          966,
+          1272,
+          1205,
+          680,
+          986,
+          1254,
+          1522,
+          509,
+          1697,
+          826,
+          919,
+          974,
+          198,
+          1011,
+          1127,
+          1823,
+          1857
+        ]
+      },
+      "scaler_proof": {
+        "method": "Strict train-only fit is proved three ways: scaler.mean_/scale_ equal train-fold moments; adding 1000 to held-out descriptor rows leaves the train-only fitted parameters unchanged; the same perturbation changes full-fit parameters (negative control turns RED).",
+        "train_rows_fit": 1580,
+        "heldout_rows_not_fit": 198,
+        "scaler_mean_matches_train_moments": true,
+        "scaler_scale_matches_train_moments": true,
+        "heldout_perturbation_leaves_train_params_unchanged": true,
+        "full_fit_negative_control_detected": true,
+        "train_mean_differs_from_full_mean": true,
+        "train_mean_l2_vs_full_mean": 7.234718801891121
+      },
+      "results": {
+        "full_fit": {
+          "ECFP4-2048": {
+            "auc": 0.9099774943735933,
+            "ci95": {
+              "lo": 0.8566316579144786,
+              "hi": 0.9563465866466616,
+              "mean": 0.9101439609902475
+            },
+            "dim": 2048
+          },
+          "ECFP4+desc": {
+            "auc": 0.9384846211552887,
+            "ci95": {
+              "lo": 0.9004444861215304,
+              "hi": 0.9710427606901726,
+              "mean": 0.9381849212303075
+            },
+            "dim": 2056
+          },
+          "ECFP4+MACCS+desc": {
+            "auc": 0.9412603150787697,
+            "ci95": {
+              "lo": 0.9056264066016504,
+              "hi": 0.9705926481620405,
+              "mean": 0.9410059639909978
+            },
+            "dim": 2223
+          }
+        },
+        "train_only": {
+          "ECFP4-2048": {
+            "auc": 0.9099774943735933,
+            "ci95": {
+              "lo": 0.8566316579144786,
+              "hi": 0.9563465866466616,
+              "mean": 0.9101439609902475
+            },
+            "dim": 2048
+          },
+          "ECFP4+desc": {
+            "auc": 0.9388597149287321,
+            "ci95": {
+              "lo": 0.9005982745686422,
+              "hi": 0.9711927981995498,
+              "mean": 0.9385471117779445
+            },
+            "dim": 2056
+          },
+          "ECFP4+MACCS+desc": {
+            "auc": 0.9410352588147036,
+            "ci95": {
+              "lo": 0.9056264066016504,
+              "hi": 0.9703732183045761,
+              "mean": 0.940800112528132
+            },
+            "dim": 2223
+          }
+        }
+      },
+      "paired_delta_trainonly_minus_fullfit": {
+        "ECFP4-2048": {
+          "delta": 0.0,
+          "lo": 0.0,
+          "hi": 0.0
+        },
+        "ECFP4+desc": {
+          "delta": 0.0003621905476369094,
+          "lo": 0.0,
+          "hi": 0.0015003750937734317
+        },
+        "ECFP4+MACCS+desc": {
+          "delta": -0.00020585146286571622,
+          "lo": -0.001650412603150797,
+          "hi": 0.0010502625656413384
+        }
+      },
+      "seed_stability": {
+        "seeds": [
+          42,
+          0,
+          7,
+          2024,
+          123
+        ],
+        "full_fit": [
+          {
+            "seed": 42,
+            "auc": 0.9412603150787697
+          },
+          {
+            "seed": 0,
+            "auc": 0.9358589647411852
+          },
+          {
+            "seed": 7,
+            "auc": 0.9419354838709677
+          },
+          {
+            "seed": 2024,
+            "auc": 0.9375843960990247
+          },
+          {
+            "seed": 123,
+            "auc": 0.9354838709677419
+          }
+        ],
+        "full_fit_summary": {
+          "mean": 0.9384246061515379,
+          "std_sample": 0.003012635875809064,
+          "min": 0.9354838709677419,
+          "max": 0.9419354838709677
+        },
+        "train_only": [
+          {
+            "seed": 42,
+            "auc": 0.9410352588147036
+          },
+          {
+            "seed": 0,
+            "auc": 0.9358589647411852
+          },
+          {
+            "seed": 7,
+            "auc": 0.9420105026256563
+          },
+          {
+            "seed": 2024,
+            "auc": 0.9375843960990247
+          },
+          {
+            "seed": 123,
+            "auc": 0.9354838709677419
+          }
+        ],
+        "train_only_summary": {
+          "mean": 0.9383945986496623,
+          "std_sample": 0.0029835402963602534,
+          "min": 0.9354838709677419,
+          "max": 0.9420105026256563
+        }
+      }
+    },
+    "BACE": {
+      "data": {
+        "path": "data/BACE.csv",
+        "sha256": "f3fb9ce90bada3e2bd6148b0df13f8f8145a357bf87df0dd5b391ede974fc737",
+        "dedup": {
+          "raw_rows": 1513,
+          "unique_valid": 1513,
+          "invalid_dropped": 0,
+          "duplicate_dropped": 0,
+          "conflicting_label_duplicates": 0
+        },
+        "label_counts": {
+          "0": 822,
+          "1": 691
+        }
+      },
+      "split": {
+        "unique_scaffolds": 671,
+        "sizes": {
+          "train": {
+            "n": 1210,
+            "pos": 584,
+            "neg": 626,
+            "positive_rate": 0.4826446280991736
+          },
+          "valid": {
+            "n": 151,
+            "pos": 53,
+            "neg": 98,
+            "positive_rate": 0.3509933774834437
+          },
+          "test": {
+            "n": 152,
+            "pos": 54,
+            "neg": 98,
+            "positive_rate": 0.35526315789473684
+          }
+        },
+        "train_indices_first20": [
+          41,
+          374,
+          375,
+          376,
+          377,
+          378,
+          379,
+          402,
+          410,
+          469,
+          470,
+          471,
+          472,
+          474,
+          475,
+          476,
+          480,
+          554,
+          555,
+          556
+        ],
+        "test_indices": [
+          1501,
+          1443,
+          599,
+          1342,
+          26,
+          191,
+          165,
+          1448,
+          115,
+          651,
+          713,
+          212,
+          695,
+          1508,
+          230,
+          443,
+          911,
+          420,
+          578,
+          404,
+          1424,
+          1123,
+          106,
+          361,
+          1349,
+          396,
+          1039,
+          808,
+          666,
+          928,
+          1319,
+          457,
+          477,
+          924,
+          1502,
+          1177,
+          1091,
+          870,
+          308,
+          275,
+          135,
+          1131,
+          656,
+          1027,
+          1168,
+          761,
+          1338,
+          1140,
+          904,
+          1218,
+          113,
+          1064,
+          1105,
+          611,
+          112,
+          1249,
+          36,
+          767,
+          1013,
+          983,
+          333,
+          926,
+          1011,
+          1225,
+          1286,
+          572,
+          1008,
+          62,
+          1203,
+          450,
+          127,
+          150,
+          876,
+          1503,
+          1193,
+          235,
+          1292,
+          1265,
+          46,
+          683,
+          233,
+          893,
+          1174,
+          234,
+          1066,
+          6,
+          1442,
+          1334,
+          847,
+          645,
+          756,
+          1119,
+          1454,
+          807,
+          138,
+          205,
+          532,
+          1133,
+          133,
+          1055,
+          1068,
+          488,
+          481,
+          715,
+          231,
+          80,
+          1473,
+          1299,
+          910,
+          214,
+          142,
+          1303,
+          801,
+          11,
+          74,
+          1107,
+          1181,
+          202,
+          92,
+          522,
+          1113,
+          1088,
+          1213,
+          1422,
+          1375,
+          295,
+          1235,
+          1464,
+          583,
+          1195,
+          18,
+          964,
+          1118,
+          166,
+          1010,
+          1179,
+          240,
+          650,
+          1163,
+          122,
+          1469,
+          1229,
+          773,
+          1194,
+          536,
+          137,
+          976,
+          1090,
+          1176,
+          171,
+          1223,
+          1465
+        ]
+      },
+      "scaler_proof": {
+        "method": "Strict train-only fit is proved three ways: scaler.mean_/scale_ equal train-fold moments; adding 1000 to held-out descriptor rows leaves the train-only fitted parameters unchanged; the same perturbation changes full-fit parameters (negative control turns RED).",
+        "train_rows_fit": 1210,
+        "heldout_rows_not_fit": 152,
+        "scaler_mean_matches_train_moments": true,
+        "scaler_scale_matches_train_moments": true,
+        "heldout_perturbation_leaves_train_params_unchanged": true,
+        "full_fit_negative_control_detected": true,
+        "train_mean_differs_from_full_mean": true,
+        "train_mean_l2_vs_full_mean": 3.1936776071677113
+      },
+      "results": {
+        "full_fit": {
+          "ECFP4-2048": {
+            "auc": 0.8908730158730158,
+            "ci95": {
+              "lo": 0.8335152116402117,
+              "hi": 0.9396282123960696,
+              "mean": 0.8912073412698414
+            },
+            "dim": 2048
+          },
+          "ECFP4+desc": {
+            "auc": 0.9026832955404385,
+            "ci95": {
+              "lo": 0.8463671579743008,
+              "hi": 0.9504936696900983,
+              "mean": 0.9029759070294785
+            },
+            "dim": 2056
+          },
+          "ECFP4+MACCS+desc": {
+            "auc": 0.899848828420257,
+            "ci95": {
+              "lo": 0.8433390022675737,
+              "hi": 0.9472836356764928,
+              "mean": 0.8999967876039304
+            },
+            "dim": 2223
+          }
+        },
+        "train_only": {
+          "ECFP4-2048": {
+            "auc": 0.8908730158730158,
+            "ci95": {
+              "lo": 0.8335152116402117,
+              "hi": 0.9396282123960696,
+              "mean": 0.8912073412698414
+            },
+            "dim": 2048
+          },
+          "ECFP4+desc": {
+            "auc": 0.9015495086923658,
+            "ci95": {
+              "lo": 0.8443853930461074,
+              "hi": 0.9493575207860923,
+              "mean": 0.9018453325774755
+            },
+            "dim": 2056
+          },
+          "ECFP4+MACCS+desc": {
+            "auc": 0.8989984882842026,
+            "ci95": {
+              "lo": 0.8427721088435374,
+              "hi": 0.9470899470899471,
+              "mean": 0.8991495653817083
+            },
+            "dim": 2223
+          }
+        }
+      },
+      "paired_delta_trainonly_minus_fullfit": {
+        "ECFP4-2048": {
+          "delta": 0.0,
+          "lo": 0.0,
+          "hi": 0.0
+        },
+        "ECFP4+desc": {
+          "delta": -0.0011305744520030228,
+          "lo": -0.0045351473922902175,
+          "hi": 0.0
+        },
+        "ECFP4+MACCS+desc": {
+          "delta": -0.0008472222222222136,
+          "lo": -0.0035903250188964453,
+          "hi": 0.0
+        }
+      },
+      "seed_stability": {
+        "seeds": [
+          42,
+          0,
+          7,
+          2024,
+          123
+        ],
+        "full_fit": [
+          {
+            "seed": 42,
+            "auc": 0.899848828420257
+          },
+          {
+            "seed": 0,
+            "auc": 0.8967309145880575
+          },
+          {
+            "seed": 7,
+            "auc": 0.8980536659108087
+          },
+          {
+            "seed": 2024,
+            "auc": 0.8975812547241118
+          },
+          {
+            "seed": 123,
+            "auc": 0.8975812547241118
+          }
+        ],
+        "full_fit_summary": {
+          "mean": 0.8979591836734693,
+          "std_sample": 0.0011590933622813127,
+          "min": 0.8967309145880575,
+          "max": 0.899848828420257
+        },
+        "train_only": [
+          {
+            "seed": 42,
+            "auc": 0.8989984882842026
+          },
+          {
+            "seed": 0,
+            "auc": 0.8958805744520031
+          },
+          {
+            "seed": 7,
+            "auc": 0.8975812547241119
+          },
+          {
+            "seed": 2024,
+            "auc": 0.8974867724867723
+          },
+          {
+            "seed": 123,
+            "auc": 0.8972033257747543
+          }
+        ],
+        "train_only_summary": {
+          "mean": 0.8974300831443689,
+          "std_sample": 0.0011111207521138987,
+          "min": 0.8958805744520031,
+          "max": 0.8989984882842026
+        }
+      }
+    }
+  },
+  "answer": {
+    "BBBP": {
+      "ECFP4-2048": {
+        "full_fit_auc": 0.9099774943735933,
+        "train_only_auc": 0.9099774943735933,
+        "auc_change": 0.0
+      },
+      "ECFP4+desc": {
+        "full_fit_auc": 0.9384846211552887,
+        "train_only_auc": 0.9388597149287321,
+        "auc_change": 0.0003750937734433579
+      },
+      "ECFP4+MACCS+desc": {
+        "full_fit_auc": 0.9412603150787697,
+        "train_only_auc": 0.9410352588147036,
+        "auc_change": -0.00022505626406610357
+      }
+    },
+    "BACE": {
+      "ECFP4-2048": {
+        "full_fit_auc": 0.8908730158730158,
+        "train_only_auc": 0.8908730158730158,
+        "auc_change": 0.0
+      },
+      "ECFP4+desc": {
+        "full_fit_auc": 0.9026832955404385,
+        "train_only_auc": 0.9015495086923658,
+        "auc_change": -0.0011337868480726376
+      },
+      "ECFP4+MACCS+desc": {
+        "full_fit_auc": 0.899848828420257,
+        "train_only_auc": 0.8989984882842026,
+        "auc_change": -0.0008503401360544505
+      }
+    }
+  },
+  "run_log": [
+    "BBBP: {'raw_rows': 2050, 'unique_valid': 1975, 'invalid_dropped': 11, 'duplicate_dropped': 64, 'conflicting_label_duplicates': 10}; split={'train': {'n': 1580, 'pos': 1208, 'neg': 372, 'positive_rate': 0.7645569620253164}, 'valid': {'n': 197, 'pos': 138, 'neg': 59, 'positive_rate': 0.700507614213198}, 'test': {'n': 198, 'pos': 155, 'neg': 43, 'positive_rate': 0.7828282828282829}}; test labels pos=155 neg=43",
+    "BBBP full_fit   ECFP4-2048         AUC=0.9100 [0.857,0.956]",
+    "BBBP full_fit   ECFP4+desc         AUC=0.9385 [0.900,0.971]",
+    "BBBP full_fit   ECFP4+MACCS+desc   AUC=0.9413 [0.906,0.971]",
+    "BBBP train_only ECFP4-2048         AUC=0.9100 [0.857,0.956]",
+    "BBBP train_only ECFP4+desc         AUC=0.9389 [0.901,0.971]",
+    "BBBP train_only ECFP4+MACCS+desc   AUC=0.9410 [0.906,0.970]",
+    "BACE: {'raw_rows': 1513, 'unique_valid': 1513, 'invalid_dropped': 0, 'duplicate_dropped': 0, 'conflicting_label_duplicates': 0}; split={'train': {'n': 1210, 'pos': 584, 'neg': 626, 'positive_rate': 0.4826446280991736}, 'valid': {'n': 151, 'pos': 53, 'neg': 98, 'positive_rate': 0.3509933774834437}, 'test': {'n': 152, 'pos': 54, 'neg': 98, 'positive_rate': 0.35526315789473684}}; test labels pos=54 neg=98",
+    "BACE full_fit   ECFP4-2048         AUC=0.8909 [0.834,0.940]",
+    "BACE full_fit   ECFP4+desc         AUC=0.9027 [0.846,0.950]",
+    "BACE full_fit   ECFP4+MACCS+desc   AUC=0.8998 [0.843,0.947]",
+    "BACE train_only ECFP4-2048         AUC=0.8909 [0.834,0.940]",
+    "BACE train_only ECFP4+desc         AUC=0.9015 [0.844,0.949]",
+    "BACE train_only ECFP4+MACCS+desc   AUC=0.8990 [0.843,0.947]"
+  ]
+}

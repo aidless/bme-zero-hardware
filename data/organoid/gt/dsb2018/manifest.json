@@ -1,0 +1,226 @@
+[
+  {
+    "image_id": 1,
+    "file_name": "00071198d059ba7f5914a526d124d28e6d010c92466da21d4a04cd5413362552.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/00071198d059ba7f5914a526d124d28e6d010c92466da21d4a04cd5413362552.png",
+    "sha256": "e837ea0f851b62ea656b456be02bcb61e32e5a9e93b23a69514f915cac522578",
+    "n_nuclei_gt": 27
+  },
+  {
+    "image_id": 2,
+    "file_name": "003cee89357d9fe13516167fd67b609a164651b21934585648c740d2c3d86dc1.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/003cee89357d9fe13516167fd67b609a164651b21934585648c740d2c3d86dc1.png",
+    "sha256": "e0178985421befcea2f53b9f1106c29b69662afe239ec1b17bc32331dbdf2c2b",
+    "n_nuclei_gt": 36
+  },
+  {
+    "image_id": 14,
+    "file_name": "05040e2e959c3f5632558fc9683fec88f0010026c555b499066346f67fdd0e13.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/05040e2e959c3f5632558fc9683fec88f0010026c555b499066346f67fdd0e13.png",
+    "sha256": "f4ac34bc8416fe4c1ebd02198d62752e5cec1078b3a72968a782fa037777e8b4",
+    "n_nuclei_gt": 24
+  },
+  {
+    "image_id": 16,
+    "file_name": "05a8f65ebd0b30d3b210f30b4d640c847c2e710d0d135e0aeeaccbe1988e3b6e.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/05a8f65ebd0b30d3b210f30b4d640c847c2e710d0d135e0aeeaccbe1988e3b6e.png",
+    "sha256": "bed9083c978dc26b5b5c78a638d8000891fc9e480b07747a822e98bb8825d8cd",
+    "n_nuclei_gt": 26
+  },
+  {
+    "image_id": 28,
+    "file_name": "0a7d30b252359a10fd298b638b90cb9ada3acced4e0c0e5a3692013f432ee4e9.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/0a7d30b252359a10fd298b638b90cb9ada3acced4e0c0e5a3692013f432ee4e9.png",
+    "sha256": "93f7b08008214c571454c5d901205b22e063a5f1946b92a4dc5f9d6b53d85f3a",
+    "n_nuclei_gt": 27
+  },
+  {
+    "image_id": 32,
+    "file_name": "0bda515e370294ed94efd36bd53782288acacb040c171df2ed97fd691fc9d8fe.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/0bda515e370294ed94efd36bd53782288acacb040c171df2ed97fd691fc9d8fe.png",
+    "sha256": "43a0ce61be907a32bb3cf20b5088096fbc34325c85b1ff2c6032c1612cac2995",
+    "n_nuclei_gt": 53
+  },
+  {
+    "image_id": 34,
+    "file_name": "0bf4b144167694b6846d584cf52c458f34f28fcae75328a2a096c8214e01c0d0.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/0bf4b144167694b6846d584cf52c458f34f28fcae75328a2a096c8214e01c0d0.png",
+    "sha256": "9d0969d6d411f60e18d1ddecd05187c4a5e983179ed451a778d2b1f41d0788cd",
+    "n_nuclei_gt": 57
+  },
+  {
+    "image_id": 36,
+    "file_name": "0c6507d493bf79b2ba248c5cca3d14df8b67328b89efa5f4a32f97a06a88c92c.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/0c6507d493bf79b2ba248c5cca3d14df8b67328b89efa5f4a32f97a06a88c92c.png",
+    "sha256": "4a4867fc5d7bd45292084e05e30d3d3a9f7ccffa69292792139516e396ccb40c",
+    "n_nuclei_gt": 28
+  },
+  {
+    "image_id": 39,
+    "file_name": "0ddd8deaf1696db68b00c600601c6a74a0502caaf274222c8367bdc31458ae7e.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/0ddd8deaf1696db68b00c600601c6a74a0502caaf274222c8367bdc31458ae7e.png",
+    "sha256": "63b37a2d4b1c4780b67a2da997c3a470328007b41b8354470402b24212ed390b",
+    "n_nuclei_gt": 32
+  },
+  {
+    "image_id": 42,
+    "file_name": "0e5edb072788c7b1da8829b02a49ba25668b09f7201cf2b70b111fc3b853d14f.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/0e5edb072788c7b1da8829b02a49ba25668b09f7201cf2b70b111fc3b853d14f.png",
+    "sha256": "a1ba096aba6c27d8e8e4136b9535a6a4b8d3532164edca8794c61a322d96727c",
+    "n_nuclei_gt": 28
+  },
+  {
+    "image_id": 45,
+    "file_name": "10328b822b836e67b547b4144e0b7eb43747c114ce4cacd8b540648892945b00.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/10328b822b836e67b547b4144e0b7eb43747c114ce4cacd8b540648892945b00.png",
+    "sha256": "230f5cfa0ac2caabd26548f04ffed7e07f33264231c94c4c732fae82cabfe1e1",
+    "n_nuclei_gt": 23
+  },
+  {
+    "image_id": 72,
+    "file_name": "1b6044e4858a9b7cee9b0028d8e54fbc8fb72e6c4424ab5b9f3859bfc72b33c5.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/1b6044e4858a9b7cee9b0028d8e54fbc8fb72e6c4424ab5b9f3859bfc72b33c5.png",
+    "sha256": "5f8b95c459c1161cbb4e5dbacee1d28ff1a9473e02bcf69c7ff751d6394689ca",
+    "n_nuclei_gt": 39
+  },
+  {
+    "image_id": 78,
+    "file_name": "1d4a5e729bb96b08370789cad0791f6e52ce0ffe1fcc97a04046420b43c851dd.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/1d4a5e729bb96b08370789cad0791f6e52ce0ffe1fcc97a04046420b43c851dd.png",
+    "sha256": "0bcfc5c38032067608757f2ba39ac43287ce954632c33a5e5f552ba78375c353",
+    "n_nuclei_gt": 27
+  },
+  {
+    "image_id": 89,
+    "file_name": "20468e8779c43e089dc0ff30f25e6cf3872d5aa6a0fdad6f8aca382da43e8582.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/20468e8779c43e089dc0ff30f25e6cf3872d5aa6a0fdad6f8aca382da43e8582.png",
+    "sha256": "4dc8cc1db9dc08d1d0864097b44fb720fc800c12210f0904c3a799bfb0d4116c",
+    "n_nuclei_gt": 20
+  },
+  {
+    "image_id": 96,
+    "file_name": "2227fd9b01d67c2bcdb407d3205214e6dfeff9fd0725828e3b3651959942ff4a.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/2227fd9b01d67c2bcdb407d3205214e6dfeff9fd0725828e3b3651959942ff4a.png",
+    "sha256": "8525e38fe0c7e2870ab10a4ad1c1640ede3bd36b7f5bb2c23a924bdef35b78ea",
+    "n_nuclei_gt": 60
+  },
+  {
+    "image_id": 101,
+    "file_name": "23830d0e51245fc0c9e410efa4c17d2a7d83a0104a3777130119ab892de47a4e.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/23830d0e51245fc0c9e410efa4c17d2a7d83a0104a3777130119ab892de47a4e.png",
+    "sha256": "0d277bf90498a01c46be76d702186a86b0d4ba3e11c0cffde4d7c295ce96712c",
+    "n_nuclei_gt": 40
+  },
+  {
+    "image_id": 103,
+    "file_name": "245b995878370ef4ea977568b2b67f93d4ecaa9308761b9d3e148e0803780183.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/245b995878370ef4ea977568b2b67f93d4ecaa9308761b9d3e148e0803780183.png",
+    "sha256": "260181fd216ed1852b9ac343436450715c6e3d7e980fb7443c0fe367a3c972d9",
+    "n_nuclei_gt": 54
+  },
+  {
+    "image_id": 105,
+    "file_name": "27c30f9011492f234e4587c9a4b53c787037d486f658821196fe354240ac3c47.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/27c30f9011492f234e4587c9a4b53c787037d486f658821196fe354240ac3c47.png",
+    "sha256": "4d76ef5755f3645b8aca39af14fae1cd9febafcee103adf26085b34a2c290994",
+    "n_nuclei_gt": 39
+  },
+  {
+    "image_id": 110,
+    "file_name": "29780b28e6a75fac7b96f164a1580666513199794f1b19a5df8587fe0cb59b67.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/29780b28e6a75fac7b96f164a1580666513199794f1b19a5df8587fe0cb59b67.png",
+    "sha256": "6b8cd31c228a0e791939c98aaf9ab5261983345c9e7076fad6123af6877d6f9c",
+    "n_nuclei_gt": 28
+  },
+  {
+    "image_id": 111,
+    "file_name": "29dd28df98ee51b4ab1a87f5509538ecc3e4697fc57c40c6165658f61b0d8e3a.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/29dd28df98ee51b4ab1a87f5509538ecc3e4697fc57c40c6165658f61b0d8e3a.png",
+    "sha256": "80e5c795d024af27f05425aa69d56807b93dc69dc9c8447c7584e3b56a2006d2",
+    "n_nuclei_gt": 56
+  },
+  {
+    "image_id": 115,
+    "file_name": "2ab91a4408860ae8339689ed9f87aa9359de1bdd4ca5c2eab7fff7724dbd6707.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/2ab91a4408860ae8339689ed9f87aa9359de1bdd4ca5c2eab7fff7724dbd6707.png",
+    "sha256": "e8083afa2e61fc194cd35b33c10d5000bc7c1111f9dd512581301109a905bc10",
+    "n_nuclei_gt": 55
+  },
+  {
+    "image_id": 119,
+    "file_name": "2bf594e9d06f78b4b79d7ffb395497a0a91126b6b0d710d7a9cee21f5c3bd177.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/2bf594e9d06f78b4b79d7ffb395497a0a91126b6b0d710d7a9cee21f5c3bd177.png",
+    "sha256": "654080a7f9dfaeef8a6c5579578a28bcf361b88b5e561c5e93d5508b085546a8",
+    "n_nuclei_gt": 23
+  },
+  {
+    "image_id": 129,
+    "file_name": "2e172afb1f43b359f1f0208da9386aefe97c0c1afe202abfe6ec09cdca820990.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/2e172afb1f43b359f1f0208da9386aefe97c0c1afe202abfe6ec09cdca820990.png",
+    "sha256": "8df659e4da79bd85bd00ade19af067c5f808bc2cff8a22d7fc876d9dd5429a78",
+    "n_nuclei_gt": 41
+  },
+  {
+    "image_id": 131,
+    "file_name": "2f929b067a59f88530b6bfa6f6889bc3a38adf88d594895973d1c8b2549fd93d.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/2f929b067a59f88530b6bfa6f6889bc3a38adf88d594895973d1c8b2549fd93d.png",
+    "sha256": "4a657196e571951e9968fe92ff741b3d2b4e79b3da8c84e3d0cb5f29cddb7b7f",
+    "n_nuclei_gt": 52
+  },
+  {
+    "image_id": 132,
+    "file_name": "30311520606ec99b6a810ae1a9a753df991777d374212423bb075c408a98ed74.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/30311520606ec99b6a810ae1a9a753df991777d374212423bb075c408a98ed74.png",
+    "sha256": "3193ca766d1fa4951ab36a38802a37559acae90e5167938f8f4647e573a43ae9",
+    "n_nuclei_gt": 46
+  },
+  {
+    "image_id": 134,
+    "file_name": "308084bdd358e0bd3dc7f2b409d6f34cc119bce30216f44667fc2be43ff31722.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/308084bdd358e0bd3dc7f2b409d6f34cc119bce30216f44667fc2be43ff31722.png",
+    "sha256": "80a793c3eb1ae66bd90cce4edfc831ea2cb78352a628ee3612c61de751dd3efe",
+    "n_nuclei_gt": 60
+  },
+  {
+    "image_id": 136,
+    "file_name": "30f65741053db713b3f328d31d3234b6fedbe31df65c1a8ea29be28146cab789.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/30f65741053db713b3f328d31d3234b6fedbe31df65c1a8ea29be28146cab789.png",
+    "sha256": "edf39488a410971c605312f49a5400b9adf28b33c1bdac2fddd06c365aeba35a",
+    "n_nuclei_gt": 28
+  },
+  {
+    "image_id": 137,
+    "file_name": "317832f90f02c5e916b2ac0f3bcb8da9928d8e400b747b2c68e544e56adacf6b.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/317832f90f02c5e916b2ac0f3bcb8da9928d8e400b747b2c68e544e56adacf6b.png",
+    "sha256": "5afd1fb3882fd555de187ee45ad2871972233d484874e2d99697743e950bc79f",
+    "n_nuclei_gt": 41
+  },
+  {
+    "image_id": 138,
+    "file_name": "319b6cb8b0d24b38db5e3c6fbb13b062e2766d9af5ff9bccb8f439ac0d870e52.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/319b6cb8b0d24b38db5e3c6fbb13b062e2766d9af5ff9bccb8f439ac0d870e52.png",
+    "sha256": "a1109a899bc96fc219fddcb26b928a0d7f92b0a2113a4f360e9b8c53171ff34c",
+    "n_nuclei_gt": 47
+  },
+  {
+    "image_id": 148,
+    "file_name": "356d9903d16074f152fe8f2f0ef555d9959c53264228eae7373cad5cf35d4e85.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/356d9903d16074f152fe8f2f0ef555d9959c53264228eae7373cad5cf35d4e85.png",
+    "sha256": "8dda590e7d0dce94bdc3b794cc3d16309f8719aa761cdd7a5840880aa87bafcd",
+    "n_nuclei_gt": 54
+  },
+  {
+    "image_id": 149,
+    "file_name": "3582166ee20755856adf4882a8bfacb616fce4247911605a109c4862de421bcd.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/3582166ee20755856adf4882a8bfacb616fce4247911605a109c4862de421bcd.png",
+    "sha256": "7c1934f726136f25c5cff792f927342487432c3f7e5fbac0ac993e7144b7921d",
+    "n_nuclei_gt": 44
+  },
+  {
+    "image_id": 150,
+    "file_name": "358e47eaa1e9222252793fe0fb8c77028d4e0d4360b95a07c9fe6df6a2066556.png",
+    "url": "https://huggingface.co/datasets/DataTorchio/nuclei-segmentation-dsb2018/resolve/main/images/358e47eaa1e9222252793fe0fb8c77028d4e0d4360b95a07c9fe6df6a2066556.png",
+    "sha256": "91395c0f1d6d283408135ed030adce944cb8b7c8309dce395c2ad6ae626bb12f",
+    "n_nuclei_gt": 52
+  }
+]

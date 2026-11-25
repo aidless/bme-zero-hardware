@@ -1,0 +1,431 @@
+{
+  "task": "BACE external validation of BBBP v2 molecular benchmark protocol",
+  "protocol": {
+    "canonicalization": "RDKit MolFromSmiles -> MolToSmiles, keep first occurrence; invalid dropped",
+    "split": "DeepChem-style Bemis-Murcko scaffold split: shuffle scaffold groups with seed, stable sort by descending group size, fill 80/10/10 train/valid/test; verify all pairwise scaffold overlaps are zero",
+    "random_split": "train_test_split(test_size=0.2, stratify=y, random_state=42)",
+    "descriptors": [
+      "MolWt",
+      "MolLogP",
+      "NumHDonors",
+      "NumHAcceptors",
+      "TPSA",
+      "NumRotatableBonds",
+      "RingCount",
+      "HeavyAtomCount"
+    ],
+    "descriptor_scaler": "StandardScaler fit on full deduplicated dataset before splitting, exactly as BBBP v2; strict train-only scaling was not used and is a limitation",
+    "model": "RandomForestClassifier(n_estimators=500, random_state=42, n_jobs=-1, class_weight=None)",
+    "class_weight_reason": "BACE labels 822 negative / 691 positive (54.5%/45.8%); mild imbalance, so default None retained to match BBBP v2",
+    "bootstrap": "2000 stratified resamples of the held-out test set (positives and negatives separately), percentile 95% CI; fixed bootstrap seed 42",
+    "seed_stability": "Five seeds 42/0/7/2024/123: (a) rerun scaffold tie-shuffle and RF random_state; (b) fixed scaffold split with RF random_state only"
+  },
+  "data": {
+    "url": "https://deepchemdata.s3-us-west-1.amazonaws.com/datasets/bace.csv",
+    "requested_uppercase_url": "https://deepchemdata.s3-us-west-1.amazonaws.com/datasets/BACE.csv",
+    "requested_uppercase_http_status": 403,
+    "working_url_status": 200,
+    "path": "data/BACE.csv",
+    "bytes": 3897767,
+    "sha256": "f3fb9ce90bada3e2bd6148b0df13f8f8145a357bf87df0dd5b391ede974fc737",
+    "raw_columns": 595,
+    "key_columns": [
+      "mol",
+      "Class"
+    ],
+    "dedup": {
+      "raw_rows": 1513,
+      "unique_valid": 1513,
+      "invalid_dropped": 0,
+      "duplicate_dropped": 0,
+      "conflicting_label_duplicates": 0
+    },
+    "label_counts": {
+      "0": 822,
+      "1": 691
+    }
+  },
+  "environment": {
+    "python": "3.12.3",
+    "rdkit": "2026.09.1",
+    "scikit_learn": "1.9.1",
+    "numpy": "2.5.2",
+    "pandas": "2.3.3",
+    "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39"
+  },
+  "scaffold_split": {
+    "unique_scaffolds": 671,
+    "largest_scaffold_size": 55,
+    "sizes": {
+      "train": {
+        "n": 1210,
+        "pos": 584,
+        "neg": 626,
+        "positive_rate": 0.4826446280991736
+      },
+      "valid": {
+        "n": 151,
+        "pos": 53,
+        "neg": 98,
+        "positive_rate": 0.3509933774834437
+      },
+      "test": {
+        "n": 152,
+        "pos": 54,
+        "neg": 98,
+        "positive_rate": 0.35526315789473684
+      }
+    },
+    "pairwise_overlaps": {
+      "train_valid": 0,
+      "train_test": 0,
+      "valid_test": 0
+    }
+  },
+  "random_split_sizes": {
+    "train": {
+      "n": 1210,
+      "pos": 553,
+      "neg": 657,
+      "positive_rate": 0.4570247933884298
+    },
+    "test": {
+      "n": 303,
+      "pos": 138,
+      "neg": 165,
+      "positive_rate": 0.45544554455445546
+    }
+  },
+  "results": {
+    "random": {
+      "ECFP4-2048": {
+        "auc": 0.8804567413263066,
+        "ci95": {
+          "lo": 0.8426855511638119,
+          "hi": 0.9137917215634607,
+          "mean": 0.8803374835309619
+        },
+        "dim": 2048
+      },
+      "MACCS-167": {
+        "auc": 0.867413263065437,
+        "ci95": {
+          "lo": 0.8237790953008344,
+          "hi": 0.9068516688625384,
+          "mean": 0.8675066974088713
+        },
+        "dim": 167
+      },
+      "ECFP4+desc": {
+        "auc": 0.88620992534036,
+        "ci95": {
+          "lo": 0.8503936100131753,
+          "hi": 0.9191705094422485,
+          "mean": 0.8861864734299518
+        },
+        "dim": 2056
+      },
+      "ECFP4+MACCS+desc": {
+        "auc": 0.8911945542380325,
+        "ci95": {
+          "lo": 0.8557454984628898,
+          "hi": 0.9229287439613526,
+          "mean": 0.8911458827404479
+        },
+        "dim": 2223
+      }
+    },
+    "scaffold": {
+      "ECFP4-2048": {
+        "auc": 0.8908730158730158,
+        "ci95": {
+          "lo": 0.8335152116402117,
+          "hi": 0.9396282123960696,
+          "mean": 0.8912073412698414
+        },
+        "dim": 2048
+      },
+      "MACCS-167": {
+        "auc": 0.8653628117913833,
+        "ci95": {
+          "lo": 0.7974300831443688,
+          "hi": 0.9213955026455026,
+          "mean": 0.8650077475434619
+        },
+        "dim": 167
+      },
+      "ECFP4+desc": {
+        "auc": 0.9026832955404385,
+        "ci95": {
+          "lo": 0.8463671579743008,
+          "hi": 0.9504936696900983,
+          "mean": 0.9029759070294785
+        },
+        "dim": 2056
+      },
+      "ECFP4+MACCS+desc": {
+        "auc": 0.899848828420257,
+        "ci95": {
+          "lo": 0.8433390022675737,
+          "hi": 0.9472836356764928,
+          "mean": 0.8999967876039304
+        },
+        "dim": 2223
+      }
+    }
+  },
+  "paired_bootstrap_fusion_minus_ecfp4": {
+    "random": {
+      "delta": 0.010808399209486163,
+      "lo": -0.00033047870004398734,
+      "hi": 0.022335858585858546
+    },
+    "scaffold": {
+      "delta": 0.00878944633408918,
+      "lo": -0.005482331821617584,
+      "hi": 0.023625283446712025
+    }
+  },
+  "stability": {
+    "seeds": [
+      42,
+      0,
+      7,
+      2024,
+      123
+    ],
+    "split_and_model_seed": [
+      {
+        "seed": 42,
+        "auc": 0.899848828420257,
+        "sizes": {
+          "train": {
+            "n": 1210,
+            "pos": 584,
+            "neg": 626,
+            "positive_rate": 0.4826446280991736
+          },
+          "valid": {
+            "n": 151,
+            "pos": 53,
+            "neg": 98,
+            "positive_rate": 0.3509933774834437
+          },
+          "test": {
+            "n": 152,
+            "pos": 54,
+            "neg": 98,
+            "positive_rate": 0.35526315789473684
+          }
+        }
+      },
+      {
+        "seed": 0,
+        "auc": 0.8767921146953405,
+        "sizes": {
+          "train": {
+            "n": 1210,
+            "pos": 571,
+            "neg": 639,
+            "positive_rate": 0.471900826446281
+          },
+          "valid": {
+            "n": 151,
+            "pos": 58,
+            "neg": 93,
+            "positive_rate": 0.3841059602649007
+          },
+          "test": {
+            "n": 152,
+            "pos": 62,
+            "neg": 90,
+            "positive_rate": 0.40789473684210525
+          }
+        }
+      },
+      {
+        "seed": 7,
+        "auc": 0.8892890120036934,
+        "sizes": {
+          "train": {
+            "n": 1210,
+            "pos": 588,
+            "neg": 622,
+            "positive_rate": 0.4859504132231405
+          },
+          "valid": {
+            "n": 151,
+            "pos": 46,
+            "neg": 105,
+            "positive_rate": 0.304635761589404
+          },
+          "test": {
+            "n": 152,
+            "pos": 57,
+            "neg": 95,
+            "positive_rate": 0.375
+          }
+        }
+      },
+      {
+        "seed": 2024,
+        "auc": 0.8620431115276477,
+        "sizes": {
+          "train": {
+            "n": 1210,
+            "pos": 583,
+            "neg": 627,
+            "positive_rate": 0.4818181818181818
+          },
+          "valid": {
+            "n": 151,
+            "pos": 53,
+            "neg": 98,
+            "positive_rate": 0.3509933774834437
+          },
+          "test": {
+            "n": 152,
+            "pos": 55,
+            "neg": 97,
+            "positive_rate": 0.3618421052631579
+          }
+        }
+      },
+      {
+        "seed": 123,
+        "auc": 0.9128205128205128,
+        "sizes": {
+          "train": {
+            "n": 1210,
+            "pos": 572,
+            "neg": 638,
+            "positive_rate": 0.4727272727272727
+          },
+          "valid": {
+            "n": 151,
+            "pos": 54,
+            "neg": 97,
+            "positive_rate": 0.3576158940397351
+          },
+          "test": {
+            "n": 152,
+            "pos": 65,
+            "neg": 87,
+            "positive_rate": 0.4276315789473684
+          }
+        }
+      }
+    ],
+    "fixed_split_model_seed_only": [
+      {
+        "seed": 42,
+        "auc": 0.899848828420257
+      },
+      {
+        "seed": 0,
+        "auc": 0.8967309145880575
+      },
+      {
+        "seed": 7,
+        "auc": 0.8980536659108087
+      },
+      {
+        "seed": 2024,
+        "auc": 0.8975812547241118
+      },
+      {
+        "seed": 123,
+        "auc": 0.8975812547241118
+      }
+    ],
+    "split_and_model_seed_summary": {
+      "mean": 0.8881587158934904,
+      "std_sample": 0.019731731690641754,
+      "min": 0.8620431115276477,
+      "max": 0.9128205128205128
+    },
+    "fixed_split_model_seed_only_summary": {
+      "mean": 0.8979591836734693,
+      "std_sample": 0.0011590933622813127,
+      "min": 0.8967309145880575,
+      "max": 0.899848828420257
+    }
+  },
+  "bbbp_reference": {
+    "source": "BME-DEEP-DIVE.md:73-76 and bench_mol_rigorous_v2.py",
+    "ECFP4-2048": {
+      "random": 0.9122,
+      "scaffold": 0.91
+    },
+    "ECFP4+MACCS+desc": {
+      "random": 0.9288,
+      "scaffold": 0.9413
+    }
+  },
+  "fusion_gain_vs_ecfp4": {
+    "random": {
+      "bace": 0.01073781291172593,
+      "bbbp": 0.016599999999999948
+    },
+    "scaffold": {
+      "bace": 0.008975812547241224,
+      "bbbp": 0.031299999999999994
+    }
+  },
+  "cross_dataset_fusion_better_than_ecfp4_all_splits": true,
+  "official_reference": {
+    "paper": "Wu et al., MoleculeNet: A Benchmark for Molecular Machine Learning, arXiv:1703.00564v3",
+    "verified_url": "https://arxiv.org/html/1703.00564v3#S6.T5",
+    "abs_url": "https://arxiv.org/abs/1703.00564",
+    "verification_date": "2026-11-24",
+    "correct_table": "Table 5 (PCBA, MUV, HIV and BACE Performances), NOT Table 6; Table 6 is BBBP/Tox21/ToxCast/SIDER/ClinTox",
+    "bace_scaffold_test_auc_mean_std": {
+      "RF": {
+        "mean": 0.867,
+        "std": 0.008
+      },
+      "KernelSVM": {
+        "mean": 0.862,
+        "std": 0.0
+      },
+      "GC": {
+        "mean": 0.783,
+        "std": 0.014
+      },
+      "Weave": {
+        "mean": 0.806,
+        "std": 0.002
+      }
+    },
+    "requested_mapping_correction": "The requested mapping RF=0.783 / KernelSVM=0.867 / GraphConv=0.806 is wrong. Verified Table 5: RF=0.867±0.008, KernelSVM=0.862±0.000, GC=0.783±0.014, Weave=0.806±0.002. 0.783 belongs to GC, 0.867 to RF, 0.806 to Weave; KernelSVM is 0.862.",
+    "caliber": "Three runs after Gaussian-process hyperparameter optimization; scaffold split; AUC-ROC; non-graph models use RDKit ECFP4 by default. Our RF is fixed at 500 trees, no hyperparameter search, 80/10/10 DeepChem-style scaffold fill, canonical dedup, and 2223-dimensional fusion features; comparison is qualitative, not SOTA-equivalent."
+  },
+  "official_comparison_fusion_scaffold": {
+    "RF": {
+      "official_mean": 0.867,
+      "ours_fusion_auc": 0.899848828420257,
+      "ours_minus_official": 0.03284882842025705
+    },
+    "KernelSVM": {
+      "official_mean": 0.862,
+      "ours_fusion_auc": 0.899848828420257,
+      "ours_minus_official": 0.03784882842025705
+    },
+    "GC": {
+      "official_mean": 0.783,
+      "ours_fusion_auc": 0.899848828420257,
+      "ours_minus_official": 0.11684882842025701
+    },
+    "Weave": {
+      "official_mean": 0.806,
+      "ours_fusion_auc": 0.899848828420257,
+      "ours_minus_official": 0.09384882842025699
+    }
+  },
+  "honest_caliber_conclusion": "Our scaffold AUC is compared with MoleculeNet Table 5 (not Table 6), where RF=0.867±0.008, KernelSVM=0.862±0.000, GC=0.783±0.014, Weave=0.806±0.002. Different feature dimension, canonical dedup, fixed 500-tree RF without GP hyperparameter search, and split implementation mean this is a qualitative external-validation reference, not an apples-to-apples SOTA claim. The requested model-to-number mapping was falsified by the fetched source.",
+  "limitations": [
+    "StandardScaler was fitted on the full dataset before splitting, matching BBBP v2 but not strict train-only preprocessing.",
+    "MoleculeNet's exact scaffold-split implementation and fold membership were not re-run; DeepChem-style group filling is protocol-equivalent to BBBP v2, not byte-identical to DeepChem's historical loader.",
+    "The 95% CIs quantify test-set sampling variance only, not split variability or model-selection uncertainty."
+  ]
+}

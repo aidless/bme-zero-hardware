@@ -1,0 +1,184 @@
+{
+  "task": "P1-8 imaging cross-dataset: PathMNIST + RetinaMNIST",
+  "protocol": "ResNet18 ImageNet, head 4ep -> unfreeze layer3/4 3ep, val macro-AUC model select, 1000x stratified bootstrap",
+  "device": "cuda",
+  "seed": 42,
+  "results": {
+    "pathmnist": {
+      "dataset": "pathmnist",
+      "n_classes": 9,
+      "split_sizes": {
+        "train": 89996,
+        "val": 10004,
+        "test": 7180
+      },
+      "best_val_macro_auc": 0.9996890933651282,
+      "best_finetune_epoch": 2,
+      "test_macro_auc": 0.9919322277311236,
+      "test_macro_auc_ci95": [
+        0.9908252525756616,
+        0.9929605058403702
+      ],
+      "test_acc": 0.9104456824512535,
+      "test_ece15": 0.047597076098400894,
+      "test_brier": 0.1412864500889223,
+      "confusion_matrix": [
+        [
+          1299,
+          0,
+          2,
+          0,
+          5,
+          30,
+          2,
+          0,
+          0
+        ],
+        [
+          0,
+          847,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          319,
+          9,
+          0,
+          10,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          631,
+          0,
+          0,
+          3,
+          0,
+          0
+        ],
+        [
+          56,
+          22,
+          1,
+          0,
+          933,
+          0,
+          15,
+          0,
+          8
+        ],
+        [
+          0,
+          29,
+          39,
+          9,
+          4,
+          431,
+          1,
+          74,
+          5
+        ],
+        [
+          0,
+          0,
+          1,
+          11,
+          1,
+          0,
+          714,
+          0,
+          14
+        ],
+        [
+          0,
+          0,
+          59,
+          6,
+          5,
+          65,
+          8,
+          247,
+          31
+        ],
+        [
+          0,
+          0,
+          0,
+          41,
+          5,
+          0,
+          71,
+          0,
+          1116
+        ]
+      ]
+    },
+    "retinamnist": {
+      "dataset": "retinamnist",
+      "n_classes": 5,
+      "split_sizes": {
+        "train": 1080,
+        "val": 120,
+        "test": 400
+      },
+      "best_val_macro_auc": 0.8013430419849946,
+      "best_finetune_epoch": 2,
+      "test_macro_auc": 0.7421951191114732,
+      "test_macro_auc_ci95": [
+        0.7035841385336716,
+        0.7788266062440807
+      ],
+      "test_acc": 0.5475,
+      "test_ece15": 0.08464179962873461,
+      "test_brier": 0.5800162893944126,
+      "confusion_matrix": [
+        [
+          131,
+          2,
+          29,
+          12,
+          0
+        ],
+        [
+          13,
+          10,
+          18,
+          5,
+          0
+        ],
+        [
+          16,
+          13,
+          44,
+          18,
+          1
+        ],
+        [
+          3,
+          2,
+          30,
+          32,
+          1
+        ],
+        [
+          4,
+          0,
+          4,
+          10,
+          2
+        ]
+      ]
+    }
+  }
+}

@@ -1,0 +1,1108 @@
+{
+  "experiment": "EEGBCI external cross-subject validation",
+  "created_at_utc": "2026-11-24T18:07:00.218547+00:00",
+  "status": "completed",
+  "protocol": {
+    "dataset": "EEGBCI/EEGMMIDB v1.0.0",
+    "subjects": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "runs": [
+      4,
+      8,
+      12
+    ],
+    "n_channels": 64,
+    "sfreq_hz": 160.0,
+    "filter": "FIR bandpass 7-30 Hz (firwin)",
+    "epoch_window_s": [
+      -0.5,
+      4.0
+    ],
+    "baseline_s": [
+      -0.5,
+      0.0
+    ],
+    "labels": {
+      "T1": "left",
+      "T2": "right"
+    },
+    "n_samples_per_epoch": 721,
+    "model": "CSP(4, reg=ledoit_wolf, log=True, average_power) + StandardScaler + LogisticRegression(C=1.0, max_iter=2000)",
+    "subject_specific_cv": "StratifiedKFold(5, shuffle=True, random_state=42)",
+    "loso_cv": "stratified shuffled 5-fold fitted exclusively on the four training subjects; five fold models evaluated on the held-out subject",
+    "primary_loso_prediction": "mean of five training-only fold-model probabilities",
+    "secondary_loso_prediction": "model refit on all epochs of the four training subjects",
+    "leakage_control": "CSP, scaler, and classifier are inside Pipeline; test subject is absent from training arrays and all fitting calls",
+    "decision_threshold": 0.5
+  },
+  "environment": {
+    "python": "3.12.3",
+    "mne": "1.13.2",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "scikit_learn": "1.9.1",
+    "matplotlib": "3.11.1",
+    "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39"
+  },
+  "source_files": [
+    {
+      "subject": 2,
+      "run": 4,
+      "path": "data/eeg/mne_data/MNE-eegbci-data/files/eegmmidb/1.0.0/S002/S002R04.edf",
+      "size_bytes": 2555616,
+      "sha256": "fcd37831378c411d50c223d97ffbc00949be2271d093f1d8e56bbe7c02bd1539"
+    },
+    {
+      "subject": 2,
+      "run": 8,
+      "path": "data/eeg/mne_data/MNE-eegbci-data/files/eegmmidb/1.0.0/S002/S002R08.edf",
+      "size_bytes": 2555616,
+      "sha256": "02d64941f6bcd1635bc7dd187a9553331b73933e9771f4e7c59249dfc5632c5a"
+    },
+    {
+      "subject": 2,
+      "run": 12,
+      "path": "data/eeg/mne_data/MNE-eegbci-data/files/eegmmidb/1.0.0/S002/S002R12.edf",
+      "size_bytes": 2555616,
+      "sha256": "a3d166b23375942a5ccf352924f7766f0ca9cfd1bac7951175e710d978f5239f"
+    },
+    {
+      "subject": 3,
+      "run": 4,
+      "path": "data/eeg/mne_data/MNE-eegbci-data/files/eegmmidb/1.0.0/S003/S003R04.edf",
+      "size_bytes": 2596896,
+      "sha256": "7d0732eea963488a53153835524e55c2b68220b0a0c7c5be99e535a9f5367e7f"
+    },
+    {
+      "subject": 3,
+      "run": 8,
+      "path": "data/eeg/mne_data/MNE-eegbci-data/files/eegmmidb/1.0.0/S003/S003R08.edf",
+      "size_bytes": 2596896,
+      "sha256": "0f50978bb972e693b8c758a9223a2d9fa35c7f117226391090bcc32a83ce765d"
+    },
+    {
+      "subject": 3,
+      "run": 12,
+      "path": "data/eeg/mne_data/MNE-eegbci-data/files/eegmmidb/1.0.0/S003/S003R12.edf",
+      "size_bytes": 2596896,
+      "sha256": "bbf7137bfa7905724741e95359fa090439d4422c07bdba16c792acb09ebd6421"
+    },
+    {
+      "subject": 4,
+      "run": 4,
+      "path": "data/eeg/mne_data/MNE-eegbci-data/files/eegmmidb/1.0.0/S004/S004R04.edf",
+      "size_bytes": 2555616,
+      "sha256": "c9ddf0294961f0b877192a2479802b9c6c88403682a17b5ad679fd6485aa6f59"
+    },
+    {
+      "subject": 4,
+      "run": 8,
+      "path": "data/eeg/mne_data/MNE-eegbci-data/files/eegmmidb/1.0.0/S004/S004R08.edf",
+      "size_bytes": 2555616,
+      "sha256": "1ab5909b183413283a7ea76e35311a68a4688558f0044b9faab3987291cbdb92"
+    },
+    {
+      "subject": 4,
+      "run": 12,
+      "path": "data/eeg/mne_data/MNE-eegbci-data/files/eegmmidb/1.0.0/S004/S004R12.edf",
+      "size_bytes": 2555616,
+      "sha256": "c44b7be0464d86be4d460ec66432869b7b3e8dcaa2067af02d6e772abf5c11de"
+    },
+    {
+      "subject": 5,
+      "run": 4,
+      "path": "data/eeg/mne_data/MNE-eegbci-data/files/eegmmidb/1.0.0/S005/S005R04.edf",
+      "size_bytes": 2555616,
+      "sha256": "956d0857b17b040955fee9b2384f818f85bfb02248c387d9aa7930c42934ca0c"
+    },
+    {
+      "subject": 5,
+      "run": 8,
+      "path": "data/eeg/mne_data/MNE-eegbci-data/files/eegmmidb/1.0.0/S005/S005R08.edf",
+      "size_bytes": 2555616,
+      "sha256": "eeed6c328ee256dd2c20d1808e05819bed4ce56b8de1c57914ded00565b6b7bc"
+    },
+    {
+      "subject": 5,
+      "run": 12,
+      "path": "data/eeg/mne_data/MNE-eegbci-data/files/eegmmidb/1.0.0/S005/S005R12.edf",
+      "size_bytes": 2555616,
+      "sha256": "dfaf07c8ecc583b07363485596258e66a75fb33169496c62918c6dd0803814ce"
+    }
+  ],
+  "subjects": {
+    "2": {
+      "n_epochs": 45,
+      "n_left": 23,
+      "n_right": 22,
+      "runs": {
+        "4": {
+          "n": 15,
+          "n_left": 7,
+          "n_right": 8
+        },
+        "8": {
+          "n": 15,
+          "n_left": 8,
+          "n_right": 7
+        },
+        "12": {
+          "n": 15,
+          "n_left": 8,
+          "n_right": 7
+        }
+      }
+    },
+    "3": {
+      "n_epochs": 45,
+      "n_left": 23,
+      "n_right": 22,
+      "runs": {
+        "4": {
+          "n": 15,
+          "n_left": 8,
+          "n_right": 7
+        },
+        "8": {
+          "n": 15,
+          "n_left": 7,
+          "n_right": 8
+        },
+        "12": {
+          "n": 15,
+          "n_left": 8,
+          "n_right": 7
+        }
+      }
+    },
+    "4": {
+      "n_epochs": 45,
+      "n_left": 23,
+      "n_right": 22,
+      "runs": {
+        "4": {
+          "n": 15,
+          "n_left": 8,
+          "n_right": 7
+        },
+        "8": {
+          "n": 15,
+          "n_left": 7,
+          "n_right": 8
+        },
+        "12": {
+          "n": 15,
+          "n_left": 8,
+          "n_right": 7
+        }
+      }
+    },
+    "5": {
+      "n_epochs": 45,
+      "n_left": 21,
+      "n_right": 24,
+      "runs": {
+        "4": {
+          "n": 15,
+          "n_left": 7,
+          "n_right": 8
+        },
+        "8": {
+          "n": 15,
+          "n_left": 7,
+          "n_right": 8
+        },
+        "12": {
+          "n": 15,
+          "n_left": 7,
+          "n_right": 8
+        }
+      }
+    }
+  },
+  "subject_specific": {
+    "2": {
+      "n": 45,
+      "n_left": 23,
+      "n_right": 22,
+      "acc": 0.4888888888888889,
+      "auc": 0.5098814229249012,
+      "folds": [
+        {
+          "n": 9,
+          "n_left": 5,
+          "n_right": 4,
+          "acc": 0.3333333333333333,
+          "auc": 0.25,
+          "fold": 1,
+          "n_train": 36,
+          "n_valid": 9
+        },
+        {
+          "n": 9,
+          "n_left": 5,
+          "n_right": 4,
+          "acc": 0.4444444444444444,
+          "auc": 0.45,
+          "fold": 2,
+          "n_train": 36,
+          "n_valid": 9
+        },
+        {
+          "n": 9,
+          "n_left": 5,
+          "n_right": 4,
+          "acc": 0.4444444444444444,
+          "auc": 0.39999999999999997,
+          "fold": 3,
+          "n_train": 36,
+          "n_valid": 9
+        },
+        {
+          "n": 9,
+          "n_left": 4,
+          "n_right": 5,
+          "acc": 0.4444444444444444,
+          "auc": 0.35,
+          "fold": 4,
+          "n_train": 36,
+          "n_valid": 9
+        },
+        {
+          "n": 9,
+          "n_left": 4,
+          "n_right": 5,
+          "acc": 0.7777777777777778,
+          "auc": 0.85,
+          "fold": 5,
+          "n_train": 36,
+          "n_valid": 9
+        }
+      ],
+      "fold_acc_mean": 0.4888888888888888,
+      "fold_acc_std": 0.15071844406945042,
+      "fold_auc_mean": 0.45999999999999996,
+      "fold_auc_std": 0.20591260281974,
+      "bootstrap": {
+        "acc_ci95": [
+          0.3333333333333333,
+          0.6222222222222222
+        ],
+        "auc_ci95": [
+          0.32398531746031745,
+          0.6821871345029239
+        ],
+        "n_boot_valid": 2000,
+        "method": "nonparametric trial-level percentile bootstrap; replacement; stratified by chance only"
+      },
+      "caliber": "within-subject stratified shuffled 5-fold OOF"
+    },
+    "3": {
+      "n": 45,
+      "n_left": 23,
+      "n_right": 22,
+      "acc": 0.5777777777777777,
+      "auc": 0.6225296442687747,
+      "folds": [
+        {
+          "n": 9,
+          "n_left": 4,
+          "n_right": 5,
+          "acc": 0.5555555555555556,
+          "auc": 0.65,
+          "fold": 1,
+          "n_train": 36,
+          "n_valid": 9
+        },
+        {
+          "n": 9,
+          "n_left": 4,
+          "n_right": 5,
+          "acc": 0.5555555555555556,
+          "auc": 0.7,
+          "fold": 2,
+          "n_train": 36,
+          "n_valid": 9
+        },
+        {
+          "n": 9,
+          "n_left": 5,
+          "n_right": 4,
+          "acc": 0.6666666666666666,
+          "auc": 0.65,
+          "fold": 3,
+          "n_train": 36,
+          "n_valid": 9
+        },
+        {
+          "n": 9,
+          "n_left": 5,
+          "n_right": 4,
+          "acc": 0.5555555555555556,
+          "auc": 0.5,
+          "fold": 4,
+          "n_train": 36,
+          "n_valid": 9
+        },
+        {
+          "n": 9,
+          "n_left": 5,
+          "n_right": 4,
+          "acc": 0.5555555555555556,
+          "auc": 0.8,
+          "fold": 5,
+          "n_train": 36,
+          "n_valid": 9
+        }
+      ],
+      "fold_acc_mean": 0.5777777777777777,
+      "fold_acc_std": 0.04444444444444442,
+      "fold_auc_mean": 0.6599999999999999,
+      "fold_auc_std": 0.09695359714832659,
+      "bootstrap": {
+        "acc_ci95": [
+          0.4438888888888889,
+          0.7333333333333333
+        ],
+        "auc_ci95": [
+          0.45256446452098625,
+          0.7877427944862153
+        ],
+        "n_boot_valid": 2000,
+        "method": "nonparametric trial-level percentile bootstrap; replacement; stratified by chance only"
+      },
+      "caliber": "within-subject stratified shuffled 5-fold OOF"
+    },
+    "4": {
+      "n": 45,
+      "n_left": 23,
+      "n_right": 22,
+      "acc": 0.5555555555555556,
+      "auc": 0.6363636363636364,
+      "folds": [
+        {
+          "n": 9,
+          "n_left": 5,
+          "n_right": 4,
+          "acc": 0.5555555555555556,
+          "auc": 0.6,
+          "fold": 1,
+          "n_train": 36,
+          "n_valid": 9
+        },
+        {
+          "n": 9,
+          "n_left": 5,
+          "n_right": 4,
+          "acc": 0.4444444444444444,
+          "auc": 0.65,
+          "fold": 2,
+          "n_train": 36,
+          "n_valid": 9
+        },
+        {
+          "n": 9,
+          "n_left": 5,
+          "n_right": 4,
+          "acc": 0.6666666666666666,
+          "auc": 0.8,
+          "fold": 3,
+          "n_train": 36,
+          "n_valid": 9
+        },
+        {
+          "n": 9,
+          "n_left": 4,
+          "n_right": 5,
+          "acc": 0.6666666666666666,
+          "auc": 0.6,
+          "fold": 4,
+          "n_train": 36,
+          "n_valid": 9
+        },
+        {
+          "n": 9,
+          "n_left": 4,
+          "n_right": 5,
+          "acc": 0.4444444444444444,
+          "auc": 0.5499999999999999,
+          "fold": 5,
+          "n_train": 36,
+          "n_valid": 9
+        }
+      ],
+      "fold_acc_mean": 0.5555555555555556,
+      "fold_acc_std": 0.09938079899999065,
+      "fold_auc_mean": 0.6399999999999999,
+      "fold_auc_std": 0.0860232526704263,
+      "bootstrap": {
+        "acc_ci95": [
+          0.4,
+          0.7111111111111111
+        ],
+        "auc_ci95": [
+          0.45649533532828723,
+          0.796324233716475
+        ],
+        "n_boot_valid": 2000,
+        "method": "nonparametric trial-level percentile bootstrap; replacement; stratified by chance only"
+      },
+      "caliber": "within-subject stratified shuffled 5-fold OOF"
+    },
+    "5": {
+      "n": 45,
+      "n_left": 21,
+      "n_right": 24,
+      "acc": 0.4888888888888889,
+      "auc": 0.5277777777777777,
+      "folds": [
+        {
+          "n": 9,
+          "n_left": 4,
+          "n_right": 5,
+          "acc": 0.6666666666666666,
+          "auc": 0.8,
+          "fold": 1,
+          "n_train": 36,
+          "n_valid": 9
+        },
+        {
+          "n": 9,
+          "n_left": 4,
+          "n_right": 5,
+          "acc": 0.3333333333333333,
+          "auc": 0.45,
+          "fold": 2,
+          "n_train": 36,
+          "n_valid": 9
+        },
+        {
+          "n": 9,
+          "n_left": 4,
+          "n_right": 5,
+          "acc": 0.4444444444444444,
+          "auc": 0.75,
+          "fold": 3,
+          "n_train": 36,
+          "n_valid": 9
+        },
+        {
+          "n": 9,
+          "n_left": 4,
+          "n_right": 5,
+          "acc": 0.4444444444444444,
+          "auc": 0.25,
+          "fold": 4,
+          "n_train": 36,
+          "n_valid": 9
+        },
+        {
+          "n": 9,
+          "n_left": 5,
+          "n_right": 4,
+          "acc": 0.5555555555555556,
+          "auc": 0.6000000000000001,
+          "fold": 5,
+          "n_train": 36,
+          "n_valid": 9
+        }
+      ],
+      "fold_acc_mean": 0.48888888888888893,
+      "fold_acc_std": 0.11331154474650633,
+      "fold_auc_mean": 0.5700000000000001,
+      "fold_auc_std": 0.20149441679609886,
+      "bootstrap": {
+        "acc_ci95": [
+          0.35500000000000004,
+          0.6222222222222222
+        ],
+        "auc_ci95": [
+          0.3539833333333333,
+          0.7026104845304619
+        ],
+        "n_boot_valid": 2000,
+        "method": "nonparametric trial-level percentile bootstrap; replacement; stratified by chance only"
+      },
+      "caliber": "within-subject stratified shuffled 5-fold OOF"
+    }
+  },
+  "loso": {
+    "2": {
+      "n": 45,
+      "n_left": 23,
+      "n_right": 22,
+      "acc": 0.4888888888888889,
+      "auc": 0.48023715415019763,
+      "bootstrap": {
+        "acc_ci95": [
+          0.3333333333333333,
+          0.6444444444444445
+        ],
+        "auc_ci95": [
+          0.31067501374518913,
+          0.6584416547958214
+        ],
+        "n_boot_valid": 2000,
+        "method": "nonparametric trial-level percentile bootstrap; replacement; stratified by chance only"
+      },
+      "heldout_subject": 2,
+      "train_subjects": [
+        3,
+        4,
+        5
+      ],
+      "n_train_subject_epochs": 135,
+      "n_test_epochs": 45,
+      "train_cv": "stratified shuffled 5-fold on training subjects only",
+      "prediction_rule": "arithmetic mean of predict_proba[:,1] from five training-only fold models",
+      "fold_train_valid_acc_mean": 0.562962962962963,
+      "fold_train_valid_acc_std": 0.0888888888888889,
+      "fold_train_valid_auc_mean": 0.5725274725274725,
+      "fold_train_valid_auc_std": 0.11673205911990774,
+      "fold_test_acc_mean": 0.5155555555555555,
+      "fold_test_acc_std": 0.03555555555555554,
+      "fold_test_auc_mean": 0.48932806324110667,
+      "fold_test_auc_std": 0.035498384378367887,
+      "folds": [
+        {
+          "n": 27,
+          "n_left": 13,
+          "n_right": 14,
+          "acc": 0.7037037037037037,
+          "auc": 0.7472527472527474,
+          "fold": 0,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 23,
+            "n_right": 22,
+            "acc": 0.4888888888888889,
+            "auc": 0.46047430830039526
+          }
+        },
+        {
+          "n": 27,
+          "n_left": 13,
+          "n_right": 14,
+          "acc": 0.48148148148148145,
+          "auc": 0.4505494505494505,
+          "fold": 1,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 23,
+            "n_right": 22,
+            "acc": 0.5333333333333333,
+            "auc": 0.4505928853754941
+          }
+        },
+        {
+          "n": 27,
+          "n_left": 13,
+          "n_right": 14,
+          "acc": 0.48148148148148145,
+          "auc": 0.554945054945055,
+          "fold": 2,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 23,
+            "n_right": 22,
+            "acc": 0.5777777777777777,
+            "auc": 0.5494071146245059
+          }
+        },
+        {
+          "n": 27,
+          "n_left": 14,
+          "n_right": 13,
+          "acc": 0.5185185185185185,
+          "auc": 0.45054945054945056,
+          "fold": 3,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 23,
+            "n_right": 22,
+            "acc": 0.4888888888888889,
+            "auc": 0.48023715415019763
+          }
+        },
+        {
+          "n": 27,
+          "n_left": 14,
+          "n_right": 13,
+          "acc": 0.6296296296296297,
+          "auc": 0.6593406593406593,
+          "fold": 4,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 23,
+            "n_right": 22,
+            "acc": 0.4888888888888889,
+            "auc": 0.5059288537549407
+          }
+        }
+      ],
+      "full_training_refit": {
+        "n": 45,
+        "n_left": 23,
+        "n_right": 22,
+        "acc": 0.4888888888888889,
+        "auc": 0.47430830039525695
+      }
+    },
+    "3": {
+      "n": 45,
+      "n_left": 23,
+      "n_right": 22,
+      "acc": 0.4444444444444444,
+      "auc": 0.46442687747035577,
+      "bootstrap": {
+        "acc_ci95": [
+          0.3111111111111111,
+          0.6
+        ],
+        "auc_ci95": [
+          0.2865474389628979,
+          0.6340230158730158
+        ],
+        "n_boot_valid": 2000,
+        "method": "nonparametric trial-level percentile bootstrap; replacement; stratified by chance only"
+      },
+      "heldout_subject": 3,
+      "train_subjects": [
+        2,
+        4,
+        5
+      ],
+      "n_train_subject_epochs": 135,
+      "n_test_epochs": 45,
+      "train_cv": "stratified shuffled 5-fold on training subjects only",
+      "prediction_rule": "arithmetic mean of predict_proba[:,1] from five training-only fold models",
+      "fold_train_valid_acc_mean": 0.4666666666666666,
+      "fold_train_valid_acc_std": 0.06017806225656268,
+      "fold_train_valid_auc_mean": 0.48241758241758237,
+      "fold_train_valid_auc_std": 0.07789030833700812,
+      "fold_test_acc_mean": 0.5022222222222222,
+      "fold_test_acc_std": 0.04121608220220311,
+      "fold_test_auc_mean": 0.4853754940711462,
+      "fold_test_auc_std": 0.09453666330563396,
+      "folds": [
+        {
+          "n": 27,
+          "n_left": 14,
+          "n_right": 13,
+          "acc": 0.4074074074074074,
+          "auc": 0.3626373626373627,
+          "fold": 0,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 23,
+            "n_right": 22,
+            "acc": 0.4888888888888889,
+            "auc": 0.34584980237154145
+          }
+        },
+        {
+          "n": 27,
+          "n_left": 14,
+          "n_right": 13,
+          "acc": 0.4074074074074074,
+          "auc": 0.4175824175824176,
+          "fold": 1,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 23,
+            "n_right": 22,
+            "acc": 0.4666666666666667,
+            "auc": 0.4782608695652174
+          }
+        },
+        {
+          "n": 27,
+          "n_left": 13,
+          "n_right": 14,
+          "acc": 0.5185185185185185,
+          "auc": 0.5604395604395604,
+          "fold": 2,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 23,
+            "n_right": 22,
+            "acc": 0.5777777777777777,
+            "auc": 0.6284584980237153
+          }
+        },
+        {
+          "n": 27,
+          "n_left": 13,
+          "n_right": 14,
+          "acc": 0.4444444444444444,
+          "auc": 0.5384615384615384,
+          "fold": 3,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 23,
+            "n_right": 22,
+            "acc": 0.5111111111111111,
+            "auc": 0.4387351778656126
+          }
+        },
+        {
+          "n": 27,
+          "n_left": 13,
+          "n_right": 14,
+          "acc": 0.5555555555555556,
+          "auc": 0.532967032967033,
+          "fold": 4,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 23,
+            "n_right": 22,
+            "acc": 0.4666666666666667,
+            "auc": 0.5355731225296442
+          }
+        }
+      ],
+      "full_training_refit": {
+        "n": 45,
+        "n_left": 23,
+        "n_right": 22,
+        "acc": 0.4888888888888889,
+        "auc": 0.42885375494071143
+      }
+    },
+    "4": {
+      "n": 45,
+      "n_left": 23,
+      "n_right": 22,
+      "acc": 0.4222222222222222,
+      "auc": 0.44071146245059284,
+      "bootstrap": {
+        "acc_ci95": [
+          0.26666666666666666,
+          0.5561111111111081
+        ],
+        "auc_ci95": [
+          0.2618900646678425,
+          0.6113360323886639
+        ],
+        "n_boot_valid": 2000,
+        "method": "nonparametric trial-level percentile bootstrap; replacement; stratified by chance only"
+      },
+      "heldout_subject": 4,
+      "train_subjects": [
+        2,
+        3,
+        5
+      ],
+      "n_train_subject_epochs": 135,
+      "n_test_epochs": 45,
+      "train_cv": "stratified shuffled 5-fold on training subjects only",
+      "prediction_rule": "arithmetic mean of predict_proba[:,1] from five training-only fold models",
+      "fold_train_valid_acc_mean": 0.5185185185185184,
+      "fold_train_valid_acc_std": 0.09369711585684089,
+      "fold_train_valid_auc_mean": 0.5813186813186813,
+      "fold_train_valid_auc_std": 0.09657834084712012,
+      "fold_test_acc_mean": 0.48,
+      "fold_test_acc_std": 0.03325917677132391,
+      "fold_test_auc_mean": 0.46521739130434786,
+      "fold_test_auc_std": 0.027258402608010546,
+      "folds": [
+        {
+          "n": 27,
+          "n_left": 14,
+          "n_right": 13,
+          "acc": 0.48148148148148145,
+          "auc": 0.6813186813186813,
+          "fold": 0,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 23,
+            "n_right": 22,
+            "acc": 0.4666666666666667,
+            "auc": 0.48221343873517786
+          }
+        },
+        {
+          "n": 27,
+          "n_left": 14,
+          "n_right": 13,
+          "acc": 0.48148148148148145,
+          "auc": 0.48901098901098905,
+          "fold": 1,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 23,
+            "n_right": 22,
+            "acc": 0.4888888888888889,
+            "auc": 0.4466403162055336
+          }
+        },
+        {
+          "n": 27,
+          "n_left": 13,
+          "n_right": 14,
+          "acc": 0.7037037037037037,
+          "auc": 0.7142857142857143,
+          "fold": 2,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 23,
+            "n_right": 22,
+            "acc": 0.5111111111111111,
+            "auc": 0.4940711462450593
+          }
+        },
+        {
+          "n": 27,
+          "n_left": 13,
+          "n_right": 14,
+          "acc": 0.4444444444444444,
+          "auc": 0.4945054945054945,
+          "fold": 3,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 23,
+            "n_right": 22,
+            "acc": 0.4222222222222222,
+            "auc": 0.4209486166007905
+          }
+        },
+        {
+          "n": 27,
+          "n_left": 13,
+          "n_right": 14,
+          "acc": 0.48148148148148145,
+          "auc": 0.5274725274725275,
+          "fold": 4,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 23,
+            "n_right": 22,
+            "acc": 0.5111111111111111,
+            "auc": 0.4822134387351779
+          }
+        }
+      ],
+      "full_training_refit": {
+        "n": 45,
+        "n_left": 23,
+        "n_right": 22,
+        "acc": 0.5111111111111111,
+        "auc": 0.4189723320158103
+      }
+    },
+    "5": {
+      "n": 45,
+      "n_left": 21,
+      "n_right": 24,
+      "acc": 0.6222222222222222,
+      "auc": 0.6309523809523809,
+      "bootstrap": {
+        "acc_ci95": [
+          0.4666666666666667,
+          0.7555555555555555
+        ],
+        "auc_ci95": [
+          0.4499827188940092,
+          0.7984189723320158
+        ],
+        "n_boot_valid": 2000,
+        "method": "nonparametric trial-level percentile bootstrap; replacement; stratified by chance only"
+      },
+      "heldout_subject": 5,
+      "train_subjects": [
+        2,
+        3,
+        4
+      ],
+      "n_train_subject_epochs": 135,
+      "n_test_epochs": 45,
+      "train_cv": "stratified shuffled 5-fold on training subjects only",
+      "prediction_rule": "arithmetic mean of predict_proba[:,1] from five training-only fold models",
+      "fold_train_valid_acc_mean": 0.4814814814814815,
+      "fold_train_valid_acc_std": 0.07768954430890013,
+      "fold_train_valid_auc_mean": 0.4956043956043956,
+      "fold_train_valid_auc_std": 0.11342661038098165,
+      "fold_test_acc_mean": 0.5199999999999999,
+      "fold_test_acc_std": 0.02666666666666666,
+      "fold_test_auc_mean": 0.5642857142857143,
+      "fold_test_auc_std": 0.05374897093942467,
+      "folds": [
+        {
+          "n": 27,
+          "n_left": 14,
+          "n_right": 13,
+          "acc": 0.48148148148148145,
+          "auc": 0.4945054945054945,
+          "fold": 0,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 21,
+            "n_right": 24,
+            "acc": 0.5333333333333333,
+            "auc": 0.5317460317460319
+          }
+        },
+        {
+          "n": 27,
+          "n_left": 14,
+          "n_right": 13,
+          "acc": 0.3333333333333333,
+          "auc": 0.29120879120879123,
+          "fold": 1,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 21,
+            "n_right": 24,
+            "acc": 0.5333333333333333,
+            "auc": 0.5535714285714286
+          }
+        },
+        {
+          "n": 27,
+          "n_left": 14,
+          "n_right": 13,
+          "acc": 0.5555555555555556,
+          "auc": 0.5989010989010989,
+          "fold": 2,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 21,
+            "n_right": 24,
+            "acc": 0.4666666666666667,
+            "auc": 0.5575396825396826
+          }
+        },
+        {
+          "n": 27,
+          "n_left": 14,
+          "n_right": 13,
+          "acc": 0.5185185185185185,
+          "auc": 0.48901098901098905,
+          "fold": 3,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 21,
+            "n_right": 24,
+            "acc": 0.5333333333333333,
+            "auc": 0.6666666666666667
+          }
+        },
+        {
+          "n": 27,
+          "n_left": 13,
+          "n_right": 14,
+          "acc": 0.5185185185185185,
+          "auc": 0.6043956043956044,
+          "fold": 4,
+          "n_train": 108,
+          "n_valid": 27,
+          "test_metrics": {
+            "n": 45,
+            "n_left": 21,
+            "n_right": 24,
+            "acc": 0.5333333333333333,
+            "auc": 0.5119047619047619
+          }
+        }
+      ],
+      "full_training_refit": {
+        "n": 45,
+        "n_left": 21,
+        "n_right": 24,
+        "acc": 0.5333333333333333,
+        "auc": 0.5396825396825397
+      }
+    }
+  },
+  "pooled_loso": {
+    "n": 180,
+    "n_left": 90,
+    "n_right": 90,
+    "acc": 0.49444444444444446,
+    "auc": 0.4850617283950617,
+    "bootstrap": {
+      "acc_ci95": [
+        0.4222222222222222,
+        0.5666666666666667
+      ],
+      "auc_ci95": [
+        0.39794614499186404,
+        0.5701430147209089
+      ],
+      "n_boot_valid": 2000,
+      "method": "nonparametric trial-level percentile bootstrap; replacement; stratified by chance only"
+    },
+    "full_training_refit": {
+      "n": 180,
+      "n_left": 90,
+      "n_right": 90,
+      "acc": 0.5055555555555555,
+      "auc": 0.49197530864197536
+    },
+    "macro_subject_specific_acc": 0.5277777777777778,
+    "macro_subject_specific_auc": 0.5741381203337724,
+    "acc_drop_pp_vs_subject_specific": 3.3333333333333326,
+    "auc_drop_vs_subject_specific": 0.08907639193871075,
+    "per_subject_acc_drop_pp": {
+      "2": 0.0,
+      "3": 13.33333333333333,
+      "4": 13.333333333333336,
+      "5": -13.333333333333336
+    }
+  },
+  "caliber": {
+    "pooled_primary": "subject-blocked leave-one-subject-out; one prediction per trial; macro trial-weighted across subjects",
+    "pooled_full_refit": "secondary LOSO with each classifier refit on all four training subjects",
+    "subject_specific_pooled_comparator": "unweighted macro mean of per-subject within-subject OOF accuracy/AUC",
+    "not_estimated": "run-blocked cross-subject validation; hyperparameter optimization; CTNet retraining"
+  },
+  "artifacts": {
+    "metrics": "data/eeg/eeg_cross_subject_metrics.json",
+    "figure": "figures/eeg_cross_subject.png",
+    "script": "bench_eeg_cross_subject.py",
+    "script_sha256": "fbdb46959dafe55cb5ca80192647e07eee1524006ff04d25a3f970645a82fe6f"
+  },
+  "elapsed_s": 143.68534302711487
+}

@@ -1,0 +1,496 @@
+{
+  "task": "Third-dataset fusion-gain check",
+  "endpoint": {
+    "name": "CT_TOX",
+    "meaning": "clinical toxicity",
+    "positive_label": 1,
+    "reason": "The downloaded ClinTox file has FDA_APPROVED and CT_TOX, not HIV; CT_TOX is the toxicity endpoint."
+  },
+  "source": {
+    "url": "https://deepchemdata.s3-us-west-1.amazonaws.com/datasets/clintox.csv.gz",
+    "path": "data/ClinTox.csv.gz",
+    "gzip_sha256": "7324a84a180ad9068d3847677c85d58e8432e82b3ae6ac95cf0e98b3a58d9697"
+  },
+  "data": {
+    "columns": [
+      "smiles",
+      "FDA_APPROVED",
+      "CT_TOX"
+    ],
+    "raw_rows": 1484,
+    "canonicalization": {
+      "raw_rows": 1484,
+      "unique_valid": 1461,
+      "invalid_dropped": 4,
+      "duplicate_dropped": 19,
+      "conflicting_label_duplicates": 19
+    },
+    "overall": {
+      "n": 1461,
+      "pos": 103,
+      "neg": 1358,
+      "positive_rate": 0.07049965776865161
+    },
+    "FDA_APPROVED_counts_not_used": {
+      "0": 94,
+      "1": 1390
+    }
+  },
+  "protocol": {
+    "primary_split": "DeepChem-style scaffold 80/10/10 with shuffled equal-size scaffold groups, seed 42",
+    "sensitivity_split": "Stratified random 80/10/10, seed 42",
+    "scaler": "Strict train-only StandardScaler fit on train fold for descriptor-containing representations",
+    "model": "RandomForestClassifier(n_estimators=500, random_state=seed, n_jobs=-1)",
+    "seeds": [
+      42,
+      0,
+      7,
+      2024,
+      123
+    ],
+    "representations": [
+      "ECFP4-2048",
+      "MACCS",
+      "ECFP4+desc",
+      "ECFP4+MACCS+desc"
+    ],
+    "bootstrap": "2000 stratified bootstrap resamples of held-out test labels; percentile 95% CI",
+    "paired_delta": "Fusion minus comparator, paired by bootstrap resample and averaged across five RF seeds"
+  },
+  "results": {
+    "scaffold_80_10_10": {
+      "split_stats": {
+        "train": {
+          "n": 1168,
+          "pos": 80,
+          "neg": 1088,
+          "positive_rate": 0.0684931506849315
+        },
+        "valid": {
+          "n": 146,
+          "pos": 11,
+          "neg": 135,
+          "positive_rate": 0.07534246575342465
+        },
+        "test": {
+          "n": 147,
+          "pos": 12,
+          "neg": 135,
+          "positive_rate": 0.08163265306122448
+        }
+      },
+      "test_bootstrap": {
+        "n_boot": 2000,
+        "seed": 42,
+        "stratified_by_label": true
+      },
+      "representations": {
+        "ECFP4-2048": {
+          "feature_dim": 2048,
+          "aucs_by_seed": [
+            {
+              "seed": 42,
+              "auc": 0.6864197530864198
+            },
+            {
+              "seed": 0,
+              "auc": 0.6614197530864196
+            },
+            {
+              "seed": 7,
+              "auc": 0.6685185185185185
+            },
+            {
+              "seed": 2024,
+              "auc": 0.6648148148148149
+            },
+            {
+              "seed": 123,
+              "auc": 0.6987654320987654
+            }
+          ],
+          "auc_mean": 0.6759876543209876,
+          "auc_std_sample": 0.015972632248569006,
+          "auc_seed42": 0.6864197530864198,
+          "ci95_seed42": {
+            "lo": 0.5533873456790123,
+            "hi": 0.8197608024691357,
+            "mean": 0.6889970679012346
+          }
+        },
+        "MACCS": {
+          "feature_dim": 167,
+          "aucs_by_seed": [
+            {
+              "seed": 42,
+              "auc": 0.8987654320987655
+            },
+            {
+              "seed": 0,
+              "auc": 0.8969135802469136
+            },
+            {
+              "seed": 7,
+              "auc": 0.8867283950617283
+            },
+            {
+              "seed": 2024,
+              "auc": 0.8969135802469136
+            },
+            {
+              "seed": 123,
+              "auc": 0.8950617283950618
+            }
+          ],
+          "auc_mean": 0.8948765432098765,
+          "auc_std_sample": 0.004739438478544399,
+          "auc_seed42": 0.8987654320987655,
+          "ci95_seed42": {
+            "lo": 0.841358024691358,
+            "hi": 0.9469212962962963,
+            "mean": 0.8986828703703704
+          }
+        },
+        "ECFP4+desc": {
+          "feature_dim": 2056,
+          "aucs_by_seed": [
+            {
+              "seed": 42,
+              "auc": 0.6861111111111111
+            },
+            {
+              "seed": 0,
+              "auc": 0.674074074074074
+            },
+            {
+              "seed": 7,
+              "auc": 0.6916666666666667
+            },
+            {
+              "seed": 2024,
+              "auc": 0.6567901234567901
+            },
+            {
+              "seed": 123,
+              "auc": 0.692283950617284
+            }
+          ],
+          "auc_mean": 0.6801851851851852,
+          "auc_std_sample": 0.014983288460463826,
+          "auc_seed42": 0.6861111111111111,
+          "ci95_seed42": {
+            "lo": 0.5515354938271604,
+            "hi": 0.8185802469135799,
+            "mean": 0.6885310185185185
+          }
+        },
+        "ECFP4+MACCS+desc": {
+          "feature_dim": 2223,
+          "aucs_by_seed": [
+            {
+              "seed": 42,
+              "auc": 0.7962962962962963
+            },
+            {
+              "seed": 0,
+              "auc": 0.8191358024691358
+            },
+            {
+              "seed": 7,
+              "auc": 0.8148148148148149
+            },
+            {
+              "seed": 2024,
+              "auc": 0.778395061728395
+            },
+            {
+              "seed": 123,
+              "auc": 0.8095679012345679
+            }
+          ],
+          "auc_mean": 0.803641975308642,
+          "auc_std_sample": 0.016517969504984475,
+          "auc_seed42": 0.7962962962962963,
+          "ci95_seed42": {
+            "lo": 0.6959799382716049,
+            "hi": 0.8883024691358024,
+            "mean": 0.7975479938271606
+          }
+        }
+      }
+    },
+    "stratified_random_80_10_10_sensitivity": {
+      "split_stats": {
+        "train": {
+          "n": 1167,
+          "pos": 83,
+          "neg": 1084,
+          "positive_rate": 0.07112253641816624
+        },
+        "valid": {
+          "n": 147,
+          "pos": 10,
+          "neg": 137,
+          "positive_rate": 0.06802721088435375
+        },
+        "test": {
+          "n": 147,
+          "pos": 10,
+          "neg": 137,
+          "positive_rate": 0.06802721088435375
+        }
+      },
+      "test_bootstrap": {
+        "n_boot": 2000,
+        "seed": 42,
+        "stratified_by_label": true
+      },
+      "representations": {
+        "ECFP4-2048": {
+          "feature_dim": 2048,
+          "aucs_by_seed": [
+            {
+              "seed": 42,
+              "auc": 0.8598540145985402
+            },
+            {
+              "seed": 0,
+              "auc": 0.8737226277372263
+            },
+            {
+              "seed": 7,
+              "auc": 0.8635036496350365
+            },
+            {
+              "seed": 2024,
+              "auc": 0.8638686131386861
+            },
+            {
+              "seed": 123,
+              "auc": 0.8503649635036497
+            }
+          ],
+          "auc_mean": 0.8622627737226278,
+          "auc_std_sample": 0.00840842963669151,
+          "auc_seed42": 0.8598540145985402,
+          "ci95_seed42": {
+            "lo": 0.7324543795620437,
+            "hi": 0.9576642335766423,
+            "mean": 0.859394890510949
+          }
+        },
+        "MACCS": {
+          "feature_dim": 167,
+          "aucs_by_seed": [
+            {
+              "seed": 42,
+              "auc": 0.9467153284671533
+            },
+            {
+              "seed": 0,
+              "auc": 0.9485401459854015
+            },
+            {
+              "seed": 7,
+              "auc": 0.9379562043795621
+            },
+            {
+              "seed": 2024,
+              "auc": 0.9496350364963504
+            },
+            {
+              "seed": 123,
+              "auc": 0.9390510948905109
+            }
+          ],
+          "auc_mean": 0.9443795620437955,
+          "auc_std_sample": 0.005478100974046397,
+          "auc_seed42": 0.9467153284671533,
+          "ci95_seed42": {
+            "lo": 0.8685948905109488,
+            "hi": 0.9934306569343065,
+            "mean": 0.9462218978102189
+          }
+        },
+        "ECFP4+desc": {
+          "feature_dim": 2056,
+          "aucs_by_seed": [
+            {
+              "seed": 42,
+              "auc": 0.8751824817518248
+            },
+            {
+              "seed": 0,
+              "auc": 0.8759124087591241
+            },
+            {
+              "seed": 7,
+              "auc": 0.8635036496350365
+            },
+            {
+              "seed": 2024,
+              "auc": 0.8667883211678832
+            },
+            {
+              "seed": 123,
+              "auc": 0.8726277372262774
+            }
+          ],
+          "auc_mean": 0.8708029197080291,
+          "auc_std_sample": 0.005431706593480761,
+          "auc_seed42": 0.8751824817518248,
+          "ci95_seed42": {
+            "lo": 0.7386770072992701,
+            "hi": 0.9653375912408759,
+            "mean": 0.8748870437956204
+          }
+        },
+        "ECFP4+MACCS+desc": {
+          "feature_dim": 2223,
+          "aucs_by_seed": [
+            {
+              "seed": 42,
+              "auc": 0.9233576642335766
+            },
+            {
+              "seed": 0,
+              "auc": 0.9145985401459854
+            },
+            {
+              "seed": 7,
+              "auc": 0.9197080291970803
+            },
+            {
+              "seed": 2024,
+              "auc": 0.9237226277372262
+            },
+            {
+              "seed": 123,
+              "auc": 0.9127737226277371
+            }
+          ],
+          "auc_mean": 0.9188321167883211,
+          "auc_std_sample": 0.004994802562663658,
+          "auc_seed42": 0.9233576642335766,
+          "ci95_seed42": {
+            "lo": 0.8248175182481752,
+            "hi": 0.9832116788321168,
+            "mean": 0.9230996350364964
+          }
+        }
+      }
+    }
+  },
+  "paired_fusion_gains": {
+    "scaffold_80_10_10": {
+      "ECFP4-2048": {
+        "delta_mean": 0.1268608024691358,
+        "ci95": {
+          "lo": 0.050115740740740745,
+          "hi": 0.20562345679012345
+        },
+        "significant_at_0_05": true,
+        "comparison": "ECFP4+MACCS+desc - ECFP4-2048"
+      },
+      "MACCS": {
+        "delta_mean": -0.09007885802469136,
+        "ci95": {
+          "lo": -0.1508070987654321,
+          "hi": -0.03487191358024696
+        },
+        "significant_at_0_05": true,
+        "comparison": "ECFP4+MACCS+desc - MACCS"
+      },
+      "ECFP4+desc": {
+        "delta_mean": 0.12255154320987655,
+        "ci95": {
+          "lo": 0.05085956790123455,
+          "hi": 0.1953719135802469
+        },
+        "significant_at_0_05": true,
+        "comparison": "ECFP4+MACCS+desc - ECFP4+desc"
+      }
+    },
+    "stratified_random_80_10_10_sensitivity": {
+      "ECFP4-2048": {
+        "delta_mean": 0.056673138686131386,
+        "ci95": {
+          "lo": 0.01539963503649633,
+          "hi": 0.1065711678832117
+        },
+        "significant_at_0_05": true,
+        "comparison": "ECFP4+MACCS+desc - ECFP4-2048"
+      },
+      "MACCS": {
+        "delta_mean": -0.025405583941605837,
+        "ci95": {
+          "lo": -0.05767153284671529,
+          "hi": -0.0027737226277372074
+        },
+        "significant_at_0_05": true,
+        "comparison": "ECFP4+MACCS+desc - MACCS"
+      },
+      "ECFP4+desc": {
+        "delta_mean": 0.04818671532846716,
+        "ci95": {
+          "lo": 0.01357664233576641,
+          "hi": 0.0895693430656934
+        },
+        "significant_at_0_05": true,
+        "comparison": "ECFP4+MACCS+desc - ECFP4+desc"
+      }
+    }
+  },
+  "conclusion": {
+    "fusion_positive_vs_all_comparators": false,
+    "fusion_significant_vs_any_comparator": true,
+    "primary_vs_ecfp4": {
+      "delta_mean": 0.1268608024691358,
+      "ci95": {
+        "lo": 0.050115740740740745,
+        "hi": 0.20562345679012345
+      },
+      "significant_at_0_05": true,
+      "comparison": "ECFP4+MACCS+desc - ECFP4-2048"
+    },
+    "primary_vs_ecfp4_plus_desc": {
+      "delta_mean": 0.12255154320987655,
+      "ci95": {
+        "lo": 0.05085956790123455,
+        "hi": 0.1953719135802469
+      },
+      "significant_at_0_05": true,
+      "comparison": "ECFP4+MACCS+desc - ECFP4+desc"
+    },
+    "text": "On the primary ClinTox scaffold split, fusion is assessed against all three other representations. Significance is a paired bootstrap CI over 2000 stratified test-set resamples, averaged across the five RF seeds."
+  },
+  "environment": {
+    "python": "3.12.3",
+    "rdkit": "2026.09.1",
+    "scikit_learn": "1.9.1",
+    "numpy": "2.5.2",
+    "pandas": "2.3.3",
+    "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39"
+  },
+  "run_log": [
+    "ClinTox CT_TOX unique valid=1461 pos=103 neg=1358 pos_rate=0.070500",
+    "--- scaffold_80_10_10 ---",
+    "split_stats={\"test\": {\"n\": 147, \"neg\": 135, \"pos\": 12, \"positive_rate\": 0.08163265306122448}, \"train\": {\"n\": 1168, \"neg\": 1088, \"pos\": 80, \"positive_rate\": 0.0684931506849315}, \"valid\": {\"n\": 146, \"neg\": 135, \"pos\": 11, \"positive_rate\": 0.07534246575342465}}",
+    "ECFP4-2048         mean=0.6760 std=0.0160 seed42=0.6864 [0.553,0.820]",
+    "MACCS              mean=0.8949 std=0.0047 seed42=0.8988 [0.841,0.947]",
+    "ECFP4+desc         mean=0.6802 std=0.0150 seed42=0.6861 [0.552,0.819]",
+    "ECFP4+MACCS+desc   mean=0.8036 std=0.0165 seed42=0.7963 [0.696,0.888]",
+    "fusion - ECFP4-2048         delta=+0.1269 CI=[+0.0501,+0.2056] significant=True",
+    "fusion - MACCS              delta=-0.0901 CI=[-0.1508,-0.0349] significant=True",
+    "fusion - ECFP4+desc         delta=+0.1226 CI=[+0.0509,+0.1954] significant=True",
+    "--- stratified_random_80_10_10_sensitivity ---",
+    "split_stats={\"test\": {\"n\": 147, \"neg\": 137, \"pos\": 10, \"positive_rate\": 0.06802721088435375}, \"train\": {\"n\": 1167, \"neg\": 1084, \"pos\": 83, \"positive_rate\": 0.07112253641816624}, \"valid\": {\"n\": 147, \"neg\": 137, \"pos\": 10, \"positive_rate\": 0.06802721088435375}}",
+    "ECFP4-2048         mean=0.8623 std=0.0084 seed42=0.8599 [0.732,0.958]",
+    "MACCS              mean=0.9444 std=0.0055 seed42=0.9467 [0.869,0.993]",
+    "ECFP4+desc         mean=0.8708 std=0.0054 seed42=0.8752 [0.739,0.965]",
+    "ECFP4+MACCS+desc   mean=0.9188 std=0.0050 seed42=0.9234 [0.825,0.983]",
+    "fusion - ECFP4-2048         delta=+0.0567 CI=[+0.0154,+0.1066] significant=True",
+    "fusion - MACCS              delta=-0.0254 CI=[-0.0577,-0.0028] significant=True",
+    "fusion - ECFP4+desc         delta=+0.0482 CI=[+0.0136,+0.0896] significant=True"
+  ]
+}

@@ -1,0 +1,427 @@
+{
+  "sensitivity_grid": {
+    "configs": [
+      {
+        "sigma": 1.5,
+        "min_distance": 8,
+        "peak_threshold": 2.0,
+        "n_nuclei": 230,
+        "area_mean": 124.99565217391304,
+        "n_seeds": 274,
+        "otsu_thr": 0.13167461983253848
+      },
+      {
+        "sigma": 1.5,
+        "min_distance": 8,
+        "peak_threshold": 3.0,
+        "n_nuclei": 228,
+        "area_mean": 125.25,
+        "n_seeds": 271,
+        "otsu_thr": 0.13167461983253848
+      },
+      {
+        "sigma": 1.5,
+        "min_distance": 8,
+        "peak_threshold": 4.0,
+        "n_nuclei": 224,
+        "area_mean": 126.35714285714286,
+        "n_seeds": 259,
+        "otsu_thr": 0.13167461983253848
+      },
+      {
+        "sigma": 1.5,
+        "min_distance": 10,
+        "peak_threshold": 2.0,
+        "n_nuclei": 214,
+        "area_mean": 133.34579439252337,
+        "n_seeds": 256,
+        "otsu_thr": 0.13167461983253848
+      },
+      {
+        "sigma": 1.5,
+        "min_distance": 10,
+        "peak_threshold": 3.0,
+        "n_nuclei": 212,
+        "area_mean": 133.48584905660377,
+        "n_seeds": 253,
+        "otsu_thr": 0.13167461983253848
+      },
+      {
+        "sigma": 1.5,
+        "min_distance": 10,
+        "peak_threshold": 4.0,
+        "n_nuclei": 208,
+        "area_mean": 134.48076923076923,
+        "n_seeds": 242,
+        "otsu_thr": 0.13167461983253848
+      },
+      {
+        "sigma": 1.5,
+        "min_distance": 12,
+        "peak_threshold": 2.0,
+        "n_nuclei": 202,
+        "area_mean": 139.5,
+        "n_seeds": 236,
+        "otsu_thr": 0.13167461983253848
+      },
+      {
+        "sigma": 1.5,
+        "min_distance": 12,
+        "peak_threshold": 3.0,
+        "n_nuclei": 201,
+        "area_mean": 139.4726368159204,
+        "n_seeds": 234,
+        "otsu_thr": 0.13167461983253848
+      },
+      {
+        "sigma": 1.5,
+        "min_distance": 12,
+        "peak_threshold": 4.0,
+        "n_nuclei": 197,
+        "area_mean": 140.64467005076142,
+        "n_seeds": 225,
+        "otsu_thr": 0.13167461983253848
+      },
+      {
+        "sigma": 2.0,
+        "min_distance": 8,
+        "peak_threshold": 2.0,
+        "n_nuclei": 250,
+        "area_mean": 133.612,
+        "n_seeds": 269,
+        "otsu_thr": 0.12333018263847799
+      },
+      {
+        "sigma": 2.0,
+        "min_distance": 8,
+        "peak_threshold": 3.0,
+        "n_nuclei": 248,
+        "area_mean": 133.83467741935485,
+        "n_seeds": 266,
+        "otsu_thr": 0.12333018263847799
+      },
+      {
+        "sigma": 2.0,
+        "min_distance": 8,
+        "peak_threshold": 4.0,
+        "n_nuclei": 247,
+        "area_mean": 134.03643724696357,
+        "n_seeds": 264,
+        "otsu_thr": 0.12333018263847799
+      },
+      {
+        "sigma": 2.0,
+        "min_distance": 10,
+        "peak_threshold": 2.0,
+        "n_nuclei": 232,
+        "area_mean": 142.58620689655172,
+        "n_seeds": 250,
+        "otsu_thr": 0.12333018263847799
+      },
+      {
+        "sigma": 2.0,
+        "min_distance": 10,
+        "peak_threshold": 3.0,
+        "n_nuclei": 230,
+        "area_mean": 142.7086956521739,
+        "n_seeds": 247,
+        "otsu_thr": 0.12333018263847799
+      },
+      {
+        "sigma": 2.0,
+        "min_distance": 10,
+        "peak_threshold": 4.0,
+        "n_nuclei": 229,
+        "area_mean": 142.9650655021834,
+        "n_seeds": 245,
+        "otsu_thr": 0.12333018263847799
+      },
+      {
+        "sigma": 2.0,
+        "min_distance": 12,
+        "peak_threshold": 2.0,
+        "n_nuclei": 212,
+        "area_mean": 150.13679245283018,
+        "n_seeds": 229,
+        "otsu_thr": 0.12333018263847799
+      },
+      {
+        "sigma": 2.0,
+        "min_distance": 12,
+        "peak_threshold": 3.0,
+        "n_nuclei": 211,
+        "area_mean": 150.12322274881515,
+        "n_seeds": 227,
+        "otsu_thr": 0.12333018263847799
+      },
+      {
+        "sigma": 2.0,
+        "min_distance": 12,
+        "peak_threshold": 4.0,
+        "n_nuclei": 210,
+        "area_mean": 150.43809523809523,
+        "n_seeds": 225,
+        "otsu_thr": 0.12333018263847799
+      },
+      {
+        "sigma": 2.5,
+        "min_distance": 8,
+        "peak_threshold": 2.0,
+        "n_nuclei": 252,
+        "area_mean": 150.82539682539684,
+        "n_seeds": 259,
+        "otsu_thr": 0.11553995470433681
+      },
+      {
+        "sigma": 2.5,
+        "min_distance": 8,
+        "peak_threshold": 3.0,
+        "n_nuclei": 249,
+        "area_mean": 151.22088353413653,
+        "n_seeds": 255,
+        "otsu_thr": 0.11553995470433681
+      },
+      {
+        "sigma": 2.5,
+        "min_distance": 8,
+        "peak_threshold": 4.0,
+        "n_nuclei": 249,
+        "area_mean": 151.22088353413653,
+        "n_seeds": 254,
+        "otsu_thr": 0.11553995470433681
+      },
+      {
+        "sigma": 2.5,
+        "min_distance": 10,
+        "peak_threshold": 2.0,
+        "n_nuclei": 233,
+        "area_mean": 161.60515021459227,
+        "n_seeds": 240,
+        "otsu_thr": 0.11553995470433681
+      },
+      {
+        "sigma": 2.5,
+        "min_distance": 10,
+        "peak_threshold": 3.0,
+        "n_nuclei": 233,
+        "area_mean": 161.60515021459227,
+        "n_seeds": 239,
+        "otsu_thr": 0.11553995470433681
+      },
+      {
+        "sigma": 2.5,
+        "min_distance": 10,
+        "peak_threshold": 4.0,
+        "n_nuclei": 231,
+        "area_mean": 161.3896103896104,
+        "n_seeds": 236,
+        "otsu_thr": 0.11553995470433681
+      },
+      {
+        "sigma": 2.5,
+        "min_distance": 12,
+        "peak_threshold": 2.0,
+        "n_nuclei": 211,
+        "area_mean": 173.72511848341233,
+        "n_seeds": 217,
+        "otsu_thr": 0.11553995470433681
+      },
+      {
+        "sigma": 2.5,
+        "min_distance": 12,
+        "peak_threshold": 3.0,
+        "n_nuclei": 210,
+        "area_mean": 173.8047619047619,
+        "n_seeds": 215,
+        "otsu_thr": 0.11553995470433681
+      },
+      {
+        "sigma": 2.5,
+        "min_distance": 12,
+        "peak_threshold": 4.0,
+        "n_nuclei": 210,
+        "area_mean": 173.8047619047619,
+        "n_seeds": 214,
+        "otsu_thr": 0.11553995470433681
+      },
+      {
+        "sigma": 3.0,
+        "min_distance": 8,
+        "peak_threshold": 2.0,
+        "n_nuclei": 250,
+        "area_mean": 171.768,
+        "n_seeds": 250,
+        "otsu_thr": 0.10813860146630538
+      },
+      {
+        "sigma": 3.0,
+        "min_distance": 8,
+        "peak_threshold": 3.0,
+        "n_nuclei": 248,
+        "area_mean": 172.16935483870967,
+        "n_seeds": 248,
+        "otsu_thr": 0.10813860146630538
+      },
+      {
+        "sigma": 3.0,
+        "min_distance": 8,
+        "peak_threshold": 4.0,
+        "n_nuclei": 245,
+        "area_mean": 172.91836734693877,
+        "n_seeds": 245,
+        "otsu_thr": 0.10813860146630538
+      },
+      {
+        "sigma": 3.0,
+        "min_distance": 10,
+        "peak_threshold": 2.0,
+        "n_nuclei": 232,
+        "area_mean": 182.48275862068965,
+        "n_seeds": 232,
+        "otsu_thr": 0.10813860146630538
+      },
+      {
+        "sigma": 3.0,
+        "min_distance": 10,
+        "peak_threshold": 3.0,
+        "n_nuclei": 232,
+        "area_mean": 182.48275862068965,
+        "n_seeds": 232,
+        "otsu_thr": 0.10813860146630538
+      },
+      {
+        "sigma": 3.0,
+        "min_distance": 10,
+        "peak_threshold": 4.0,
+        "n_nuclei": 230,
+        "area_mean": 182.94782608695652,
+        "n_seeds": 230,
+        "otsu_thr": 0.10813860146630538
+      },
+      {
+        "sigma": 3.0,
+        "min_distance": 12,
+        "peak_threshold": 2.0,
+        "n_nuclei": 210,
+        "area_mean": 198.10476190476192,
+        "n_seeds": 210,
+        "otsu_thr": 0.10813860146630538
+      },
+      {
+        "sigma": 3.0,
+        "min_distance": 12,
+        "peak_threshold": 3.0,
+        "n_nuclei": 209,
+        "area_mean": 198.22488038277513,
+        "n_seeds": 209,
+        "otsu_thr": 0.10813860146630538
+      },
+      {
+        "sigma": 3.0,
+        "min_distance": 12,
+        "peak_threshold": 4.0,
+        "n_nuclei": 208,
+        "area_mean": 198.79326923076923,
+        "n_seeds": 208,
+        "otsu_thr": 0.10813860146630538
+      }
+    ],
+    "nuclei_count_mean": 225.75,
+    "nuclei_count_std": 16.851239886556886,
+    "nuclei_count_cv": 0.07464558089283227,
+    "nuclei_count_range": [
+      197,
+      252
+    ],
+    "area_mean_range": [
+      124.99565217391304,
+      198.79326923076923
+    ],
+    "baseline": {
+      "sigma": 2.0,
+      "min_distance": 10,
+      "peak_threshold": 3.0,
+      "n_nuclei": 230,
+      "area_mean": 142.7086956521739,
+      "n_seeds": 247,
+      "otsu_thr": 0.12333018263847799
+    }
+  },
+  "bootstrap_ci95": {
+    "area": {
+      "mean": 142.7086956521739,
+      "ci95": [
+        134.10717391304348,
+        153.0479347826087
+      ]
+    },
+    "diameter": {
+      "mean": 13.150429609442392,
+      "ci95": [
+        12.78634629090637,
+        13.552383683080613
+      ]
+    },
+    "circularity": {
+      "mean": 0.9713089606391087,
+      "ci95": [
+        0.9543420760271742,
+        0.9871776883084152
+      ]
+    },
+    "eccentricity": {
+      "mean": 0.5737066882368115,
+      "ci95": [
+        0.5535023077174399,
+        0.5946690807018359
+      ]
+    }
+  },
+  "baseline_morphometrics": {
+    "n_nuclei": 230,
+    "n_seeds": 247,
+    "labeled_pixel_fraction": 13.012313842773438
+  },
+  "noise_robustness": [
+    {
+      "noise_sigma": 0.0,
+      "n_count_mean": 230.0,
+      "retention": 1.0,
+      "reps": 5
+    },
+    {
+      "noise_sigma": 0.02,
+      "n_count_mean": 227.2,
+      "retention": 0.9878260869565217,
+      "reps": 5
+    },
+    {
+      "noise_sigma": 0.05,
+      "n_count_mean": 217.0,
+      "retention": 0.9434782608695652,
+      "reps": 5
+    },
+    {
+      "noise_sigma": 0.1,
+      "n_count_mean": 201.4,
+      "retention": 0.8756521739130435,
+      "reps": 5
+    },
+    {
+      "noise_sigma": 0.15,
+      "n_count_mean": 190.0,
+      "retention": 0.8260869565217391,
+      "reps": 5
+    }
+  ],
+  "metadata": {
+    "dataset": "skimage.data.human_mitosis() [HeLa nuclei, DAPI, 2D]",
+    "ground_truth": "none -> Dice/IoU not computable; honest limitation",
+    "limitations": [
+      "2D monolayer nuclei, not 3D organoid structure",
+      "no manual ground-truth mask, no segmentation accuracy metric",
+      "single public example image, no biological functionality validation"
+    ],
+    "elapsed_s": 7.840577840805054
+  }
+}
