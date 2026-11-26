@@ -46,3 +46,7 @@ data/prereg/*.flag
 !data/prereg/FREEZE.log
 !data/prereg/*.sha256
 !data/prereg/*_metrics.json
+data/negative/*
+!data/negative/negative_mol_metrics.json
+!data/negative/negative_imaging_metrics.json
+!data/negative/negative_eeg_metrics.json

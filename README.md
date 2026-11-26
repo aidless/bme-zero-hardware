@@ -55,12 +55,12 @@ python3 mini_project_eeg.py      # ③ EEG 解码（MNE 自动下载）
 
 ## 文档
 
-- [`BME-DEEP-DIVE.md`](BME-DEEP-DIVE.md) — 七轮 deep dive 总报告：文献核实 + bootstrap CI + scaffold split + 跨被试 + 概率校准 + P0 硬伤修复 + 跨数据集/跨组织验证 + 预注册与分析者自由度（第六轮）+ **前沿基础模型实测与同协议 head-to-head（第七轮）+ 同架构纯预训练域消融（第八轮）**
+- [`BME-DEEP-DIVE.md`](BME-DEEP-DIVE.md) — 九轮 deep dive 总报告：文献核实 + bootstrap CI + scaffold split + 跨被试 + 概率校准 + P0 硬伤修复 + 跨数据集/跨组织验证 + 预注册与分析者自由度（第六轮）+ **前沿基础模型实测与同协议 head-to-head（第七轮）+ 同架构纯预训练域消融（第八轮）+ 标签置换阴性对照（第九轮）**
 - [`PREREGISTRATION-1-EEG-crosssubject.md`](PREREGISTRATION-1-EEG-crosssubject.md) / [`PREREGISTRATION-2-Mol-split-effect.md`](PREREGISTRATION-2-Mol-split-effect.md) — 第六轮两份预注册，含冻结 sha256（`data/prereg/FREEZE.log`）；判定规则跑前写死、脚本运行时验签。结论：黎曼 ensemble 优势在冻成单次 fit 后消失；split 单因素差异 CI 跨 0（推翻此前"97.5% gap"归因）
 - [`docs/BME-PORTFOLIO.md`](docs/BME-PORTFOLIO.md) — 完整实测档案：每方向的脚本、数字、踩坑、下一步
 - [`docs/bme-zero-hardware-guide.md`](docs/bme-zero-hardware-guide.md) — 零硬件入门路径：工具栈 + 数据集 + 12 周路线
 - [`docs/eeg_direction_conclusion.md`](docs/eeg_direction_conclusion.md) — EEG 方向能做/不能做的边界说明
-- 外部验证逐方向记录（均在 `docs/`）：BACE / DermaMNIST / EEG 跨被试 / 校准 / 类器官 & EEG 文献核实（2026-11-24、11-25）；第五轮新增 EEG 9 人扩展、制药 train-only + gap 归因 + ClinTox、单细胞分辨率 + 跨组织、类器官 GT（2026-11-26）
+- 外部验证逐方向记录（均在 `docs/`）：BACE / DermaMNIST / EEG 跨被试 / 校准 / 类器官 & EEG 文献核实（2026-11-24、11-25）；第五轮新增 EEG 9 人扩展、制药 train-only + gap 归因 + ClinTox、单细胞分辨率 + 跨组织、类器官 GT（2026-11-26）；第九轮标签置换阴性对照（协议 + 分子结论，2026-11-26）
 - [`FETCH_DATA.md`](FETCH_DATA.md) — 所有公开数据的下载来源与复现顺序
 
 ## 环境与复现
