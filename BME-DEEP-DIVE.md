@@ -616,3 +616,33 @@ Rad-DINO vs dinov2-base 在 0.5 阈值下 McNemar b=39 / c=25，**p=0.1034（不
 | data/power/power_mde_metrics.json | 三数据集 MDE、超出/MDE 比值、所需 n、全部口径参数 |
 
 **十轮收口**：核实 → 审稿级重估 → 类器官/EEG → 外部验证/校准 → 21 项清单 → 预注册 → 前沿基础模型 → 同架构消融 → 阴性对照 → 功效定量化。九轮把每个数字的口径与流水线干净度钉死，第十轮把"功效不足"这个唯一悬而未判的定性结论量化到可复算——ClinTox 的真实效应只高出 80%-MDE 20%，test 规模仅为目标 dAUC 所需样本的 5%，其 p=0.0198 是样本量问题而非方法缺陷。
+
+---
+
+## 十四、证据链一致性审计：35 个数字机器验真
+
+前十轮的纪律是"数字可复算"，但报告正文里的数字可能存在转录漂移（改了 JSON 忘改正文、或正文取了不同精度）。本轮把这条纪律做成机器闸：`bench_evidence_audit.py` 把报告里 **35 个关键数字逐条绑定到落盘 JSON 字段**，验证两件事——① JSON 实值按报告采用的精度渲染后必须等于报告展示串；② 该串必须逐字出现在报告正文。不做模糊匹配。
+
+### 14.1 覆盖范围
+
+| 来源段落 | 审计的数字（示例） | JSON 源 |
+|---|---|---|
+| 影像 DermaMNIST | test AUC 0.9343 / acc 0.7751 / ECE 0.0539 / 最弱类 0.8797 | `data/derma_rigorous_metrics.json` |
+| 阴性对照·分子 | BBBP/BACE/ClinTox 的 real AUC 与 null std | `data/negative/negative_mol_metrics.json` |
+| 阴性对照·影像 | PneumoniaMNIST/DermaMNIST 的 real 与 null mean | `data/negative/negative_imaging_metrics.json` |
+| 功效定量化 | MDE 0.1110/0.2455、比值 1.20、所需 n 2873 | `data/power/power_mde_metrics.json` |
+| 前沿/消融 | 三臂 AUC、域效应 0.0224、架构残余 0.0269、McNemar p | `data/frontier/*.json` |
+| 预注册 | 分子配对差 0.0517、EEG 两臂 acc 与 B−A 差 | `data/prereg/*.json` |
+
+### 14.2 结果与抓到的一个真实问题
+
+**35/35 全部 PASS**（`data/evidence_audit/evidence_audit_metrics.json`，verdict=PASS）。过程中审计闸真的报了一次 `DRIFT_DETECTED`：预注册 EEG 的 B−A 配对差在报告里用 Unicode 减号 `−0.0593`（U+2212），JSON 渲染用 ASCII `-0.0593`。**这是脚本的编码假阳性，不是报告错**——数值一致，报告的 Unicode 减号是合法排版。修复方式是在审计闸里做减号归一化（U+2212/U+2013 → ASCII `-`），而不是改报告。这一条正说明"门要能红"：闸门确实会因格式差异报警，判读时要区分真漂移与编码假阳性。
+
+### 14.3 产物与十一轮收口
+
+| 文件 | 内容 |
+|---|---|
+| bench_evidence_audit.py | 35 条 claim→JSON 绑定，`--selftest` 4 项，减号归一化 |
+| data/evidence_audit/evidence_audit_metrics.json | 逐条 pass/fail、JSON 源路径、渲染值、汇总 verdict |
+
+**十一轮收口**：核实 → 审稿级重估 → 类器官/EEG → 外部验证/校准 → 21 项清单 → 预注册 → 前沿基础模型 → 同架构消融 → 阴性对照 → 功效定量化 → 证据链审计。前六轮把数字放回真实口径并加上区间与可证伪设计，后五轮把"泛化、对照、功效、转录"逐层做成机器可验的闸。至此整份报告的每个关键数字都能一条命令追溯到落盘 JSON。

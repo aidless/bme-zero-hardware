@@ -1,0 +1,363 @@
+{
+  "experiment": "Round 11: evidence-chain consistency audit of BME-DEEP-DIVE.md",
+  "created_at_utc": "2026-11-26T23:37:00.839391+00:00",
+  "report": "BME-DEEP-DIVE.md",
+  "n_claims": 35,
+  "n_pass": 35,
+  "n_fail": 0,
+  "failures": [],
+  "method": "each claim's report string must equal its JSON value rendered at the report's precision AND appear verbatim in the report; no fuzzy matching",
+  "claims": [
+    {
+      "claim": "derma.test_auc",
+      "report_shown": "0.9343",
+      "json_value": 0.9343069018463802,
+      "rendered": "0.9343",
+      "source": "data/derma_rigorous_metrics.json:test.macro_auc",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "derma.test_acc",
+      "report_shown": "0.7751",
+      "json_value": 0.7750623441396509,
+      "rendered": "0.7751",
+      "source": "data/derma_rigorous_metrics.json:test.accuracy",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "derma.val_auc",
+      "report_shown": "0.9385",
+      "json_value": 0.9384539381365987,
+      "rendered": "0.9385",
+      "source": "data/derma_rigorous_metrics.json:protocol.selected.val_macro_auc",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "derma.ece",
+      "report_shown": "0.0539",
+      "json_value": 0.05393226087241994,
+      "rendered": "0.0539",
+      "source": "data/derma_rigorous_metrics.json:test.calibration.ece",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "derma.weakest_auc",
+      "report_shown": "0.8797",
+      "json_value": 0.8797265127608924,
+      "rendered": "0.8797",
+      "source": "data/derma_rigorous_metrics.json:test.weakest_class_auc",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "negmol.bbbp.real",
+      "report_shown": "0.9413",
+      "json_value": 0.9412603150787697,
+      "rendered": "0.9413",
+      "source": "data/negative/negative_mol_metrics.json:datasets.BBBP.real_auc",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "negmol.bbbp.nullstd",
+      "report_shown": "0.0446",
+      "json_value": 0.04463636809620022,
+      "rendered": "0.0446",
+      "source": "data/negative/negative_mol_metrics.json:datasets.BBBP.null.std_sample",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "negmol.bace.real",
+      "report_shown": "0.8998",
+      "json_value": 0.899848828420257,
+      "rendered": "0.8998",
+      "source": "data/negative/negative_mol_metrics.json:datasets.BACE.real_auc",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "negmol.bace.nullstd",
+      "report_shown": "0.0478",
+      "json_value": 0.047842714999750374,
+      "rendered": "0.0478",
+      "source": "data/negative/negative_mol_metrics.json:datasets.BACE.null.std_sample",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "negmol.clintox.real",
+      "report_shown": "0.7963",
+      "json_value": 0.7962962962962963,
+      "rendered": "0.7963",
+      "source": "data/negative/negative_mol_metrics.json:datasets.ClinTox.real_auc",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "negmol.clintox.nullstd",
+      "report_shown": "0.0987",
+      "json_value": 0.09873863486844024,
+      "rendered": "0.0987",
+      "source": "data/negative/negative_mol_metrics.json:datasets.ClinTox.null.std_sample",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "negimg.pneumo.real",
+      "report_shown": "0.9242",
+      "json_value": 0.9242274819197897,
+      "rendered": "0.9242",
+      "source": "data/negative/negative_imaging_metrics.json:datasets.pneumoniamnist.real_auc",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "negimg.pneumo.nullmean",
+      "report_shown": "0.5006",
+      "json_value": 0.5005643182520508,
+      "rendered": "0.5006",
+      "source": "data/negative/negative_imaging_metrics.json:datasets.pneumoniamnist.null_mean",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "negimg.derma.real",
+      "report_shown": "0.8834",
+      "json_value": 0.8833566143960694,
+      "rendered": "0.8834",
+      "source": "data/negative/negative_imaging_metrics.json:datasets.dermamnist.real_auc",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "negimg.derma.nullmean",
+      "report_shown": "0.5000",
+      "json_value": 0.49999692517987887,
+      "rendered": "0.5000",
+      "source": "data/negative/negative_imaging_metrics.json:datasets.dermamnist.null_mean",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "power.bbbp.mde",
+      "report_shown": "0.1110",
+      "json_value": 0.1109872071363146,
+      "rendered": "0.1110",
+      "source": "data/power/power_mde_metrics.json:datasets.BBBP.mde.mde_auc_excess_at_80pct_power",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "power.clintox.mde",
+      "report_shown": "0.2455",
+      "json_value": 0.24551113336287325,
+      "rendered": "0.2455",
+      "source": "data/power/power_mde_metrics.json:datasets.ClinTox.mde.mde_auc_excess_at_80pct_power",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "power.clintox.ratio",
+      "report_shown": "1.20",
+      "json_value": 1.199543316649629,
+      "rendered": "1.20",
+      "source": "data/power/power_mde_metrics.json:datasets.ClinTox.mde.excess_over_mde_ratio",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "power.clintox.reqn",
+      "report_shown": "2873",
+      "json_value": 2873,
+      "rendered": "2873",
+      "source": "data/power/power_mde_metrics.json:datasets.ClinTox.sample_size.n_total",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "ablation.raddino",
+      "report_shown": "0.9735",
+      "json_value": 0.9735097523559061,
+      "rendered": "0.9735",
+      "source": "data/frontier/ablation_metrics.json:arms.rad_dino_chestxray.auc",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "ablation.dinov2",
+      "report_shown": "0.9511",
+      "json_value": 0.9510957703265396,
+      "rendered": "0.9511",
+      "source": "data/frontier/ablation_metrics.json:arms.dinov2_base_natural.auc",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "ablation.resnet18",
+      "report_shown": "0.9242",
+      "json_value": 0.9242274819197897,
+      "rendered": "0.9242",
+      "source": "data/frontier/ablation_metrics.json:arms.resnet18_imagenet.auc",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "ablation.domain",
+      "report_shown": "0.0224",
+      "json_value": 0.022413982029366508,
+      "rendered": "0.0224",
+      "source": "data/frontier/ablation_metrics.json:decomposition.domain_raddino_minus_dinov2.point",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "ablation.arch",
+      "report_shown": "0.0269",
+      "json_value": 0.02686828840674993,
+      "rendered": "0.0269",
+      "source": "data/frontier/ablation_metrics.json:decomposition.arch_residual_dinov2_minus_resnet18.point",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "ablation.mcnemar_p",
+      "report_shown": "0.1034",
+      "json_value": 0.10342187831608088,
+      "rendered": "0.1034",
+      "source": "data/frontier/ablation_metrics.json:mcnemar_raddino_vs_dinov2.p",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "raddino.test_auc",
+      "report_shown": "0.9735",
+      "json_value": 0.9735097523559061,
+      "rendered": "0.9735",
+      "source": "data/frontier/raddino_metrics.json:test.auc",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "raddino.test_ece",
+      "report_shown": "0.1015",
+      "json_value": 0.1015452410524281,
+      "rendered": "0.1015",
+      "source": "data/frontier/raddino_metrics.json:test.ece15",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "head2h.auc_diff",
+      "report_shown": "0.0493",
+      "json_value": 0.04928227043611644,
+      "rendered": "0.0493",
+      "source": "data/frontier/headtohead_metrics.v2final.json:paired_diff_rad_dino_minus_resnet18.auc_diff",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "head2h.mcnemar_p",
+      "report_shown": "0.0006",
+      "json_value": 0.0006393977673643526,
+      "rendered": "0.0006",
+      "source": "data/frontier/headtohead_metrics.v2final.json:paired_diff_rad_dino_minus_resnet18.mcnemar_p",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "prereg.ours_auc",
+      "report_shown": "0.7616",
+      "json_value": 0.7616147664490206,
+      "rendered": "0.7616",
+      "source": "data/prereg/prereg_mol_metrics.json:ours_shuffle.auc",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "prereg.deepchem_auc",
+      "report_shown": "0.7099",
+      "json_value": 0.7099162581699346,
+      "rendered": "0.7099",
+      "source": "data/prereg/prereg_mol_metrics.json:deepchem_order.auc",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "prereg.diff",
+      "report_shown": "0.0517",
+      "json_value": 0.05169850827908595,
+      "rendered": "0.0517",
+      "source": "data/prereg/prereg_mol_metrics.json:paired_diff.point",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "prereg.eeg.A_acc",
+      "report_shown": "0.5086",
+      "json_value": 0.508641975308642,
+      "rendered": "0.5086",
+      "source": "data/prereg/prereg_eeg_metrics.json:arms.A_csp.acc",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "prereg.eeg.B_acc",
+      "report_shown": "0.4494",
+      "json_value": 0.44938271604938274,
+      "rendered": "0.4494",
+      "source": "data/prereg/prereg_eeg_metrics.json:arms.B_tangent.acc",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    },
+    {
+      "claim": "prereg.eeg.diff",
+      "report_shown": "-0.0593",
+      "json_value": -0.059259259259259234,
+      "rendered": "-0.0593",
+      "source": "data/prereg/prereg_eeg_metrics.json:paired_diff_B_minus_A.point",
+      "value_matches": true,
+      "in_report": true,
+      "pass": true
+    }
+  ],
+  "verdict": "PASS"
+}
