@@ -1,0 +1,45 @@
+{
+  "experiment": "negative-control-imaging",
+  "created_at_utc": "2026-11-26T16:02:23.182295Z",
+  "protocol": "frozen ResNet18(ImageNet) + StandardScaler + LR linear probe; official split fixed; label vector shuffled across train+test per permutation; N=100",
+  "environment": {
+    "python": "3.12.3",
+    "torch": "2.14.1+cu130",
+    "numpy": "2.5.2",
+    "scikit_learn": "1.9.1"
+  },
+  "datasets": {
+    "pneumoniamnist": {
+      "n_perm": 100,
+      "null_mean": 0.5005643182520508,
+      "null_std": 0.02643713094528991,
+      "null_median": 0.4989383421651758,
+      "null_p95": 0.5437605676264059,
+      "null_max": 0.5829003181336161,
+      "null_min": 0.4496082000438919,
+      "real_auc": 0.9242274819197897,
+      "empirical_p": 0.009900990099009901,
+      "null_mean_deviation_from_half": 0.0005643182520508327,
+      "n_train": 4708,
+      "n_test": 624,
+      "n_classes": 2,
+      "verdict_clean": true
+    },
+    "dermamnist": {
+      "n_perm": 100,
+      "null_mean": 0.49999692517987887,
+      "null_std": 0.014658646444860262,
+      "null_median": 0.49961022628391144,
+      "null_p95": 0.5254614763007485,
+      "null_max": 0.5299463632758357,
+      "null_min": 0.46603720259012676,
+      "real_auc": 0.8833566143960694,
+      "empirical_p": 0.009900990099009901,
+      "null_mean_deviation_from_half": -3.0748201211294734e-06,
+      "n_train": 7007,
+      "n_test": 2005,
+      "n_classes": 7,
+      "verdict_clean": true
+    }
+  }
+}
