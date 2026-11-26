@@ -1,0 +1,60 @@
+{
+  "protocol": "frozen ViT-B/14 CLS + StandardScaler + LR linear probe (no finetune), same split, same processor(518px)",
+  "n_test": 624,
+  "feature_dim": 768,
+  "arms": {
+    "rad_dino_chestxray": {
+      "arch": "ViT-B/14",
+      "pretrain": "chest X-ray DINOv2",
+      "auc": 0.9735097523559061
+    },
+    "dinov2_base_natural": {
+      "arch": "ViT-B/14",
+      "pretrain": "natural images DINOv2",
+      "auc": 0.9510957703265396,
+      "acc": 0.8685897435897436
+    },
+    "resnet18_imagenet": {
+      "arch": "ResNet18",
+      "pretrain": "ImageNet supervised",
+      "auc": 0.9242274819197897
+    }
+  },
+  "decomposition": {
+    "total_raddino_minus_resnet18": {
+      "point": 0.04928227043611644,
+      "ci95": [
+        0.03054395082042138,
+        0.06990302291986024
+      ]
+    },
+    "domain_raddino_minus_dinov2": {
+      "point": 0.022413982029366508,
+      "ci95": [
+        0.00833620247883285,
+        0.03703959349286493
+      ],
+      "interpret": "\u7eaf\u9884\u8bad\u7ec3\u6570\u636e\u57df\uff08\u67b6\u6784/\u9884\u5904\u7406/\u63a2\u9488\u5168\u56fa\u5b9a\uff09"
+    },
+    "arch_residual_dinov2_minus_resnet18": {
+      "point": 0.02686828840674993,
+      "ci95": [
+        0.006766889862272263,
+        0.04817300693148045
+      ],
+      "interpret": "\u67b6\u6784(ViT vs CNN)+\u76d1\u7763\u65b9\u5f0f(\u81ea\u76d1\u7763 vs \u76d1\u7763)\u5408\u5e76\u6b8b\u4f59\uff0c\u975e\u7eaf\u67b6\u6784"
+    },
+    "additivity_check": 0.0
+  },
+  "mcnemar_raddino_vs_dinov2": {
+    "b_rd_only": 39,
+    "c_dino_only": 25,
+    "p": 0.10342187831608088
+  },
+  "verdict": {
+    "domain_ci_excludes_0": true,
+    "statement": "\u9884\u8bad\u7ec3\u57df\u6709\u53ef\u6d4b\u6548\u5e94"
+  },
+  "seed": 42,
+  "n_boot": 2000
+}

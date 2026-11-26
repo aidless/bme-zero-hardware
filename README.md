@@ -49,12 +49,13 @@ python3 mini_project_eeg.py      # ③ EEG 解码（MNE 自动下载）
 | ③ EEG | CSP acc 0.778 / AUC 0.877 | 仅 S001 被试内；9 人 LOSO 后 CSP pooled acc 0.519（CI 覆盖 0.5）。第五轮黎曼 ensemble 报 acc 0.580（CI 不含 0.5），但第六轮把预测规则冻结成单次 fit 后**两臂都不显著**（CSP 0.509 / 黎曼 0.449，CI 均覆盖 0.5，黎曼点估计还更差）——所谓优势依赖一个事后选的 ensemble 细节；两臂 ECE 0.49/0.72 跨被试严重失校准 |
 | ② 类器官/细胞图像 | 230 个核（HeLa） | DSB2018 32 图人工 GT 上传统流水线 Dice 0.7765、Cellpose3 对照 0.8547；2D 核 Dice ≠ 3D 类器官质量 |
 | 前沿对照 | — | 第七轮把 Rad-DINO（胸片预训练）真的拉到 PneumoniaMNIST：冻结特征+线性探针 test AUC 0.9735[0.9633,0.9827]；同协议配对下比 ResNet18(ImageNet) 0.9242 高 +0.0493[0.0305,0.0699]、McNemar p=0.00064——**领域对口预训练有可测优势**，但协议不同不写 SOTA 超越 |
+| 同架构消融 | — | 第八轮插入控制臂 dinov2-base（同 ViT-B/14、同 518px、同探针，只换预训练数据）：把 +0.049 拆成**纯预训练域 +0.0224[0.0083,0.0370]** 与**架构+监督残余 +0.0269[0.0068,0.0482]**；AUC 域效应显著但阈值 McNemar p=0.103 不显著（排序改善≠0.5阈值翻转），两个口径并列不挑显著的报 |
 
 详细文献核实、bootstrap CI、scaffold split、跨被试验证、概率校准全部在 [`BME-DEEP-DIVE.md`](BME-DEEP-DIVE.md)，累计证伪/纠正 9 个易记错的文献 id，并对无官方榜单的方向如实留白。
 
 ## 文档
 
-- [`BME-DEEP-DIVE.md`](BME-DEEP-DIVE.md) — 七轮 deep dive 总报告：文献核实 + bootstrap CI + scaffold split + 跨被试 + 概率校准 + P0 硬伤修复 + 跨数据集/跨组织验证 + 预注册与分析者自由度（第六轮）+ **前沿基础模型实测与同协议 head-to-head（第七轮）**
+- [`BME-DEEP-DIVE.md`](BME-DEEP-DIVE.md) — 七轮 deep dive 总报告：文献核实 + bootstrap CI + scaffold split + 跨被试 + 概率校准 + P0 硬伤修复 + 跨数据集/跨组织验证 + 预注册与分析者自由度（第六轮）+ **前沿基础模型实测与同协议 head-to-head（第七轮）+ 同架构纯预训练域消融（第八轮）**
 - [`PREREGISTRATION-1-EEG-crosssubject.md`](PREREGISTRATION-1-EEG-crosssubject.md) / [`PREREGISTRATION-2-Mol-split-effect.md`](PREREGISTRATION-2-Mol-split-effect.md) — 第六轮两份预注册，含冻结 sha256（`data/prereg/FREEZE.log`）；判定规则跑前写死、脚本运行时验签。结论：黎曼 ensemble 优势在冻成单次 fit 后消失；split 单因素差异 CI 跨 0（推翻此前"97.5% gap"归因）
 - [`docs/BME-PORTFOLIO.md`](docs/BME-PORTFOLIO.md) — 完整实测档案：每方向的脚本、数字、踩坑、下一步
 - [`docs/bme-zero-hardware-guide.md`](docs/bme-zero-hardware-guide.md) — 零硬件入门路径：工具栈 + 数据集 + 12 周路线
