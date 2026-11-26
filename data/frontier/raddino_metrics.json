@@ -1,0 +1,39 @@
+{
+  "model": "microsoft/rad-dino (ViT-B/14, CLS 768d, frozen)",
+  "pretrain": "chest X-ray (DINOv2 self-supervised), Nature Mach Intell 2025 / arXiv:2401.10815",
+  "protocol": "frozen feature extraction + StandardScaler + LogisticRegression linear probe; no finetune",
+  "dataset": "PneumoniaMNIST official split",
+  "n_train": 4708,
+  "n_val": 524,
+  "n_test": 624,
+  "feature_dim": 768,
+  "seed": 42,
+  "n_boot": 2000,
+  "train": {
+    "auc": 1.0,
+    "acc": 1.0
+  },
+  "val": {
+    "auc": 0.9910692183185756,
+    "acc": 0.9637404580152672
+  },
+  "test": {
+    "auc": 0.9735097523559061,
+    "acc": 0.8910256410256411,
+    "auc_ci95": [
+      0.9633083131243758,
+      0.9827299865504088
+    ],
+    "acc_ci95": [
+      0.8653846153846154,
+      0.9150641025641025
+    ],
+    "ece15": 0.1015452410524281
+  },
+  "historical_comparison": {
+    "pixel_logreg_auc": 0.9279,
+    "cnn_2layer_auc": 0.9364,
+    "resnet18_imagenet_transfer_auc": 0.9741,
+    "note": "\u4e0d\u540c\u9884\u8bad\u7ec3\u53e3\u5f84\uff08CXR vs ImageNet\uff09\u4e0e\u4e0d\u540c\u534f\u8bae\uff08\u51bb\u7ed3linear probe vs \u7aef\u5230\u7aeffinetune\uff09\uff0c\u53ea\u505a\u63cf\u8ff0\u6027\u5bf9\u6bd4\uff0c\u4e0d\u5ba3\u79f0 SOTA \u8d85\u8d8a"
+  }
+}

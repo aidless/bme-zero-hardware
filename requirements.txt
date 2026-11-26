@@ -21,3 +21,4 @@ pyriemann>=0.6       # 仅 bench_eeg_extended.py 的 Riemann 对照需要
 
 # build_portfolio.py 只用标准库（base64/re/glob），无需额外依赖。
 # Debian/Ubuntu 系统 Python 被 PEP 668 拦截时，pip 加 --break-system-packages 或用 venv。
+rad-dino>=0.1.2  # 第七轮前沿对照，pip install rad-dino --break-system-packages

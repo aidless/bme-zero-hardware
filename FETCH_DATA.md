@@ -90,3 +90,17 @@ curl -L -o heart_1k_v3.h5 \
 - Python 3.12（测试环境），依赖见 `requirements.txt`
 - 部分发行版（如 Debian/Ubuntu 系统 Python）用 pip 安装需加 `--break-system-packages` 或使用 venv
 - 本机实测 GPU 为 RTX 3060 6GB；`adv_resnet.py` 用 GPU 约 1 分钟，其余脚本纯 CPU 可跑
+
+## 7. 第七轮前沿基础模型（可选，Rad-DINO 胸片预训练）
+
+```bash
+pip install rad-dino --break-system-packages
+# 脚本会自动从 huggingface 下载 microsoft/rad-dino/model.safetensors（330.3MB）
+# 若 hf.co 不通：export HF_ENDPOINT=https://hf-mirror.com
+# ResNet18 ImageNet 权重（head-to-head 对照）：
+curl -o ~/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth \
+  https://download.pytorch.org/models/resnet18-f37072fd.pth
+python3 bench_frontier_raddino.py          # 单臂 linear probe
+python3 bench_frontier_headtohead_v2.py    # 同协议配对对比（GPU 批量）
+```
+数据源：PneumoniaMNIST（medmnist 自带下载）。产物在 `data/frontier/`。

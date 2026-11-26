@@ -1,0 +1,40 @@
+{
+  "protocol": "frozen backbone + StandardScaler + LogisticRegression linear probe (no finetune), same split",
+  "n_test": 624,
+  "arms": {
+    "rad_dino_cxr": {
+      "auc": 0.9735097523559061,
+      "acc": 0.8910256410256411,
+      "pretrain": "chest X-ray DINOv2",
+      "feature_dim": 768
+    },
+    "resnet18_imagenet": {
+      "auc": 0.9242274819197897,
+      "acc": 0.8413461538461539,
+      "pretrain": "ImageNet supervised",
+      "feature_dim": 512
+    }
+  },
+  "paired_diff_rad_dino_minus_resnet18": {
+    "auc_diff": 0.04928227043611644,
+    "auc_diff_ci95": [
+      0.03054395082042138,
+      0.06990302291986024
+    ],
+    "acc_diff": 0.049679487179487225,
+    "acc_diff_ci95": [
+      0.020833333333333367,
+      0.07692307692307698
+    ],
+    "mcnemar_b_rd_only": 55,
+    "mcnemar_c_r18_only": 24,
+    "mcnemar_p": 0.0006393977673643526
+  },
+  "verdict": {
+    "auc_ci_excludes_0": true,
+    "statement": "\u9886\u57df\u9884\u8bad\u7ec3\u6709\u53ef\u6d4b\u4f18\u52bf"
+  },
+  "seed": 42,
+  "n_boot": 2000,
+  "note": "v2: GPU batch \u63d0\u53d6 ResNet18\uff1bv1 \u9010\u5f20 CPU \u592a\u6162\u5df2\u5f03"
+}

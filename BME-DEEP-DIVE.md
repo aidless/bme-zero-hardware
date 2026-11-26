@@ -2,7 +2,7 @@
 
 > 目的：把已开源作品集（github.com/aidless/bme-zero-hardware）的五个方向从"单数字 demo"升级到"经得起审稿的 benchmark"。核心动作有两层：① 联网逐条核实 2024–2026 真实前沿（号-题一致 + 数字溯源，杜绝编造 DOI）；② 用更严格的实验协议重估我们的基线，并诚实标注口径差异。
 >
-> 日期：2026-11-24（第三轮补齐类器官 & EEG；第四轮跨数据集、跨被试与概率校准）→ 2026-11-26（第五轮 21 项清单逐条做完；第六轮预注册与分析者自由度） · 证据分级：🟢 已打开正文核对标题/年份/数字 ｜ 🟡 仅搜索摘要未验证（不得当事实）｜ ⚪ 自报未独立复现
+> 日期：2026-11-24（第三轮补齐类器官 & EEG；第四轮跨数据集、跨被试与概率校准）→ 2026-11-26（第五轮 21 项清单逐条做完；第六轮预注册与分析者自由度；第七轮前沿基础模型实测与同协议 head-to-head） · 证据分级：🟢 已打开正文核对标题/年份/数字 ｜ 🟡 仅搜索摘要未验证（不得当事实）｜ ⚪ 自报未独立复现
 
 ---
 
@@ -414,3 +414,74 @@ BBBP canonical 去重后 1975 个有效分子、1025 个 Bemis–Murcko scaffold
 
 两处反转都不是因为结果"变差"，而是因为把**分析者自由度**（选哪个因素的归因、选哪种预测规则）预先关掉后，事后挑出来的显著回归到它真实的证据强度。六个方向所有的数字继续保持"放回真实口径 + 带区间 + 可证伪"的处理方式，不写任何 SOTA 宣称。至此六轮深挖（核实 → 审稿级重估 → 类器官/EEG 补齐 → 外部验证/校准 → 21 项清单 → 预注册）全部收口。
 
+
+---
+
+## 十、第七轮：把前沿基础模型拉到我们数据上做同协议 head-to-head（2026-11-26）
+
+前六轮有一个反复出现的措辞：*"口径不同，不能写超过 SOTA"*。我们核实了 PanDerm、Rad-DINO、scGPT、Geneformer 等一堆前沿模型，却**从未真正把它们跑在我们自己的数据上**——对比永远是"我们的数字 vs 文献里的数字"，跨预训练数据、跨协议、跨切分，只能定性。第七轮补上这个缺口：把前沿视觉基础模型 **Rad-DINO** 真的下载下来，冻结特征 + 同一线性探针，在同一 test split 上和我们的经典 backbone 做**可控变量的配对对比**。
+
+### 10.1 为什么选 Rad-DINO（文献核实 🟢）
+
+| 项 | 内容 |
+|---|---|
+| 模型 | microsoft/rad-dino，ViT-B/14，CLS 768 维，权重 330.3 MB |
+| 出处 | arXiv:2401.10815（标题 *Exploring scalable medical image encoders beyond text supervision*，注意标题里无 "Rad-DINO" 字样）；期刊版 Nature Machine Intelligence 2025 |
+| 预训练 | 从 dinov2-base 出发，在胸片（CXR）上自监督 finetune |
+| 为何对口 | 我们的 PneumoniaMNIST 就是胸片，**预训练数据域与任务域一致**——这是前六轮我们与 ImageNet 模型对比时最大的口径不齐 |
+| 权重获取 | `hf_hub_download("microsoft/rad-dino", "model.safetensors")`，hf.co API 200（hf-mirror 返回 308） |
+| 环境 | `pip install rad-dino --break-system-packages`；extract_features 要 PIL.Image，传 tensor 会触发 AutoImageProcessor 的 values outside [0,1] 报错 |
+
+ Nature 正文页 `s42256-024-00965-w` 本轮 web_fetch 30s 超时未直取，故期刊卷期页码标 🟡，核心事实（ViT-B、胸片自监督、arXiv 号-题一致）由 arXiv abs 与 HF 官方卡坐实。
+
+### 10.2 单臂结果：冻结特征 linear probe 就追平端到端 finetune
+
+协议：Rad-DINO 冻结，抽 CLS 768 维特征 → StandardScaler + LogisticRegression（无微调、无超参搜索、无 val 选模），PneumoniaMNIST 官方 split，2000 次分层 bootstrap，ECE-15bin。
+
+| split | AUC | Acc |
+|---|---|---|
+| train (4708) | 1.0000 | 1.0000 |
+| val (524) | 0.9911 | 0.9637 |
+| **test (624)** | **0.9735 [0.9633, 0.9827]** | **0.8910 [0.8654, 0.9151]** |
+
+test ECE=0.1015（沿用被批评过的探针，概率仍偏高估）。**关键观察**：一个完全冻结、只做线性探针的胸片预训练模型，test AUC 0.9735 就摸到了我们 ResNet18 端到端 ImageNet 迁移 finetune 的 0.9741——而且线性探针连 val 都没用来选模。train=1.0 / test=0.9735 的落差说明线性探针在训练集上是完全拟合的，但泛化仍强。
+
+### 10.3 同协议 head-to-head：唯一变量是预训练数据域
+
+这是本轮真正的产出。`bench_frontier_headtohead_v2.py` 把 **两个 backbone 都冻结、都用同一个 StandardScaler+LR 探针、同一 test split**，唯一差别是预训练数据（胸片 CXR vs ImageNet 自然图像）。Read-DINO 的 test 概率复用上一脚本，ResNet18（ImageNet 监督权重）512 维特征用 GPU 批量抽取（v1 逐张 CPU 跑 60+ 分钟异常慢——39 线程争抢——弃用；v2 批量 GPU 约 1 分钟完成）。
+
+| 臂 | 预训练 | 特征维度 | test AUC | test Acc |
+|---|---|---|---|---|
+| Rad-DINO | 胸片自监督（领域对口） | 768 | **0.9735** | **0.8910** |
+| ResNet18 | ImageNet 监督 | 512 | 0.9242 | 0.8413 |
+
+配对统计（同一 624 张 test，2000 次配对 bootstrap + McNemar）：
+
+| 指标 | Rad-DINO − ResNet18 | 95% CI | 判读 |
+|---|---|---|---|
+| ΔAUC | +0.0493 | [0.0305, 0.0699] | CI 排除 0，领域预训练有可测优势 |
+| ΔAcc | +0.0497 | [0.0208, 0.0769] | CI 排除 0 |
+| McNemar | b=55（仅 DINO 对）/ c=24（仅 R18 对） | p=0.00064 | 配对正确数差异显著 |
+
+**这是六轮以来第一次得到统计显著的正面结论**：当把预训练数据域作为唯一变量控制住，领域对口的胸片预训练比 ImageNet 预训练带来约 +0.05 AUC，且配对检验排除偶然。前六轮"口径不同不能比"的困局，靠"把前沿模型真的跑起来 + 同协议对齐"被解开了一次。
+
+### 10.4 诚实边界与净结论
+
+- 这不是 SOTA 宣称：Rad-DINO 冻结探针 0.9735 和 ResNet18 端到端 finetune 0.9741 数值接近，但**协议不同（冻结探针 vs 端到端微调），只是并列陈述，不互相宣布超越**。
+- 配对对比的两个 backbone 架构也不同（ViT-B/14 vs ResNet18），所以 +0.049 是"预训练数据域 + 架构"的合并效应，**没有做同架构（dinov2-base vs rad-dino）的纯预训练消融**——那是下一步，不在本轮范围。
+- ECE 0.1015 提醒：AUC 高不等于概率校准好，这一臂的概率仍偏高估（呼应第四轮校准结论）。
+- 净结论：**领域对口预训练是可测的真实增益**（同协议配对 +0.049 AUC、p<0.0007），而**不是**"我们的模型比 SOTA 强"。真正让对比站得住的，是把前沿模型拉到同一协议下重跑，而不是把我们的数字和文献数字并排贴。
+
+### 10.5 本轮产物与复现
+
+| 文件 | 内容 |
+|---|---|
+| bench_frontier_raddino.py | Rad-DINO 冻结特征抽取 + linear probe + bootstrap + ECE |
+| bench_frontier_headtohead_v2.py | 同协议配对 head-to-head（GPU 批量版；v1 CPU 逐张弃用） |
+| data/frontier/raddino_metrics.json | 单臂全部数字（train/val/test/CI/ECE） |
+| data/frontier/headtohead_metrics.json | 配对 ΔAUC/ΔAcc/McNemar + verdict |
+| data/frontier/raddino_test_prob.npy / resnet18_test_prob.npy | 两臂 test 概率，可复算配对检验 |
+
+复现：`pip install rad-dino --break-system-packages`，需 `~/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth`（ImageNet 权重）与 HF 权重 `microsoft/rad-dino`。两脚本均 seed=42、2000 次 bootstrap。
+
+**七轮收口**：核实 → 审稿级重估 → 类器官/EEG 补齐 → 外部验证/校准 → 21 项清单 → 预注册 → 前沿基础模型实测。所有数字继续沿用"放回真实口径 + 带区间 + 可证伪 + 不写 SOTA 超越"的处理方式。第七轮唯一一次显著正面结论，也严格限定在"同协议可控变量对比"的边界内。
