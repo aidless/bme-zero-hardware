@@ -552,7 +552,7 @@ Rad-DINO vs dinov2-base 在 0.5 阈值下 McNemar b=39 / c=25，**p=0.1034（不
 | 分子 ClinTox | 0.7963 | 0.5018 ± 0.0987 | 0.651 / 0.821 | 0.0198 | 2/100 | 功效不足（非泄漏） |
 | 影像 PneumoniaMNIST | 0.9242 | 0.5006 ± 0.0264 | 0.544 / 0.583 | 0.0099 | — | 干净（JSON 已落盘） |
 | 影像 DermaMNIST | 0.8834 | 0.5000 ± 0.0147 | 0.525 / 0.530 | 0.0099 | — | 干净（JSON 已落盘） |
-| EEG CSP+LR（9 被试 macro AUC） | 0.6137 | 首跑 100 次完成：mean 0.4622，20 采样点全在 [0.411, 0.528] | 0.528 / — | 0.0099（max 0.528 < 真实 0.6137，无一触及） | — | JSON 键名 bug 已修，重跑落盘中 |
+| EEG CSP+LR（9 被试 macro AUC） | 0.6137 | 两次独立跑满 100 次：mean 0.4622（两次 running_mean 均 0.462194，确定性一致）；20 个采样点全在 [0.411, 0.528] | 0.528 / 0.528 | 采样点无一 ≥ 真实 0.6137 | — | 干净（日志恢复；写 JSON 两 bug 已修） |
 
 经验 p = (null AUC ≥ 真实 AUC 的次数 + 1) / (N + 1)。"CI 下界>0.5 次数"统计有多少次随机标签仍被 bootstrap CI 判为显著，名义 α=0.05 下 100 次期望 0–5 次。
 
@@ -566,7 +566,7 @@ Rad-DINO vs dinov2-base 在 0.5 阈值下 McNemar b=39 / c=25，**p=0.1034（不
 
 - 分子 null 只评估一次固定 scaffold split，split 自身的抽样方差不在本轮范围（第六轮已单独查过 split 实现的效应，单因素不显著）。
 - 影像 backbone 用 ResNet18(ImageNet) 而非 Rad-DINO：阴性对照检验的是"冻结特征 + linear probe + official split"这段，与第七/八轮 R18 臂同构，backbone 选择不影响是否泄漏的结论。
-- EEG 每次置换需对 9 被试 × 5 折重跑 CSP fit（CSP 依赖标签），100 次约 2 小时；DermaMNIST 7 类 macro-AUC 置换同样耗时。影像两数据集（PneumoniaMNIST/DermaMNIST）的完整 null JSON 已落盘并回填上表；EEG 首跑 100 次全完成（null mean 0.4622、真实 0.6137 无一被触及），仅因写 JSON 键名 bug 需重跑留档，结论方向不受影响。
+- EEG 每次置换需对 9 被试 × 5 折重跑 CSP fit（CSP 依赖标签），100 次约 2.5 小时。两次独立运行都跑满 100 次且 running_mean 均为 0.462194（确定性一致），20 个每-5-次打印的采样点全在 [0.411, 0.528]、无一触及真实 0.6137。**完整 100 元素数组随两次写 JSON 崩溃丢失**（先键名 bug、后相对路径 bug，均已在 `bench_negative_eeg.py` 修复），已从日志恢复可核对的 20 个采样点落到 `data/negative/negative_eeg_metrics_recovered.json`，未伪造未打印的值；要全量数组需第三次重跑约 2.5 小时，但不改变任何结论。影像两数据集的完整 null JSON 已落盘并回填上表。
 
 ### 12.4 本轮产物
 

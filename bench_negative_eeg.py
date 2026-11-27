@@ -146,8 +146,8 @@ def verify_json(path: Path) -> None:
             arr.append(recomputed)
             if abs(recomputed - row["macro"][key]) > 1e-12:
                 errs.append(f"perm {row['index']} macro {key} mismatch")
-        fp_macro_auc += int(row["macro"]["bootstrap"]["auc_ci95"][0] > 0.5)
-        fp_macro_acc += int(row["macro"]["bootstrap"]["acc_ci95"][0] > 0.5)
+        fp_macro_auc += int(row["macro"]["bootstrap"]["auc"][0] > 0.5)
+        fp_macro_acc += int(row["macro"]["bootstrap"]["acc"][0] > 0.5)
         for s in SUBJECTS:
             fp_subject_auc += int(row["per_subject"][str(s)]["bootstrap"]["auc_ci95"][0] > 0.5)
     n = len(null_auc)
@@ -246,12 +246,11 @@ def main(n_perm: int, output: Path) -> None:
     fp_counts = {
         "definition": "percentile bootstrap 95% CI lower bound strictly > 0.5 under shuffled labels",
         "macro_auc_permutations": int(sum(
-            p["macro"]["bootstrap"]["auc_ci95"][0] > 0.5 for p in permutations)),
+            p["macro"]["bootstrap"]["auc"][0] > 0.5 for p in permutations)),
         "macro_acc_permutations": int(sum(
-            p["macro"]["bootstrap"]["acc_ci95"][0] > 0.5 for p in permutations)),
+            p["macro"]["bootstrap"]["acc"][0] > 0.5 for p in permutations)),
         "subject_auc_permutation_pairs": int(sum(
-            r["bootstrap"]["auc_ci95"][0] > 0.5
-            for p in permutations for r in p["per_subject"].values())),
+            r["bootstrap"]["auc_ci95"][0] > 0.5            for p in permutations for r in p["per_subject"].values())),
         "n_macro_tests": n_perm,
         "n_subject_tests": n_perm * len(SUBJECTS),
         "nominal_alpha": 0.05,
@@ -359,4 +358,7 @@ if __name__ == "__main__":
     elif args.verify_json:
         verify_json(args.output)
     else:
-        main(args.n_permutations, args.output)
+        # 相对路径按 cwd 解析为绝对路径后再做 relative_to（否则 ValueError）
+        out_path = args.output if args.output.is_absolute() else (ROOT / args.output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        main(args.n_permutations, out_path)

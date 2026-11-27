@@ -1,0 +1,75 @@
+{
+  "experiment": "EEGBCI negative control — values RECOVERED FROM RUN LOG",
+  "created_at_utc": "2026-11-26T23:53:54.849177+00:00",
+  "status": "recovered_from_log_partial",
+  "recovery_note": "The 100-permutation run completed twice with identical final running_mean=0.462194, but both attempts crashed at the final JSON write (first a bootstrap-key bug, then a relative-path bug; both since fixed in bench_negative_eeg.py). Only the 20 points printed to the log (every 5th permutation) are recoverable; the full 100-element in-memory array was lost. No unprinted value is fabricated. Numbers below are the printed samples plus the final running_mean (which averages all 100 permutations).",
+  "source_log": "data/negative_eeg_run_v2.log",
+  "real": {
+    "macro_acc": 0.575309,
+    "macro_auc": 0.613696
+  },
+  "null": {
+    "n_permutations_total": 100,
+    "n_sampled_points_recovered": 20,
+    "sampled_indices": [
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      55,
+      60,
+      65,
+      70,
+      75,
+      80,
+      85,
+      90,
+      95,
+      100
+    ],
+    "sampled_aucs": [
+      0.505394,
+      0.473865,
+      0.50188,
+      0.490573,
+      0.527565,
+      0.462307,
+      0.449805,
+      0.428582,
+      0.461244,
+      0.501536,
+      0.499093,
+      0.417978,
+      0.469908,
+      0.453713,
+      0.503751,
+      0.415168,
+      0.475478,
+      0.411336,
+      0.505784,
+      0.482644
+    ],
+    "mean_all_100_from_final_running_mean": 0.462194,
+    "max_sampled": 0.527565,
+    "p95_sampled": 0.50687305,
+    "std_sampled": 0.034089219755471696
+  },
+  "empirical_test_from_samples": {
+    "definition": "on 20 recovered sample points; full 100-array unavailable",
+    "null_ge_real_sampled": 0,
+    "p_sampled": 0.047619047619047616,
+    "note": "all 20 sampled AUCs (max 0.5276) fall far below the real 0.6137; first run's 100 completions also reported no sampled point reaching the real value"
+  },
+  "verdict": {
+    "null_mean_near_half": true,
+    "real_clears_all_sampled_null": true,
+    "pipeline_clean_by_recovered_evidence": true,
+    "caveat": "recovered partial evidence; full-array JSON requires a third ~2.5h rerun now that both write bugs are fixed"
+  }
+}
