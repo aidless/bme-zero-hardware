@@ -66,11 +66,34 @@ CLAIMS = [
 ]
 
 
+NARRATIVE_RULES = [
+    # id, 当前证据要求（必须全部出现）, 旧口径残留（任一出现即失败）
+    ("gap_attribution", ("组合累计降幅为 **0.2366**", "97.5% 是单切 split 的未配对观察比值"), ("单因素切到 DeepChem 精确 split 一项就消掉", "切分实现能解释 97.5%")),
+    ("fusion_scope", ("融合特征并非普适最优", "ClinTox 上还显著劣于 MACCS"), ("融合特征在严格 scaffold split 下没有掉",)),
+    ("eeg_cross_subject", ("稳健优势未成立", "冻成单次 fit 的预注册协议两臂均无优势证据"), ("跨被试结论一直是",)),
+    ("eeg_null_partial", ("完整 100 元素数组", "未伪造未打印的值"), ("negative_eeg_metrics.json | null 分布全量数组",)),
+    ("no_pending_markers", (), ("含待落盘行", "置换进行中", "重跑落盘中")),
+    ("scope_five_directions", ("五个方向",), ("六个方向所有",)),
+]
+
+
 def get_path(obj: dict, dotted: str):
     cur = obj
     for part in dotted.split("."):
         cur = cur[part]
     return cur
+
+
+def audit_narrative(report: str) -> list[dict]:
+    """检查历史轮次的旧口径是否在报告里留成当前结论。"""
+    rows = []
+    for rid, require, forbid in NARRATIVE_RULES:
+        missing = [s for s in require if s not in report]
+        stale = [s for s in forbid if s in report]
+        ok = not missing and not stale
+        rows.append({"rule": rid, "required_missing": missing,
+                     "forbidden_present": stale, "pass": ok})
+    return rows
 
 
 def selftest() -> None:
@@ -80,14 +103,18 @@ def selftest() -> None:
     assert f"{2873:.0f}" == "2873"
     assert "-0.0593" in "diff -0.0593 CI"
     assert "\u22120.0593".replace("\u2212", "-") == "-0.0593"
-    print("SELFTEST PASS: path traversal / rounding / format widths / minus-sign normalization")
+    ok_text = "组合累计降幅为 **0.2366**；97.5% 是单切 split 的未配对观察比值；融合特征并非普适最优；ClinTox 上还显著劣于 MACCS；稳健优势未成立；冻成单次 fit 的预注册协议两臂均无优势证据；完整 100 元素数组；未伪造未打印的值；五个方向"
+    assert all(r["pass"] for r in audit_narrative(ok_text))
+    for bad in ("单因素切到 DeepChem 精确 split 一项就消掉", "切分实现能解释 97.5%", "融合特征在严格 scaffold split 下没有掉", "跨被试结论一直是", "含待落盘行", "六个方向所有"):
+        assert not all(r["pass"] for r in audit_narrative(ok_text + "；" + bad)), bad
+    print("SELFTEST PASS: path traversal / rounding / format widths / minus-sign normalization / narrative rules red+green")
 
 
 def main() -> None:
     report = REPORT.read_text(encoding="utf-8")
     cache: dict[str, dict] = {}
     rows = []
-    failures = []
+    num_failures = []
     for cid, shown, rel, dotted, ndigits in CLAIMS:
         if rel not in cache:
             cache[rel] = json.loads((ROOT / rel).read_text(encoding="utf-8"))
@@ -107,32 +134,45 @@ def main() -> None:
                      "rendered": rendered, "source": f"{rel}:{dotted}",
                      "value_matches": value_ok, "in_report": in_report, "pass": ok})
         if not ok:
-            failures.append(cid)
+            num_failures.append(cid)
+
+    narrative = audit_narrative(report)
+    narrative_failures = [r["rule"] for r in narrative if not r["pass"]]
+    failures = num_failures + narrative_failures
 
     payload = {
-        "experiment": "Round 11: evidence-chain consistency audit of BME-DEEP-DIVE.md",
+        "experiment": "Round 11+12: evidence-chain and narrative-coherence audit of BME-DEEP-DIVE.md",
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "report": str(REPORT.relative_to(ROOT)),
         "n_claims": len(rows),
-        "n_pass": sum(r["pass"] for r in rows),
+        "n_claims_pass": sum(r["pass"] for r in rows),
+        "n_narrative_rules": len(narrative),
+        "n_narrative_pass": sum(r["pass"] for r in narrative),
+        "n_pass": len(rows) + len(narrative) - len(failures),
         "n_fail": len(failures),
         "failures": failures,
         "method": "each claim's report string must equal its JSON value rendered at "
                   "the report's precision AND appear verbatim in the report; "
                   "no fuzzy matching",
         "claims": rows,
+        "narrative_rules": narrative,
         "verdict": "PASS" if not failures else "DRIFT_DETECTED",
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"WROTE {OUT.relative_to(ROOT)}")
-    print(f"claims={len(rows)} pass={payload['n_pass']} fail={payload['n_fail']} "
-          f"verdict={payload['verdict']}")
+    print(f"claims={len(rows)} pass={payload['n_claims_pass']} "
+          f"narrative={len(narrative)} pass={payload['n_narrative_pass']} "
+          f"total_fail={payload['n_fail']} verdict={payload['verdict']}")
     for r in rows:
         if not r["pass"]:
             print(f"  FAIL {r['claim']}: shown={r['report_shown']} "
                   f"json={r['json_value']} rendered={r['rendered']} "
                   f"in_report={r['in_report']} src={r['source']}")
+    for r in narrative:
+        if not r["pass"]:
+            print(f"  FAIL {r['rule']}: missing={r['required_missing']} "
+                  f"stale={r['forbidden_present']}")
     if failures:
         raise SystemExit(2)
 
